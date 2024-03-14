@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
 
@@ -6,7 +7,8 @@ import './LandingPage.css';
 import RegisterForm from '../RegisterForm/RegisterForm';
 
 function LandingPage() {
-  const [heading, setHeading] = useState('Welcome');
+  const [heading, setHeading] = useState("It's Game Night!");
+  const user = useSelector(store => store.user);
   const history = useHistory();
 
   const onLogin = (event) => {
@@ -20,47 +22,38 @@ function LandingPage() {
       <div className="grid">
         <div className="grid-col grid-col_8">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur
-            id felis metus. Vestibulum et pulvinar tortor. Morbi pharetra lacus
-            ut ex molestie blandit. Etiam et turpis sit amet risus mollis
-            interdum. Suspendisse et justo vitae metus bibendum fringilla sed
-            sed justo. Aliquam sollicitudin dapibus lectus, vitae consequat odio
-            elementum eget. Praesent efficitur eros vitae nunc interdum, eu
-            interdum justo facilisis. Sed pulvinar nulla ac dignissim efficitur.
-            Quisque eget eros metus. Vestibulum bibendum fringilla nibh a
-            luctus. Duis a sapien metus.
+            Is your group having trouble settling on a game to play? Do you spend
+            what feels like forever looking over your collection, and just can't 
+            figure out the perfect game? We all know that feeling. 
           </p>
 
           <p>
-            Praesent consectetur orci dui, id elementum eros facilisis id. Sed
-            id dolor in augue porttitor faucibus eget sit amet ante. Nunc
-            consectetur placerat pharetra. Aenean gravida ex ut erat commodo, ut
-            finibus metus facilisis. Nullam eget lectus non urna rhoncus
-            accumsan quis id massa. Curabitur sit amet dolor nisl. Proin
-            euismod, augue at condimentum rhoncus, massa lorem semper lacus, sed
-            lobortis augue mi vel felis. Duis ultrices sapien at est convallis
-            congue.
+            We've designed Off the Shelf to help you out with finding just the right 
+            game to play. Are you feeling a fantasy game where everyone is trying 
+            to control parts of a map, and you're all battling with cards? Or maybe you're 
+            just feeling like rolling dice tonight? Maybe a few of your regulars had to 
+            drop out last minute, and the game you were thinking about just doesn't 
+            fit anymore.
           </p>
 
           <p>
-            Fusce porta diam ac tortor elementum, ut imperdiet metus volutpat.
-            Suspendisse posuere dapibus maximus. Aliquam vitae felis libero. In
-            vehicula sapien at semper ultrices. Vivamus sed feugiat libero. Sed
-            sagittis neque id diam euismod, ut egestas felis ultricies. Nullam
-            non fermentum mauris. Sed in enim ac turpis faucibus pretium in sit
-            amet nisi.
+            No matter your vibe, we've got you covered. We let you build a 
+            collection here in our application, and can help you sort through it 
+            quickly and easily. That way, you get to spend more time playing.
           </p>
         </div>
+        {user.id ? 
+        <h2>Welcome Back, {user.username}!</h2> :
         <div className="grid-col grid-col_4">
-          <RegisterForm />
-
+          <RegisterForm /> 
           <center>
             <h4>Already a Member?</h4>
             <button className="btn btn_sizeSm" onClick={onLogin}>
               Login
             </button>
           </center>
-        </div>
+        </div> 
+        }
       </div>
     </div>
   );
