@@ -10,7 +10,7 @@ const passport = require('./strategies/user.strategy');
 // Route Includes
 const userRouter = require('./routes/user.router');
 const collectionRouter = require('./routes/collection.router');
-const gamesRouter = require('./routes/games.router.js');
+const gamesRouter = require('./routes/games.router');
 
 // Express Middleware
 app.use(express.json());
