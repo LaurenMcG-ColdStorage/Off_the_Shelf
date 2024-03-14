@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 function RegisterForm() {
+
+  //These state bits are for collecting a new user's inputs. 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [collection, setCollection] = useState('');
+  const [role, setRole] = useState('');
+
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
@@ -48,6 +53,30 @@ function RegisterForm() {
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="collection">
+          Collection Name:
+          <input
+            type="collection"
+            name="collection"
+            value={collection}
+            required
+            onChange={(event) => setCollection(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="role">
+          Player or Collector?
+          <input
+            type="role"
+            name="role"
+            value={role}
+            required
+            onChange={(event) => setRole(event.target.value)}
           />
         </label>
       </div>

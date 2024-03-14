@@ -3,6 +3,8 @@
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
 
+--The database name is: off_the_shelf
+
 --This table stores all of the user data required to operate the application
 CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
