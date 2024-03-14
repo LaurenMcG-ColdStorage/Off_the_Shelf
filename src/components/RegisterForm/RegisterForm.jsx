@@ -20,6 +20,8 @@ function RegisterForm() {
       payload: {
         username: username,
         password: password,
+        collection: collection,
+        role: role
       },
     });
   }; // end registerUser
