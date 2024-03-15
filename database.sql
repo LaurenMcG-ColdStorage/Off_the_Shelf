@@ -3,49 +3,26 @@
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
 
---The database name is: off_the_shelf
+-- The database name is: off_the_shelf
 
---This table stores all of the user data required to operate the application
-CREATE TABLE "user" (
-	"id" SERIAL PRIMARY KEY,
-	"username" VARCHAR(30) UNIQUE NOT NULL,
-	"password" VARCHAR(255) NOT NULL,
-	"collection_name" VARCHAR(40) NOT NULL,
-	"role" VARCHAR(10) NOT NULL
-	);
+-- These queries are arranged so that you can copy/paste them directly into your database interface 
+-- of choice and execute them without needing to rearrange anything.
 
---This table will store all of the information needed for collection tracking, as well as a small amount of analytics
-CREATE TABLE "collection" (
-	"name" VARCHAR(40) NOT NULL,
-	"game_id" INT NOT NULL,
-	"viewed" BIGINT,
-	"played" BIGINT
-	);
-
--- This table stores play session hitory data for users.
-CREATE TABLE "history" (
-	"user_id" BIGINT REFERENCES "user",
-	"game_id" VARCHAR NOT NULL,
-	"date" DATE,
-	"notes" VARCHAR(1000)
-	);
-
--- Mechanics is a small table that stores the different selectable game mechanics.
--- We've made a table for it for better scalability
+-- This stores the list of game mechanics
 CREATE TABLE "mechanics" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(20)
 	);
 
--- Themes stores all of the different avilable themes or flavors that a game might have.
+--This stores the themes	
 CREATE TABLE "themes" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(20)
 	);
 
--- Games stores all of the games that have been entered into any collection.
--- All games will persist regardless of whether they remain in any collection
- CREATE TABLE "games" (
+-- This is a persistant table that holds all of the games. Games do not need to be tied to a collection
+-- once entered to remain in the table.
+CREATE TABLE "games" (
 	"id" SERIAL PRIMARY KEY,
 	"title" VARCHAR(50) NOT NULL,
 	"player_count" INT NOT NULL,
@@ -56,4 +33,35 @@ CREATE TABLE "themes" (
 	"theme_id" INT NOT NULL REFERENCES "themes",
 	"image" VARCHAR(100) NOT NULL
 	);
-	
+
+-- This will be a table that stores each unique Collection made by users.
+CREATE TABLE "collections" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR(50) UNIQUE NOT NULL
+	);
+
+-- This is the junction table that ties collections to games, and also stores a bit of play data.
+CREATE TABLE "collection_game" (
+	"collection_id" INT REFERENCES "collections",
+	"game_id" INT REFERENCES "games",
+	"viewed" BIGINT,
+	"played" BIGINT
+	);
+
+-- This holds all of the user data that we are collecting. It's not a lot, because we really don't need much.	
+CREATE TABLE "user" (
+	"id" SERIAL PRIMARY KEY,
+	"username" VARCHAR(30) UNIQUE NOT NULL,
+	"password" VARCHAR(255) NOT NULL,
+	"collection_id" INT NOT NULL REFERENCES "collections",
+	"role" VARCHAR(10) NOT NULL
+	);
+
+
+CREATE TABLE "history" (
+	"user_id" BIGINT REFERENCES "user",
+	"game_id" VARCHAR NOT NULL,
+	"date" DATE,
+	"notes" VARCHAR(1000)
+	);
+		
