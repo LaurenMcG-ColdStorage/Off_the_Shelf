@@ -21,6 +21,8 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import CollectionPage from '../CollectionPage/CollectionPage';
 import Recommend from '../Recommend/Recommend';
+import PlayHistory from '../PlayHistory/PlayHistory';
+import Manage from '../Manage/Manage';
 
 import './App.css';
 
@@ -59,9 +61,18 @@ function App() {
             {/* This route shows the Collection Page when logged in, otherwise it's the login page */}
             <CollectionPage />
           </ProtectedRoute>
+          
           <ProtectedRoute exact path='/recommend'>
             {/* This route shows the Recommend Feature when logged in, or Login Page if not. */}
             <Recommend />
+          </ProtectedRoute>
+          
+          <ProtectedRoute exact path='/history'>
+            <PlayHistory />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path='/manage'>
+            <Manage />
           </ProtectedRoute>
 
           <ProtectedRoute
