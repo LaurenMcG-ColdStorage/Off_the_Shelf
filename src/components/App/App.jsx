@@ -19,6 +19,8 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import CollectionPage from '../CollectionPage/CollectionPage';
+import Recommend from '../Recommend/Recommend';
 
 import './App.css';
 
@@ -52,6 +54,16 @@ function App() {
             Visiting localhost:5173/user will show the UserPage if the user is logged in.
             If the user is not logged in, the ProtectedRoute will show the LoginPage (component).
             Even though it seems like they are different pages, the user is always on localhost:5173/user */}
+          
+          <ProtectedRoute exact path='/collection'>
+            {/* This route shows the Collection Page when logged in, otherwise it's the login page */}
+            <CollectionPage />
+          </ProtectedRoute>
+          <ProtectedRoute exact path='/recommend'>
+            {/* This route shows the Recommend Feature when logged in, or Login Page if not. */}
+            <Recommend />
+          </ProtectedRoute>
+
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
