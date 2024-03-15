@@ -23,7 +23,7 @@ function Manage(){
 
     return(
         <div>
-            <h2>This is the Manage Collection Page</h2>
+            <h2>Add A Game To Your Collection!</h2>
             <label>Title</label>
             <input value={game.title} onChange={(event) => setGame({...game, title: event.target.value})}></input><br />
             <label>Player Count</label>
@@ -40,7 +40,7 @@ function Manage(){
             <input value={game.theme_id} onChange={(event) => setGame({...game, theme_id: event.target.value})}></input><br />
             <label>Image</label>
             <input value={game.image} onChange={(event) => setGame({...game, image: event.target.value})}></input><br />
-            <button>Add New Game</button>
+            <button>Add To Collection</button>
         </div>
 
     );
