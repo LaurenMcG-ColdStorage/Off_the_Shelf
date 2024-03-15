@@ -23,7 +23,7 @@ router.post('/register', (req, res, next) => {
 
   //This query will add a new user
   const queryText = `INSERT INTO "user" ("username", "password")
-  VALUES ($1, $2) RETURNING id`;
+  VALUES ($1, $2) RETURNING "id";`;
   pool
     .query(queryText, [username, password])
     .then(() => res.sendStatus(201))

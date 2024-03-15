@@ -108,18 +108,10 @@ function App() {
             }
           </Route>
 
-          <Route
-            exact
-            path="/home"
-          >
-            {user.id ?
-              // If the user is already logged in, 
-              // redirect them to the /user page
-              <Redirect to="/user" />
-              :
-              // Otherwise, show the Landing page
+          {/* This takes our user to the landing page. The landing page already has logic to
+          render items conditionally, so we don't need a redirect */}
+          <Route exact path="/home"> 
               <LandingPage />
-            }
           </Route>
 
           {/* If none of the other routes matched, we will show a 404. */}

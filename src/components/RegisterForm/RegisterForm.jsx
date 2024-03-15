@@ -6,14 +6,12 @@ function RegisterForm() {
   //These state bits are for collecting a new user's inputs. 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
 
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
   const registerUser = (event) => {
     event.preventDefault();
-    console.log(username, password);
 
     dispatch({
       type: 'REGISTER',
