@@ -40,7 +40,7 @@ function Manage(){
             <input value={game.theme_id} onChange={(event) => setGame({...game, theme_id: event.target.value})}></input><br />
             <label>Image</label>
             <input value={game.image} onChange={(event) => setGame({...game, image: event.target.value})}></input><br />
-            <button>Add To Collection</button>
+            <button onClick={(event) => handleSubmit(event)}>Add To Collection</button>
         </div>
 
     );
