@@ -24,8 +24,23 @@ function* fetchUser() {
   }
 }
 
+// This is where we will update user collections and roles.
+function* updateUser(action) {
+  try {
+    const userData = action.payload;
+    const checkCollection = yield axios.get(`/api/collection/${userData.collection}`)
+    //The put call sends the update information to our user router
+    const updateResponse = yield axios.put('/api/user', action.payload);
+    //After the update, refresh user data in state
+    yield put ({type: 'FETCH_USER'});
+  } catch(error) {
+    console.log('User update failed', error);
+  };
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
+  yield takeLatest('UPDATE_USER', updateUser);
 }
 
 export default userSaga;

@@ -9,6 +9,20 @@ router.get('/', (req, res) => {
   // GET route code here
 });
 
+router.get('/:collection', (req, res) => {
+  //This route is checking to see if a collection is in the collections table already, and returning the ID if so
+  const collection = req.params.collection;
+  const compareQuery = `SELECT * FROM "collections" WHERE "name" = $1 RETURN "id";`;
+  pool
+  .query(compareQuery, [collection])
+  .then((result) => {
+    res.send(result.rows[0].id)
+  })
+  .catch((error) => {
+    res.sendStatus(404)
+  })
+})
+
 /**
  * POST route template
  */

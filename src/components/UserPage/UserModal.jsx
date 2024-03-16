@@ -6,7 +6,7 @@ import './UserModal.css';
 export const UserModal = ({onSubmit, onCancel, onClose}) => {
 
     const user = useSelector((state) => state.user);
-    const [userUpdate, setUserUpdate] = useState(user);
+    const [userUpdate, setUserUpdate] = useState({id: user.id, username: user.username, collection: '', role: ''});
     const dispatch = useDispatch();
 
     const userSubmit = (event) => {
@@ -24,7 +24,7 @@ export const UserModal = ({onSubmit, onCancel, onClose}) => {
                 <div className="content">
                     <h2> Update Profile: </h2>
                     <label>Collection: </label>
-                    <input value={userUpdate.collection_id} onChange={(event) => setUserUpdate({...userUpdate, collection_id: event.target.value})}></input>
+                    <input value={userUpdate.collection_id} onChange={(event) => setUserUpdate({...userUpdate, collection: event.target.value})}></input>
                     <label>Role: </label>
                     <select value={userUpdate.role} onChange={(event) => setUserUpdate({...userUpdate, role: event.target.value})}>
                         <option value={'Player'}>Player</option>
