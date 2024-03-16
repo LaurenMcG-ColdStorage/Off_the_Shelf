@@ -27,10 +27,19 @@ function* fetchUser() {
 // This is where we will update user collections and roles.
 function* updateUser(action) {
   try {
+    //Grab the userdata sent by the dispatch
     const userData = action.payload;
+    //Make a call to check for a valid collection, and get the ID
     const checkCollection = yield axios.get(`/api/collection/${userData.collection}`)
+    //Package the data we're trying to update
+    const scrubbedData = {
+      id: userData.id,
+      collection_id: checkCollection.id,
+      role: userData.role
+    }
+
     //The put call sends the update information to our user router
-    const updateResponse = yield axios.put('/api/user', action.payload);
+    const updateResponse = yield axios.put('/api/user', scrubbedData);
     //After the update, refresh user data in state
     yield put ({type: 'FETCH_USER'});
   } catch(error) {

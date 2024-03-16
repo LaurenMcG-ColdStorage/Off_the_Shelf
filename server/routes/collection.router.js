@@ -62,4 +62,18 @@ router.post('/', (req, res) => {
   })
 });
 
+router.post('/:collection', (req, res) => {
+  const newCollection = req.params.collection;
+  const addQuery = `INSERT INTO "collections" ("name")
+                    VALUES ($1);`;
+  pool
+  .query(addQuery, newCollection)
+  .then((result) => {
+    res.sendStatus(201)
+  })
+  .catch((error) => {
+    res.sendStatus(500)
+  })
+})
+
 module.exports = router;

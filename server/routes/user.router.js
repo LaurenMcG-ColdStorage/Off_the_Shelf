@@ -50,11 +50,14 @@ router.post('/logout', (req, res) => {
 router.put('/', (req, res) => {
   const userData = req.data;
   const updateQuery = `UPDATE "user" SET "collection_id" = $1, "role" = $2 WHERE "id" = $3;`;
-  router.get('/', (req, res) => {
-    pool
-    .query()
-    .then()
-    .catch()
+  
+  pool
+  .query(updateQuery, [userData.collection_id, userData.role, userData.id])
+  .then((result) => {
+    res.sendStatus(200);
+  })
+  .catch((error) => {
+    res.sendStatus(500);
   })
 })
 
