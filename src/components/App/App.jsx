@@ -20,9 +20,14 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import CollectionPage from '../CollectionPage/CollectionPage';
-import Recommend from '../Recommend/Recommend';
 import PlayHistory from '../PlayHistory/PlayHistory';
 import Manage from '../Manage/Manage';
+
+import Recommend from '../Recommend/Recommend';
+import RecPlayers from '../Recommend/RecPlayers/RecPlayers';
+import RecTime from "../Recommend/RecTime/RecTime";
+import RecMech from "../Recommend/RecMech/RecMech";
+import RecTheme from "../Recommend/RecTheme/RecTheme";
 
 import './App.css';
 
@@ -65,6 +70,22 @@ function App() {
           <ProtectedRoute exact path='/recommend'>
             {/* This route shows the Recommend Feature when logged in, or Login Page if not. */}
             <Recommend />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path='/recplayers'>
+              <RecPlayers />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path='/reclength'>
+              <RecTime />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path='/recmechanics'>
+              <RecMech />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path='/rectheme'>
+              <RecTheme />
           </ProtectedRoute>
           
           <ProtectedRoute exact path='/history'>
