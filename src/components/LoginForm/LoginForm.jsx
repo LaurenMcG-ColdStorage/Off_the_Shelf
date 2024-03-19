@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {useSelector} from 'react-redux';
 
@@ -6,11 +6,12 @@ function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const errors = useSelector(store => store.errors);
+  const user = useSelector(store => store.user)
   const dispatch = useDispatch();
 
   const login = (event) => {
     event.preventDefault();
-
+    //Log user in on submit
     if (username && password) {
       dispatch({
         type: 'LOGIN',

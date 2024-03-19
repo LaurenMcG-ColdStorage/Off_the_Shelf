@@ -49,8 +49,8 @@ router.post('/logout', (req, res) => {
 
 router.put('/', (req, res) => {
   const userData = req.data;
-  const updateQuery = `UPDATE "user" SET "collection_id" = $1, "role" = $2 WHERE "id" = $3;`;
-  
+  console.log('User update Data: ', userData);
+  const updateQuery = `UPDATE "user" SET "collection_id" = $1 "role" = $2 WHERE "id" = $3;`;
   pool
   .query(updateQuery, [userData.collection_id, userData.role, userData.id])
   .then((result) => {
@@ -59,6 +59,6 @@ router.put('/', (req, res) => {
   .catch((error) => {
     res.sendStatus(500);
   })
-})
+});
 
 module.exports = router;

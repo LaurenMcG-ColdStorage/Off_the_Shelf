@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, takeEvery } from 'redux-saga/effects';
 
 // worker Saga: will be fired on "FETCH_USER" actions
 function* fetchUser() {
@@ -25,31 +25,30 @@ function* fetchUser() {
 }
 
 // This is where we will update user collections and roles.
-function* updateUser(action) {
+function* updateUserCollection(action) {
   try {
     //Grab the userdata sent by the dispatch
     const userData = action.payload;
-    //Make a call to check for a valid collection, and get the ID
-    const checkCollection = yield axios.get(`/api/collection/${userData.collection}`)
-    //Package the data we're trying to update
-    const scrubbedData = {
-      id: userData.id,
-      collection_id: checkCollection.id,
-      role: userData.role
-    }
-
-    //The put call sends the update information to our user router
-    const updateResponse = yield axios.put('/api/user', scrubbedData);
-    //After the update, refresh user data in state
+          //Update the collections table with the new collection
+    const addCollection = yield axios.put(`/api/collection/${userData.collection}`);
+          //Package the data we're trying to update
+    //console.log(addCollection.data)
+    // const scrubbedData = {
+    //   id: userData.id,
+    //   collection_id: addCollection.id,
+    //   role: userData.role
+    // };
+    //console.log('Scrubbed data: ', scrubbedData);
+    yield axios.put('/api/user', {id: userData.id, collection_id: addCollection.id, role: userData.role});
     yield put ({type: 'FETCH_USER'});
-  } catch(error) {
-    console.log('User update failed', error);
-  };
-}
+  } catch (error) {
+    console.log('User update failed', error); 
+  }
+} 
 
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
-  yield takeLatest('UPDATE_USER', updateUser);
+  yield takeEvery('UPDATE_USER', updateUserCollection);
 }
 
 export default userSaga;

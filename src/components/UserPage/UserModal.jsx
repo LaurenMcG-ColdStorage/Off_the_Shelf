@@ -6,13 +6,14 @@ import './UserModal.css';
 export const UserModal = ({onSubmit, onCancel, onClose}) => {
 
     const user = useSelector((state) => state.user);
-    const [userUpdate, setUserUpdate] = useState({id: user.id, username: user.username, collection: '', role: ''});
+    //console.log(user);
+    let [userUpdate, setUserUpdate] = useState({id: user.id, collection: '', role: ''});
     const dispatch = useDispatch();
 
-    const userSubmit = (event) => {
-        console.log(userUpdate);
+    const userSubmit = () => {
+        //console.log(userUpdate);
         dispatch({type: 'UPDATE_USER', payload: userUpdate})
-        onClose()
+        onSubmit();
     }
 
     return(
@@ -24,11 +25,11 @@ export const UserModal = ({onSubmit, onCancel, onClose}) => {
                 <div className="content">
                     <h2> Update Profile: </h2>
                     <label>Collection: </label>
-                    <input value={userUpdate.collection_id} onChange={(event) => setUserUpdate({...userUpdate, collection: event.target.value})}></input>
+                    <input value={userUpdate.collection} onChange={(event) => setUserUpdate({...userUpdate, collection: event.target.value})}></input>
                     <label>Role: </label>
-                    <select value={userUpdate.role} onChange={(event) => setUserUpdate({...userUpdate, role: event.target.value})}>
-                        <option value={'Player'}>Player</option>
-                        <option value={'Collector'}>Collector</option>
+                    <select defaultValue={'Player'} onChange={(event) => setUserUpdate({...userUpdate, role: event.target.value})}>
+                        <option value='Player'>Player</option>
+                        <option value='Collector'>Collector</option>
                     </select>
                 </div>
                 <div className="footer">
