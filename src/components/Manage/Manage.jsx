@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 function Manage(){
 
+    const user = useSelector((store) => store.user.collection_id)
     const dispatch = useDispatch();
     //This local state will store all of the data for a new game
     const [game, setGame] = useState({
@@ -14,7 +15,8 @@ function Manage(){
         mech2_id: '',
         mech3_id: '',
         theme_id: '',
-        image: ''})
+        image: '',
+        collection_id: user})
 
     const handleSubmit = (event) => {
         event.preventDefault();

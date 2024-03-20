@@ -12,9 +12,9 @@ function* addNewCollection(action){
 };
 
 //This adds a game to a specified collection.
-function* addToCollection(action){
+function* addGameToCollection(action){
     try{
-        const gamesResponse = yield axios.post('/api/collection', action.payload)
+        const gamesResponse = yield axios.post('/api/games', action.payload)
     } catch (error) {
         console.log('Error adding to collection');
     };
@@ -36,7 +36,7 @@ function* setCollection(action){
 };
 
 function* collectionSaga(){
-    yield takeEvery('ADD_GAME_COLLECTION', addToCollection);
+    yield takeEvery('ADD_GAME_COLLECTION', addGameToCollection);
     yield takeEvery('NEW_COLLECTION', addNewCollection);
     yield takeEvery('GRAB_COLLECTION', setCollection);
 }
