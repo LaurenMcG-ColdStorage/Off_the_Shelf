@@ -1,5 +1,5 @@
 const collectionReducer = (state = [], action) => {
-   console.log('Payload data: ', action.payload);
+   //console.log('Payload data: ', action.payload);
     switch (action.type) {
         case 'SET_COLLECTION':
             return action.payload;

@@ -9,12 +9,12 @@ function Manage(){
     //This local state will store all of the data for a new game
     const [game, setGame] = useState({
         title: '', 
-        player_count: '', 
-        play_time: '',
-        mech1_id: '',
-        mech2_id: '',
-        mech3_id: '',
-        theme_id: '',
+        player_count: 0, 
+        play_time: 0,
+        mech1_id: 0,
+        mech2_id: 0,
+        mech3_id: 0,
+        theme_id: 0,
         image: '',
         collection_id: user})
 

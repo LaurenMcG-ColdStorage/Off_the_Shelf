@@ -14,52 +14,52 @@ router.get('/', (req, res) => {
  */
 router.post('/', async (req, res) => {
 
-  const newGame = req.data;
+  const newGame = req.body;
+  console.log('Collection Router 1: ', newGame);
   const gameQuery = `SELECT "id" FROM "games" WHERE "title" = $1;`;
   const addQuery = `INSERT INTO "games" ("title", "player_count", "play_time", "mech1_id", "mech2_id", "mech3_id", "theme_id", "image")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURN "id";`;
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id";`;
   const collectQuery = `INSERT INTO "collection_game" ("collection_id", "game_id") 
   VALUES ($1, $2);`;
 
-  const newGameId = '';
+  let newGameId = '';
 
-  await pool
-  .query(gameQuery, [newGame.title])
-  .then((result) => {
-    newGameId = result.rows[0].id
-  })
-  .catch((error) => {
-    res.sendStatus(500);
-  })
-  //End first call
-
-  //This will either update the games table and the collection_game table, or only the collection_game table.
-  //Based on whether or not our first call returned a game id.
-  if (newGameId != '') {
-    await pool
-      .query(addQuery, [newGame.title, newGame.player_count, newGame.play_time, newGame.mech1_id, newGame.mech2_id, newGame.mech3_id, newGame.theme_id, newGame.image])
-      .then((result) => {
-        //This second database call updates the collection.
-        pool
-        .query(collectQuery, [newGame.collection_id, newGameId])
+  try {
+    console.log('Inside game POST try: ',newGame);
+    pool.query(gameQuery, [newGame.title])
+    .then((result) => {
+      console.log('Game Check value: ', result.rows[0]);
+      newGameId = result.rows[0];
+      if (newGameId != undefined) {
+        console.log('Inside games POST if:');
+        pool.query(collectQuery, [newGame.collection_id, newGameId.id])
         .then((result) => {
           res.sendStatus(201);
         })
         .catch((error) => {
-          res.sendStatus(500);
+          res.sendStatus(505)
         })
+      } else {
+        console.log('Inside games POST else:');
+        pool.query(addQuery, [newGame.title, parseInt(newGame.player_count), parseInt(newGame.play_time), parseInt(newGame.mech1_id), parseInt(newGame.mech2_id), parseInt(newGame.mech3_id), parseInt(newGame.theme_id), newGame.image])
+        .then((result) => {
+          newGameId = result.rows[0];
+          pool.query(collectQuery, [newGame.collection_id, newGameId.id])
+        .then((result) => {
+          res.sendStatus(201);
+        })
+        .catch((error) => {
+          res.sendStatus(505)
+        })
+        })
+        .catch((error) => {
+          res.sendStatus(506)
+        })
+      }
     })
-  } else {
-    await pool
-      .query(collectQuery, [newGame.collection_id, newGameId])
-      .then((result) => {
-        res.sendStatus(201);
-      })
-      .catch((error) => {
-        res.sendStatus(500);
-      })
-  }
-
+  } catch (error) {
+    res.sendStatus(500)
+  };
 });
 
 module.exports = router;
