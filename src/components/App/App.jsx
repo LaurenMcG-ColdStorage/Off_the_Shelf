@@ -28,6 +28,7 @@ import RecPlayers from '../Recommend/RecPlayers/RecPlayers';
 import RecTime from "../Recommend/RecTime/RecTime";
 import RecMech from "../Recommend/RecMech/RecMech";
 import RecTheme from "../Recommend/RecTheme/RecTheme";
+import RecResult from '../Recommend/RecResult/RecResult';
 
 import './App.css';
 
@@ -94,6 +95,10 @@ function App() {
 
           <ProtectedRoute exact path='/manage'>
             <Manage />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path='/recresult'>
+            <RecResult />
           </ProtectedRoute>
 
           <ProtectedRoute

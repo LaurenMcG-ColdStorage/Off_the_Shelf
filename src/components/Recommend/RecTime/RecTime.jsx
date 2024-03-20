@@ -10,10 +10,15 @@ function RecTime(){
         history.push('/recmechanics')
     };
 
+    const handleSkip =(event) => {
+        event.preventDefault();
+        history.push('/recmechanics')
+    };
+
     function valueText(value){
         return`${value}`;
     };
-    
+
     return(
         <div>
             <h2>Would you like your game to be short and sweet, an afternoon marathon, or something in between?</h2>
@@ -21,13 +26,14 @@ function RecTime(){
                 <Slider 
                 marks
                 min={30}
-                max={400}
+                max={390}
                 step={30}
                 defaultValue={120}
                 getAriaValueText={valueText}
                 valueLabelDisplay="auto"></Slider>
             </Box>
-            <Button onClick={(event) => handleNext}>Next</Button>
+            <Button onClick={(event) => handleNext(event)}>Next</Button>
+            <Button onClick={(event) => handleSkip(event)}>Skip This One</Button>
         </div>
     );
 
