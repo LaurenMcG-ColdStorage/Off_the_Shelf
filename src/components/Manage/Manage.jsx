@@ -1,48 +1,45 @@
 import { useState } from "react";
+import { ManageAddModal } from "./ManageAddModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector, useDispatch } from "react-redux";
 
+import './Manage.css';
+
 function Manage(){
 
-    const user = useSelector((store) => store.user.collection_id)
+    const user = useSelector((store) => store.user.collection_id);
+    const collection = useSelector((store) => store.collection);
     const dispatch = useDispatch();
-    //This local state will store all of the data for a new game
-    const [game, setGame] = useState({
-        title: '', 
-        player_count: 0, 
-        play_time: 0,
-        mech1_id: 0,
-        mech2_id: 0,
-        mech3_id: 0,
-        theme_id: 0,
-        image: '',
-        collection_id: user})
+    const [manageModal, setManageModal] = useState(false);
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        dispatch({type: 'ADD_GAME_COLLECTION', payload: game})
+    const handleClose = () => {
+        setManageModal(false);
+    };
+
+    const handleRemoveFromCollection = (game) => {
+        const removeData = {collection_id: user, game_id: game.game_id};
+        dispatch({type: 'REMOVE_TITLE', payload: removeData})
+        dispatch({type: 'GRAB_COLLECTION', payload: removeData})
     }
 
     return(
         <div>
-            <h2>Add A Game To Your Collection!</h2>
-            <label>Title</label>
-            <input value={game.title} onChange={(event) => setGame({...game, title: event.target.value})}></input><br />
-            <label>Player Count</label>
-            <input value={game.player_count} onChange={(event) => setGame({...game, player_count: event.target.value})}></input><br />
-            <label>Play Time</label>
-            <input value={game.play_time} onChange={(event) => setGame({...game, play_time: event.target.value})}></input><br />
-            <label>First Mechanic</label>
-            <input value={game.mech1_id} onChange={(event) => setGame({...game, mech1_id: event.target.value})}></input><br />
-            <label>Second Mechanic</label>
-            <input value={game.mech2_id} onChange={(event) => setGame({...game, mech2_id: event.target.value})}></input><br />
-            <label>Third Mechanic</label>
-            <input value={game.mech3_id} onChange={(event) => setGame({...game, mech3_id: event.target.value})}></input><br />
-            <label>Theme</label>
-            <input value={game.theme_id} onChange={(event) => setGame({...game, theme_id: event.target.value})}></input><br />
-            <label>Image</label>
-            <input value={game.image} onChange={(event) => setGame({...game, image: event.target.value})}></input><br />
-            <button onClick={(event) => handleSubmit(event)}>Add To Collection</button>
+            {manageModal && 
+                <ManageAddModal onClose={handleClose}/>
+            }
+            <h2>Collection: View</h2>
+            <button onClick={(event) => setManageModal(true)}>Add New Game</button>
+            {collection.map((game, gameIndex) => {
+                return(
+                    <div key={gameIndex}>
+                        <h5>{game.title}</h5>
+                        <img className='manage_img' src={game.image}></img>
+                        <aside>Viewed: </aside>
+                        <aside>Played: </aside>
+                        <button onClick={(event) => handleRemoveFromCollection(game)}>Remove</button>
+                    </div>
+                )
+            })}
         </div>
 
     );

@@ -20,6 +20,15 @@ function* addGameToCollection(action){
     };
 };
 
+function* removeGameFromCollection(action){
+    try{
+        const queryData = action.payload;
+        const removeResponse = yield axios.delete(`/api/games/${queryData.collection_id}/${queryData.game_id}`);
+    } catch (error) {
+        console.log('Error removing game from collection');
+    }
+}
+
 function* setCollection(action){
     try {
         const collection = action.payload;
@@ -39,6 +48,7 @@ function* collectionSaga(){
     yield takeEvery('ADD_GAME_COLLECTION', addGameToCollection);
     yield takeEvery('NEW_COLLECTION', addNewCollection);
     yield takeEvery('GRAB_COLLECTION', setCollection);
+    yield takeEvery('REMOVE_TITLE', removeGameFromCollection);
 }
 
 export default collectionSaga;
