@@ -26,9 +26,9 @@ export const PlayHistoryModal = ({onClose}) => {
                 <div className="content">
                     <h2> Log Your Session: </h2>
                     <label>Game Title: </label>
-                    <input value={sessionUpdate.title} onChange={(event) => setSessionUpdate({...sessionUpdate, title: event.target.value})}></input>
+                    <input value={sessionUpdate.title} onChange={(event) => setSessionUpdate({...sessionUpdate, title: event.target.value})}></input><br />
                     <label>How Many Players: </label>
-                    <input defaultValue={sessionUpdate.players} onChange={(event) => setSessionUpdate({...sessionUpdate, players: event.target.value})}></input>
+                    <input defaultValue={sessionUpdate.players} onChange={(event) => setSessionUpdate({...sessionUpdate, players: event.target.value})}></input><br />
                     <label>Notes: </label>
                     <input value={sessionUpdate.title} onChange={(event) => setSessionUpdate({...sessionUpdate, notes: event.target.value})}></input>
                 </div>

@@ -17,7 +17,8 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-
+    const postHistory = req.body;
+    const presentQuery = `INSERT INTO "history"`
 })
 
 module.exports = router;

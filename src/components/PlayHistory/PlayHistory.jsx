@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 
 import './PlayHistory.css';
@@ -8,24 +8,24 @@ import { PlayHistoryModal } from './PlayHistoryModal';
 function PlayHistory(){
 
     const dispatch = useDispatch();
-    const sessionHistory = useSelector((store) => store.sessionHistory);
+    const user = useSelector((state) => state.user.id);
+    const sessionHistory = useSelector((state) => state.sessionHistory);
     const [modalActive, setModalActive] = useState(false);
 
     const handleClose = () => {
         setModalActive(false);
     };
 
-    const handleAdd = () => {
-        setModalActive(true);
-    }
-
+    useEffect(() => {
+        dispatch({type: 'GET_SESSIONS', payload: {user_id: user}})
+    })
     return(
         <div>
             {modalActive && 
-                <PlayHistoryModal onClose={handleClose()} />
+                <PlayHistoryModal onClose={handleClose} />
             }
             <h2>This is the Play History Page</h2>
-            <button onClick={() => handleAdd()}>Enter Play Session</button>
+            <button onClick={(event) => setModalActive(true)}>Add New Play Session</button>
         <table>
             <thead>
                 <tr>
@@ -43,7 +43,7 @@ function PlayHistory(){
                         <td>{session.notes}</td>
                     </tr>
                 )
-               })};
+               })}
             </tbody>
         </table>
         </div>
