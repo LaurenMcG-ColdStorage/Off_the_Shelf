@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ManageAddModal } from "./ManageAddModal";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector, useDispatch } from "react-redux";
@@ -14,6 +14,7 @@ function Manage(){
 
     const handleClose = () => {
         setManageModal(false);
+        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}})
     };
 
     const handleRemoveFromCollection = (game) => {
@@ -21,6 +22,10 @@ function Manage(){
         dispatch({type: 'REMOVE_TITLE', payload: removeData})
         dispatch({type: 'GRAB_COLLECTION', payload: removeData})
     }
+
+    useEffect(() => {
+        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}}) 
+    }, [])
 
     return(
         <div>

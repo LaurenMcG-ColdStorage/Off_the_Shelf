@@ -22,7 +22,6 @@ export const ManageAddModal = ({onClose}) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch({type: 'ADD_GAME_COLLECTION', payload: game})
-        dispatch({type: 'GRAB_COLLECTION', payload: game})
         onClose();
     }
     
