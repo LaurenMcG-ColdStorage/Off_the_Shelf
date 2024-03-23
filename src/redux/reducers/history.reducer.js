@@ -1,12 +1,12 @@
-const sessionHistory = (state = [], action) => {
+const gameHistory = (state = [], action) => {
     switch (action.type) {
-        case 'SET_SESSIONS':
+        case 'SET_HISTORY':
             return action.payload;
-        case 'UNSET_SESSIONS':
+        case 'UNSET_HISTORY':
             return [];
         default:
             return state;
     };
 };
 
-export default sessionHistory;
+export default gameHistory;

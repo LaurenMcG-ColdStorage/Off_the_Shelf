@@ -1,21 +1,27 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import './PlayHistoryModal.css';
 
 export const PlayHistoryModal = ({onClose}) => {
 
-    const user = useSelector((state) => state.user);
+    const user = useSelector((state) => state.user.id);
     //console.log(user);
-    const [sessionUpdate, setSessionUpdate] = useState({id: user.id, title: '', players: 1, notes: ''});
+    const [sessionUpdate, setSessionUpdate] = useState({user_id: user, title: '', date: '', players: 1, notes: ''});
     const dispatch = useDispatch();
 
-    const sessionSubmit = () => {
-        //console.log(userUpdate);
-        dispatch({type: 'NEW_SESSION', payload: sessionUpdate})
+    const sessionSubmit = (event) => {
+        event.preventDefault();
+        //console.log(sessionUpdate)
+        dispatch({type: 'NEW_HISTORY', payload: sessionUpdate})
         onClose();
     }
+
+    useEffect(() => {
+        const today = new Date().toLocaleDateString();
+        setSessionUpdate({...sessionUpdate, date: `${today}`})
+    }, [])
 
     return(
         <div className="modal-container">
@@ -30,10 +36,10 @@ export const PlayHistoryModal = ({onClose}) => {
                     <label>How Many Players: </label>
                     <input defaultValue={sessionUpdate.players} onChange={(event) => setSessionUpdate({...sessionUpdate, players: event.target.value})}></input><br />
                     <label>Notes: </label>
-                    <input value={sessionUpdate.title} onChange={(event) => setSessionUpdate({...sessionUpdate, notes: event.target.value})}></input>
+                    <input value={sessionUpdate.notes} onChange={(event) => setSessionUpdate({...sessionUpdate, notes: event.target.value})}></input>
                 </div>
                 <div className="footer">
-                    <button className="btn-submit" onClick={() => sessionSubmit()}>Add Session</button>
+                    <button className="btn-submit" onClick={(event) => sessionSubmit(event)}>Add Session</button>
                     <button className="btn-cancel" onClick={() => onCancel()}>Cancel</button>
                 </div> 
             </div>

@@ -9,7 +9,7 @@ function PlayHistory(){
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.id);
-    const sessionHistory = useSelector((state) => state.sessionHistory);
+    const gameHistory = useSelector((state) => state.gameHistory);
     const [modalActive, setModalActive] = useState(false);
 
     const handleClose = () => {
@@ -17,8 +17,9 @@ function PlayHistory(){
     };
 
     useEffect(() => {
-        dispatch({type: 'GET_SESSIONS', payload: {user_id: user}})
-    })
+        dispatch({type: 'GET_HISTORY', payload: user})
+    }, [])
+
     return(
         <div>
             {modalActive && 
@@ -30,15 +31,17 @@ function PlayHistory(){
             <thead>
                 <tr>
                     <th>Title</th>
+                    <th>Date</th>
                     <th>Players</th>
                     <th>Notes</th>
                 </tr>
             </thead>
             <tbody>
-               {sessionHistory.map((session, sessionIndex) => {
+               {gameHistory.map((session, sessionIndex) => {
                 return(
                     <tr key={sessionIndex}>
                         <td>{session.title}</td>
+                        <td>{(new Date(session.date)).toLocaleDateString()}</td>
                         <td>{session.players}</td>
                         <td>{session.notes}</td>
                     </tr>
