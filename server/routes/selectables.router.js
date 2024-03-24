@@ -17,5 +17,14 @@ router.get('/:mech', (req,res) => {
 
 router.get('/:theme', (req, res) => {
     const themeQuery = `SELECT * FROM "themes";`;
+
+    pool
+    .query(themeQuery)
+    .then((result) => {
+        res.send(result.rows)
+    })
+    .catch((error) => {
+        res.sendStatus(500);
+    })
 })
 module.exports = router;
