@@ -6,7 +6,8 @@ body,
 
 body {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  background-image: linear-gradient(to bottom right, #fc9c48, #53361d) ;
+  background-color: rgb(46, 43, 66);
+  color: #f2f2f2;
   margin: 0px;
 }
 

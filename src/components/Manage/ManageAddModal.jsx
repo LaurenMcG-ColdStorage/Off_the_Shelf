@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+
 import './ManageAddModal.css';
 
 export const ManageAddModal = ({onClose}) => {
@@ -29,27 +30,45 @@ export const ManageAddModal = ({onClose}) => {
         <div className="modal-container">
             <div className='modal'>
                 <div className='header'>
-                    <h2>Add A Game To Your Collection!</h2>
                     <section className="close" onClick={() => onClose()}>&times;</section>
+                    <h2>Add A Game To Your Collection!</h2>
                 </div>
-                <div className='content'>
-                    <label>Title</label>
-                    <input value={game.title} onChange={(event) => setGame({...game, title: event.target.value})}></input><br />
-                    <label>Player Count</label>
-                    <input value={game.player_count} onChange={(event) => setGame({...game, player_count: event.target.value})}></input><br />
-                    <label>Play Time</label>
-                    <input value={game.play_time} onChange={(event) => setGame({...game, play_time: event.target.value})}></input><br />
-                    <label>First Mechanic</label>
-                    <input value={game.mech1_id} onChange={(event) => setGame({...game, mech1_id: event.target.value})}></input><br />
-                    <label>Second Mechanic</label>
-                    <input value={game.mech2_id} onChange={(event) => setGame({...game, mech2_id: event.target.value})}></input><br />
-                    <label>Third Mechanic</label>
-                    <input value={game.mech3_id} onChange={(event) => setGame({...game, mech3_id: event.target.value})}></input><br />
-                    <label>Theme</label>
-                    <input value={game.theme_id} onChange={(event) => setGame({...game, theme_id: event.target.value})}></input><br />
-                    <label>Image</label>
-                    <input value={game.image} onChange={(event) => setGame({...game, image: event.target.value})}></input><br />
-                </div>
+                <table className='content'>
+                    <tbody>
+                        <tr>
+                            <td><label>Title</label></td>
+                            <td><input value={game.title} onChange={(event) => setGame({...game, title: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>Player Count</label></td>
+                            <td><input value={game.player_count} onChange={(event) => setGame({...game, player_count: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>Play Time</label></td>
+                            <td><input value={game.play_time} onChange={(event) => setGame({...game, play_time: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>First Mechanic</label></td>
+                            <td><input value={game.mech1_id} onChange={(event) => setGame({...game, mech1_id: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>Second Mechanic</label></td>
+                            <td><input value={game.mech2_id} onChange={(event) => setGame({...game, mech2_id: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>Third Mechanic</label></td>
+                            <td><input value={game.mech3_id} onChange={(event) => setGame({...game, mech3_id: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>Theme</label></td>
+                            <td><input value={game.theme_id} onChange={(event) => setGame({...game, theme_id: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>Image</label></td>
+                            <td><input value={game.image} onChange={(event) => setGame({...game, image: event.target.value})}></input></td>
+                        </tr>
+                    </tbody>
+                </table>
                 <div className='footer'>
                     <button onClick={(event) => handleSubmit(event)}>Add To Collection</button>
                     <button onClick={() => onClose()}>Cancel</button>

@@ -1,5 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { Card } from "@mui/material";
+import {CardContent} from "@mui/material";
+import {CardMedia} from "@mui/material";
+import {CardActionArea} from "@mui/material";
+import {Typography} from "@mui/material";
+
+import './CollectionPage.css';
 
 function CollectionPage(){
 
@@ -13,15 +20,34 @@ function CollectionPage(){
       },[])
 
     return (
-        <div>
+        <div className='collection-page'>
             <h2>This is the Collection page</h2>
             {collection.map((game, gameIndex) => {
                 return(
-                    <div key={gameIndex}>
-                        <h4>{game.title}</h4>
-                        <img src={game.image}></img>
+                    <Card key={gameIndex} className='cards'
+                        sx={{width: '70%',
+                            maxWidth: 900,
+                            boxShadow: 4,
+                            alignItems: 'inherit',
+                            mx: 'auto',
+                            my: '2rem',
+                            backgroundColor: '#464366',
+                            color: '#f2f2f2',
 
-                    </div>
+                            }}>
+                        <CardActionArea>
+                            <CardMedia 
+                                component='img'
+                                height='145'
+                                image={game.image}
+                                alt={game.title}/>
+                            <CardContent>
+                                <Typography>
+                                    {game.title}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Card>
 
                 )
             })}

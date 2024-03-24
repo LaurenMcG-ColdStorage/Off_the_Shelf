@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import selectables from './selectables.reducer'
 import gameHistory from './history.reducer';
 import collection from './collection.reducer';
 import errors from './errors.reducer';
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   user, // will have an id, username, collection, and role if someone is logged in
   collection, //This will hold all of the games in the specified collection.
   gameHistory, //This will hold all of the play sessions that a user has logged.
+  selectables, //This will hold game themes and mechanics for use in logging
 });
 
 export default rootReducer;
