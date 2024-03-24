@@ -27,23 +27,38 @@ router.post('/', (req, res) => {
     const presentQuery = `INSERT INTO "history" ("user_id", "game_id", "date", "players", "notes")
                           VALUES ($1, $2, $3, $4, $5);`;
     const convertQuery = `SELECT "id" FROM "games" WHERE "title" = $1;`;
+    const metricUpdate = `UPDATE "collection_game" SET "played" = "played" + 1 WHERE "game_id" = $1 AND "collection_id" = $2;`;
+    //Query One
     pool
     .query(convertQuery, [postHistory.title])
     .then((result) => {
         const logSession = [postHistory.user_id, result.rows[0].id, postHistory.date, parseInt(postHistory.players), postHistory.notes];
         //console.log("LOG SESSION DATA: ", logSession)
+        
+        //Query Two
         pool
         .query(presentQuery, logSession)
         .then((result) => {
-            res.sendStatus(201);
+            //Query Three
+            pool
+            .query(metricUpdate, [logSession[1], postHistory.collection_id])
+            .then((result) => {
+                res.sendStatus(201);
+            })
+            .catch((error) => {
+                res.sendStatus(500)
+            })
+            //End Q3
         })
         .catch((error) => {
             res.sendStatus(501);
         })
+        //End Q2
     })
     .catch((error) => {
         res.sendStatus(500);
     })
+    //End Q1
 })
 
 module.exports = router;

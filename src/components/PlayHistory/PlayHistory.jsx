@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import { PlayHistoryModal } from './PlayHistoryModal';
 
 import './PlayHistory.css';
-import { PlayHistoryModal } from './PlayHistoryModal';
 
 function PlayHistory(){
 

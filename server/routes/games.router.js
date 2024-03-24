@@ -23,8 +23,8 @@ router.post('/', (req, res) => {
   const addQuery = `INSERT INTO "games" ("title", "player_count", "play_time", "mech1_id", "mech2_id", "mech3_id", "theme_id", "image")
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING "id";`;
   //This adds the game to our user's collection.
-  const collectQuery = `INSERT INTO "collection_game" ("collection_id", "game_id") 
-  VALUES ($1, $2);`;
+  const collectQuery = `INSERT INTO "collection_game" ("collection_id", "game_id", "viewed", "played") 
+  VALUES ($1, $2, $3, $4);`;
 
   //This we'll be updating and using for logic pathways.
   let newGameId = '';
@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
       //If the logic variable isn't undefined (which means we have the game already)
       if (newGameId != undefined) {
         //Add game to collection
-        pool.query(collectQuery, [newGame.collection_id, newGameId.id])
+        pool.query(collectQuery, [newGame.collection_id, newGameId.id, 0, 0])
         .then((result) => {
           res.sendStatus(201);
         })

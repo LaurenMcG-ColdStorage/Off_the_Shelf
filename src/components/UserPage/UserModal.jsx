@@ -12,7 +12,7 @@ export const UserModal = ({onSubmit, onCancel, onClose}) => {
 
     const userSubmit = () => {
         //console.log(userUpdate);
-        dispatch({type: 'UPDATE_USER', payload: userUpdate})
+        dispatch({type: 'BUILD_USER', payload: userUpdate})
         onSubmit();
     }
 
@@ -27,7 +27,7 @@ export const UserModal = ({onSubmit, onCancel, onClose}) => {
                     <label>Collection: </label>
                     <input value={userUpdate.collection} onChange={(event) => setUserUpdate({...userUpdate, collection: event.target.value})}></input>
                     <label>Role: </label>
-                    <select defaultValue={'Player'} onChange={(event) => setUserUpdate({...userUpdate, role: event.target.value})}>
+                    <select value={userUpdate.role} onChange={(event) => setUserUpdate({...userUpdate, role: event.target.value})}>
                         <option value='Player'>Player</option>
                         <option value='Collector'>Collector</option>
                     </select>

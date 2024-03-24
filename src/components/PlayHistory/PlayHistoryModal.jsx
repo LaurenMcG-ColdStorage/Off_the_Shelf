@@ -6,9 +6,9 @@ import './PlayHistoryModal.css';
 
 export const PlayHistoryModal = ({onClose}) => {
 
-    const user = useSelector((state) => state.user.id);
+    const user = useSelector((state) => state.user);
     //console.log(user);
-    const [sessionUpdate, setSessionUpdate] = useState({user_id: user, title: '', date: '', players: 1, notes: ''});
+    const [sessionUpdate, setSessionUpdate] = useState({user_id: user.id, collection_id: user.collection_id, title: '', date: '', players: 1, notes: ''});
     const dispatch = useDispatch();
 
     const sessionSubmit = (event) => {

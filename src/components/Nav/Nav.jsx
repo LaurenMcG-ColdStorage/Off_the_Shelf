@@ -6,12 +6,14 @@ import { useSelector } from 'react-redux';
 
 function Nav() {
   const user = useSelector((store) => store.user);
-
+  
+  //Photo by <a href="https://unsplash.com/@cmzw?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Mingwei Lim</a> on <a href="https://unsplash.com/photos/a-pile-of-black-rocks-with-orange-letters-on-them-Qi1eNaEzlAE?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  
   return (
     <div className="nav">
       <Link to="/home">
         <h2 className="nav-title">Off The Shelf</h2>
-      </Link>
+      </Link><br />
       <div>
         {/* If no user is logged in, show these links */}
         {!user.id && (
