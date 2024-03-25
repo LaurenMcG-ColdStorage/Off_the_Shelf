@@ -24,7 +24,9 @@ function Manage(){
     }
 
     useEffect(() => {
-        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}}) 
+        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}});
+        dispatch({type: 'GET_MECHANICS'});
+        dispatch({type: 'GET_GAME_THEMES'});
     }, [])
 
     return(

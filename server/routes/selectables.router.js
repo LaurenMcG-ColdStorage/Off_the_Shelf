@@ -2,9 +2,9 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-router.get('/:mech', (req,res) => {
+router.get('/', (req,res) => {
     const mechQuery = `SELECT * FROM "mechanics";`;
-
+    console.log('Mechanics Query Running')
     pool
     .query(mechQuery)
     .then((result) => {
@@ -17,7 +17,7 @@ router.get('/:mech', (req,res) => {
 
 router.get('/:theme', (req, res) => {
     const themeQuery = `SELECT * FROM "themes";`;
-
+    console.log('Themes Query Running')
     pool
     .query(themeQuery)
     .then((result) => {

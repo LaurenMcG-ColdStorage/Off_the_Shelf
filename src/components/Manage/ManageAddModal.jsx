@@ -6,7 +6,9 @@ import './ManageAddModal.css';
 
 export const ManageAddModal = ({onClose}) => {
     
-    const user = useSelector((store) => store.user.collection_id)
+    const user = useSelector((store) => store.user.collection_id);
+    const mechanics = useSelector((store) => store.selectables.mechanicReducer);
+    const themes = useSelector((store) => store.selectables.themeReducer);
     const dispatch = useDispatch();
     //This local state will store all of the data for a new game
     const [game, setGame] = useState({
@@ -49,19 +51,47 @@ export const ManageAddModal = ({onClose}) => {
                         </tr>
                         <tr>
                             <td><label>First Mechanic</label></td>
-                            <td><input value={game.mech1_id} onChange={(event) => setGame({...game, mech1_id: event.target.value})}></input></td>
+                            <td><select value={game.mech1_id} onChange={(event) => setGame({...game, mech1_id: event.target.value})}>
+                                {mechanics.map((mech1) => {
+                                    return (
+                                        <option value={mech1.id}>{mech1.name}</option>
+                                    )
+                                })}
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Second Mechanic</label></td>
-                            <td><input value={game.mech2_id} onChange={(event) => setGame({...game, mech2_id: event.target.value})}></input></td>
+                            <td><select value={game.mech2_id} onChange={(event) => setGame({...game, mech2_id: event.target.value})}>
+                                {mechanics.map((mech2) => {
+                                    return (
+                                        <option value={mech2.id}>{mech2.name}</option>
+                                    )
+                                })}
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Third Mechanic</label></td>
-                            <td><input value={game.mech3_id} onChange={(event) => setGame({...game, mech3_id: event.target.value})}></input></td>
+                            <td><select value={game.mech3_id} onChange={(event) => setGame({...game, mech3_id: event.target.value})}>
+                                {mechanics.map((mech3) => {
+                                    return (
+                                        <option value={mech3.id}>{mech3.name}</option>
+                                    )
+                                })}
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Theme</label></td>
-                            <td><input value={game.theme_id} onChange={(event) => setGame({...game, theme_id: event.target.value})}></input></td>
+                            <td><select value={game.theme_id} onChange={(event) => setGame({...game, theme_id: event.target.value})}>
+                            {themes.map((theme) => {
+                                    return (
+                                        <option value={theme.id}>{theme.name}</option>
+                                    )
+                                })}
+                                </select>
+                            </td>
                         </tr>
                         <tr>
                             <td><label>Image</label></td>
