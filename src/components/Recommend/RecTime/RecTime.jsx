@@ -26,7 +26,13 @@ function RecTime(){
             <h2>Would you like your game to be short and sweet, an afternoon marathon, or something in between?</h2>
             <Box sx={{width: 300,
                  mx: 'auto'}}>
-                <Slider 
+                <Slider sx={{
+                '& .MuiSlider-thumb': { color: '#e7822b'},
+                '& .MuiSlider-track': {color: '#e7822b'},
+                '& .MuiSlider-rail': {color: '#d6711a'},
+                '& .MuiSlider-active': {color: '#f8933c'},
+                '& .MuiSlider-mark':  {color: '#f8933c'},
+                '& .MuiSlider-valueLabel': {backgroundColor: '#e7822b'}}}
                 marks
                 min={30}
                 max={390}
@@ -35,8 +41,18 @@ function RecTime(){
                 getAriaValueText={valueText}
                 valueLabelDisplay="auto"></Slider>
             </Box>
-            <Button onClick={(event) => handleNext(event)}>Next</Button>
-            <Button onClick={(event) => handleSkip(event)}>Skip This One</Button>
+            <Button variant='contained' sx={{
+                    backgroundColor: '#464366',
+                    '&:hover':{backgroundColor: '#e7822b'},
+                    mx: 1,
+                    my: 2}}
+            onClick={(event) => handleNext(event)}>Next</Button>
+            <Button variant='contained' sx={{
+                    backgroundColor: '#464366',
+                    '&:hover':{backgroundColor: '#e7822b'},
+                    mx: 1,
+                    my: 2}}
+            onClick={(event) => handleSkip(event)}>Skip This One</Button>
         </div>
     );
 
