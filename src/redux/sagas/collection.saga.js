@@ -14,6 +14,7 @@ function* addNewCollection(action){
 //This adds a game to a specified collection.
 function* addGameToCollection(action){
     try{
+        console.log('Add game saga: ', action.payload);
         const gamesResponse = yield axios.post('/api/games', action.payload)
     } catch (error) {
         console.log('Error adding to collection');

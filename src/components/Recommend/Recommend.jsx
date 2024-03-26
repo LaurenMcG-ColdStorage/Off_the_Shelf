@@ -1,12 +1,10 @@
-import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
-import { Slider, Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 
-//import Link from "@mui/material/Link";
+import './Recommend.css';
 
 function Recommend(){
 
-    const dispatch = useDispatch();
     const history = useHistory();
 
     const handleNext = (event) => {
@@ -15,9 +13,13 @@ function Recommend(){
     }
 
     return(
-        <div>
-            <h2>Hey There! Wondering what to play? Let us help you!</h2>
-            <Button onClick={(event) => handleNext(event)}>Get Started!</Button>
+        <div className='recstart-page'>
+            <h2>Hey there, wondering what to play? Let us help!</h2>
+            <Button variant='contained' sx={{
+                    backgroundColor: '#464366',
+                    '&:hover':{backgroundColor: '#e7822b'},
+                    my: 2}} 
+            onClick={(event) => handleNext(event)}>Get Started!</Button>
         </div>
 
     )

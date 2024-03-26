@@ -40,7 +40,7 @@ router.get('/:collection', (req, res) => {
   pool
   .query(compareQuery, [collection])
   .then((result) => {
-    console.log(result.rows);
+    //console.log(result.rows);
     res.send(result.rows)
   })
   .catch((error) => {
@@ -56,7 +56,7 @@ router.post('/:collection', (req, res) => {
   pool
   .query(addQuery, [newCollection])
   .then((result) => {
-    //console.log('Returning: ', result.rows[0])
+    console.log('Returning: ', result.rows[0])
     res.send(result.rows[0]);
   })
   .catch((error) => {

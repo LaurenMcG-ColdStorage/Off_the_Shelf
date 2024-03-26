@@ -3,7 +3,7 @@ import { takeEvery, put } from 'redux-saga/effects';
 
 function* getGameMechanics(){
     try {
-        console.log('MECHANICS SAGA RUNNING')
+        //console.log('MECHANICS SAGA RUNNING')
         const mechResponse = yield axios.get(`/api/select`);
         yield put({type: 'SET_MECHANICS', payload: mechResponse.data});
     } catch (error) {
@@ -13,7 +13,7 @@ function* getGameMechanics(){
 
 function* getGameThemes(){
     try {
-        console.log('THEME SAGA RUNNING')
+        //console.log('THEME SAGA RUNNING')
         const themeResponse = yield axios.get(`/api/select/theme`);
         yield put ({type: 'SET_GAME_THEMES', payload: themeResponse.data});
     } catch (error) {

@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/', (req,res) => {
     const mechQuery = `SELECT * FROM "mechanics";`;
-    console.log('Mechanics Query Running')
+    //console.log('Mechanics Query Running')
     pool
     .query(mechQuery)
     .then((result) => {
@@ -17,7 +17,7 @@ router.get('/', (req,res) => {
 
 router.get('/:theme', (req, res) => {
     const themeQuery = `SELECT * FROM "themes";`;
-    console.log('Themes Query Running')
+    //console.log('Themes Query Running')
     pool
     .query(themeQuery)
     .then((result) => {

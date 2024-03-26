@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './LandingPage.css';
@@ -14,6 +14,10 @@ function LandingPage() {
   const onLogin = (event) => {
     history.push('/login');
   };
+
+  useEffect(() => {
+    {user.id && setHeading(`Welcome Back ${user.username}!`) }
+  },[])
 
   return (
     <div className="container">
@@ -44,7 +48,7 @@ function LandingPage() {
       </div>
 
         {user.id ? 
-        <h2>Welcome Back, {user.username}!</h2> 
+        <></>
 
         :
 

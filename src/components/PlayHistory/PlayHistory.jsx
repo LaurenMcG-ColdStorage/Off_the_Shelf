@@ -2,6 +2,14 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux";
 import { PlayHistoryModal } from './PlayHistoryModal';
+import { Table } from '@mui/material';
+import { TableHead }from '@mui/material';
+import { TableBody }from '@mui/material';
+import { TableRow }from '@mui/material';
+import { TableCell } from '@mui/material';
+import { TableContainer } from '@mui/material';
+import { Paper } from '@mui/material';
+import { Button } from '@mui/material';
 
 import './PlayHistory.css';
 
@@ -21,34 +29,48 @@ function PlayHistory(){
     }, [])
 
     return(
-        <div>
+        <div className='history-container'>
             {modalActive && 
                 <PlayHistoryModal onClose={handleClose} />
             }
-            <h2>This is the Play History Page</h2>
-            <button onClick={(event) => setModalActive(true)}>Add New Play Session</button>
-        <table>
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Date</th>
-                    <th>Players</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-               {gameHistory.map((session, sessionIndex) => {
-                return(
-                    <tr key={sessionIndex}>
-                        <td>{session.title}</td>
-                        <td>{(new Date(session.date)).toLocaleDateString()}</td>
-                        <td>{session.players}</td>
-                        <td>{session.notes}</td>
-                    </tr>
-                )
-               })}
-            </tbody>
-        </table>
+            <h2>This Is Your Play History</h2>
+            <p>Log your games here! </p>
+            <Button variant='contained' sx={{
+                    backgroundColor: '#464366',
+                    '&:hover':{backgroundColor: '#e7822b'},
+                    my: 2}}
+                    onClick={(event) => setModalActive(true)}>Add New Play Session</Button>
+        <TableContainer component={Paper} 
+                        sx={{ width: '80%', 
+                        mx: 'auto',
+                        backgroundColor: '#686588',
+                         }}>
+            <Table sx={{minWidth: 600, 
+                        maxWidth: 900,
+                        border: 2,
+                        borderColor: '#797699' }}>
+                <TableHead>
+                    <TableRow>
+                        <TableCell align='center' sx={{color: '#f2f2f2'}}>Title</TableCell>
+                        <TableCell align='center' sx={{color: '#f2f2f2'}}>Date</TableCell>
+                        <TableCell align='center' sx={{color: '#f2f2f2'}}>Players</TableCell>
+                        <TableCell align='center' sx={{color: '#f2f2f2'}}>Notes</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                {gameHistory.map((session, sessionIndex) => {
+                    return(
+                        <TableRow key={sessionIndex} >
+                            <TableCell align='center' sx={{color: '#f2f2f2'}}>{session.title}</TableCell>
+                            <TableCell align='center' sx={{color: '#f2f2f2'}}>{(new Date(session.date)).toLocaleDateString()}</TableCell>
+                            <TableCell align='center' sx={{color: '#f2f2f2'}}>{session.players}</TableCell>
+                            <TableCell align='center' sx={{color: '#f2f2f2'}}>{session.notes}</TableCell>
+                        </TableRow>
+                    )
+                })}
+                </TableBody>
+            </Table>
+        </TableContainer>
         </div>
 
     )

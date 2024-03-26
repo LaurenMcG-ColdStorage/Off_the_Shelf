@@ -1,6 +1,8 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { Slider, Box, Button } from "@mui/material";
 
+import './RecTime.css';
+
 function RecTime(){
 
     const history = useHistory();
@@ -20,9 +22,10 @@ function RecTime(){
     };
 
     return(
-        <div>
+        <div className='rectime-container'>
             <h2>Would you like your game to be short and sweet, an afternoon marathon, or something in between?</h2>
-            <Box sx={{width: 300}}>
+            <Box sx={{width: 300,
+                 mx: 'auto'}}>
                 <Slider 
                 marks
                 min={30}

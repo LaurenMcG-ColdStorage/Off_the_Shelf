@@ -25,6 +25,7 @@ export const ManageAddModal = ({onClose}) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         dispatch({type: 'ADD_GAME_COLLECTION', payload: game})
+        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}})
         onClose();
     }
     
@@ -54,7 +55,7 @@ export const ManageAddModal = ({onClose}) => {
                             <td><select value={game.mech1_id} onChange={(event) => setGame({...game, mech1_id: event.target.value})}>
                                 {mechanics.map((mech1) => {
                                     return (
-                                        <option value={mech1.id}>{mech1.name}</option>
+                                        <option key={mech1.id} value={mech1.id}>{mech1.name}</option>
                                     )
                                 })}
                                 </select>
@@ -65,7 +66,7 @@ export const ManageAddModal = ({onClose}) => {
                             <td><select value={game.mech2_id} onChange={(event) => setGame({...game, mech2_id: event.target.value})}>
                                 {mechanics.map((mech2) => {
                                     return (
-                                        <option value={mech2.id}>{mech2.name}</option>
+                                        <option key={mech2.id} value={mech2.id}>{mech2.name}</option>
                                     )
                                 })}
                                 </select>
@@ -76,7 +77,7 @@ export const ManageAddModal = ({onClose}) => {
                             <td><select value={game.mech3_id} onChange={(event) => setGame({...game, mech3_id: event.target.value})}>
                                 {mechanics.map((mech3) => {
                                     return (
-                                        <option value={mech3.id}>{mech3.name}</option>
+                                        <option key={mech3.id} value={mech3.id}>{mech3.name}</option>
                                     )
                                 })}
                                 </select>
@@ -87,7 +88,7 @@ export const ManageAddModal = ({onClose}) => {
                             <td><select value={game.theme_id} onChange={(event) => setGame({...game, theme_id: event.target.value})}>
                             {themes.map((theme) => {
                                     return (
-                                        <option value={theme.id}>{theme.name}</option>
+                                        <option key={theme.id} value={theme.id}>{theme.name}</option>
                                     )
                                 })}
                                 </select>

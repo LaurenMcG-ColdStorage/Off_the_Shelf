@@ -31,7 +31,9 @@ function CollectionPage(){
                             alignItems: 'inherit',
                             mx: 'auto',
                             my: '2rem',
+                            border: 1,
                             backgroundColor: '#464366',
+                            borderColor: '#575477',
                             color: '#f2f2f2',
 
                             }}>
