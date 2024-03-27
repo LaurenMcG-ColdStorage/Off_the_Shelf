@@ -51,7 +51,8 @@ function RecMech(){
                     })}
             </select>
             <Button 
-            variant='contained' sx={{
+                variant='contained' 
+                sx={{
                 backgroundColor: '#464366',
                 '&:hover':{backgroundColor: '#e7822b'},
                 my: 2}}
