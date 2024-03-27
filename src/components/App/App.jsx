@@ -39,7 +39,9 @@ function App() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_USER' });
-  }, [dispatch]);
+    dispatch({ type: 'GET_MECHANICS'});
+    dispatch({ type: 'GET_GAME_THEMES'});
+  }, []);
 
   return (
     <Router>

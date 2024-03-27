@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/:id', (req, res) => {
     //Store our request data for use
     const getHistory = req.params.id;
-    console.log('GET ROUTE DATA: ', getHistory);
+    //console.log('GET ROUTE DATA: ', getHistory);
     //Conjure up a SQL query to get the game title, play date, and any stored notes from the history and games tables"
     const historyQuery = `SELECT "games"."title", "history"."date", "history"."players", "history"."notes" FROM "history" 
                           JOIN "games" ON "history"."game_id" = "games"."id"

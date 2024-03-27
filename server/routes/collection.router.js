@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/:id', (req, res) => {
   // GET route code here
   const collectionID = req.params.id;
-  console.log('Collection code: ', collectionID);
+  //console.log('Collection code: ', collectionID);
   const collectionQuery = `SELECT 
   "games"."title", "games"."image", "games"."id" AS "game_id", "collection_game"."played", "collection_game"."viewed",
   "collections"."id" AS "collection_id" FROM "games"
@@ -35,7 +35,7 @@ router.post('/', (req, res) => {
 router.get('/:collection', (req, res) => {
   //This route is checking to see if a collection is in the collections table already, and returning the ID if so
   const collection = req.params.collection;
-  console.log('Check collection for: ', collection);
+  //console.log('Check collection for: ', collection);
   const compareQuery = `SELECT "id" FROM "collections" WHERE "name" = $1;`;
   pool
   .query(compareQuery, [collection])
@@ -50,13 +50,13 @@ router.get('/:collection', (req, res) => {
 
 router.post('/:collection', (req, res) => {
   const newCollection = req.params.collection;
-  console.log('add collection data: ', newCollection);
+  //console.log('add collection data: ', newCollection);
   const addQuery = `INSERT INTO "collections" ("name")
                     VALUES ($1) RETURNING "id";`;
   pool
   .query(addQuery, [newCollection])
   .then((result) => {
-    console.log('Returning: ', result.rows[0])
+    //console.log('Returning: ', result.rows[0])
     res.send(result.rows[0]);
   })
   .catch((error) => {

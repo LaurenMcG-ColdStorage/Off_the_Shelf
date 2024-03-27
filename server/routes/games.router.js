@@ -72,7 +72,7 @@ router.post('/', (req, res) => {
 
 router.delete('/:collection_id/:game_id', (req, res) => {
   const requestedRemoval = {collection_id: req.params.collection_id, game_id: req.params.game_id};
-  console.log(requestedRemoval);
+  //console.log(requestedRemoval);
   const deleteQuery = `DELETE FROM "collection_game" WHERE "collection_id" = $1 AND "game_id" = $2;`;
   try{
     pool
