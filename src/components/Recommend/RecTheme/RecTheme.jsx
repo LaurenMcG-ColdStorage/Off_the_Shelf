@@ -9,7 +9,7 @@ function RecTheme(){
 
     const history = useHistory();
     const themes = useSelector((store) => store.selectables.themeReducer)
-    const [pickTheme, setPickTheme] = useState()
+    const [pickTheme, setPickTheme] = useState('')
 
     const handleComplete = (event) => {
         event.preventDefault();

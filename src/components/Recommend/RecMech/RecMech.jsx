@@ -2,13 +2,6 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from 'react';
 import { Button } from "@mui/material";
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import FormGroup from '@mui/material/FormGroup';
-import FormHelperText from '@mui/material/FormHelperText';
 
 import './RecMech.css';
 
@@ -17,9 +10,9 @@ function RecMech(){
     const history = useHistory();
     const dispatch = useDispatch();
     const mechanics = useSelector((store) => store.selectables.mechanicReducer);
-    const [mechBoxOne, setMechBoxOne] = useState({});
-    const [mechBoxTwo, setMechBoxTwo] = useState({});
-    const [mechBoxThree, setMechBoxThree] = useState({});
+    const [mechBoxOne, setMechBoxOne] = useState('');
+    const [mechBoxTwo, setMechBoxTwo] = useState('');
+    const [mechBoxThree, setMechBoxThree] = useState('');
 
     const handleNext =(event) => {
         event.preventDefault();
