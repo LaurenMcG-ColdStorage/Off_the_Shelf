@@ -202,7 +202,6 @@ router.get('/', (req,res) => {
                 }
             })
             .catch((error) => {res.sendStatus(500)});
-            //End Two
         //If the user entered everything except mech2
         case (recData.time != '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme != ''):
             return pool
@@ -241,7 +240,25 @@ router.get('/', (req,res) => {
                 }
             })
             .catch((error) => {res.sendStatus(500)});
-            //End Two
+        //If the user entered all, but only one mech
+        case (recData.time != '' && recData.mech2 == '' && recData.mech3 == '' && recData.theme != ''):
+            return pool.query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
+                .then((result) => {
+                    if (result.rows.length < 3) {
+                        pool.query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
+                        .then((result) => {
+                            if (result.rows.length < 3) {
+                                pool.query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
+                            } else {
+                                res.send(result.rows)
+                            }
+                        })
+                        .catch((error) => {res.sendStatus(500)})
+                    } else {
+                        res.send(result.rows);
+                    }
+                })
+                .catch((error) => {res.sendStatus(500)})
         //If the user entered all except theme
         case (recData.time != '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme == ''):
             return pool.query(recQuerySix, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.mech3])
@@ -282,7 +299,7 @@ router.get('/', (req,res) => {
                             pool.query(recQueryTwelve, [recData.collection_id, recData.players, recData.mech1, recData.theme])
                             .then((result) => {
                                 if (result.rows.length < 3) {
-                                    pool.query(recQueryThree, [recData.collection_id, recData.players, recData.mech1])
+                                    pool.query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {res.send(result.rows)})
                                     .catch((error) => {res.sendStatus(500)})
                                 } else { 
@@ -298,17 +315,43 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)})
+            .catch((error) => {res.sendStatus(500)});
+        //If the user entered no theme and no time
+        case (recData.time == '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme == ''):
+            return pool.query(recQueryThirteen, [recData.collection_id, recData.players, recData.mech1, recData.mech2, recData.mech3])
+            .then((result) => {
+                if (result.rows.length < 3) {
+                    pool.query(recQueryFourteen, [recData.collection_id, recData.players, recData.mech1, recData.mech2])
+                    .then((result) => {
+                        if (result.rows.length < 3) {
+                            pool.query()
+                            .then((result) => {
+                                if (result.rows.length < 3) {
+                                    pool.query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
+                                    .then((result) => {res.send(result.rows)})
+                                    .catch((error) => {res.sendStatus(500)}) 
+                                } else {
+                                    res.send(result.rows);
+                                }
+                            })
+                            .catch((error) => {res.sendStatus(500)})
+                        } else {
+                            res.send(result.rows);
+                        }
+                    })
+                    .catch((error) => {res.sendStatus(500)})
+                } else {
+                    res.send(result.rows);
+                }
+            })
+            .catch((error) => {res.sendStatus(500)});
+        //If the user entered
         //If the user entered the bare minimum info
         default:
             return pool
             .query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
-            .then((result) => {
-                res.send(result.rows);
-            })
-            .catch((error) => {
-                res.sendStatus(500);
-            })
+            .then((result) => {res.send(result.rows)})
+            .catch((error) => {res.sendStatus(500)})
     }
     
 })
