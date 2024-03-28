@@ -13,6 +13,7 @@ const collectionRouter = require('./routes/collection.router');
 const gamesRouter = require('./routes/games.router');
 const historyRouter = require('./routes/history.router');
 const selectablesRouter = require('./routes/selectables.router');
+const recRouter = require('./routes/rec.router');
 
 // Express Middleware
 app.use(express.json());
@@ -32,6 +33,7 @@ app.use('/api/collection', collectionRouter);
 app.use('/api/games', gamesRouter);
 app.use('/api/history', historyRouter);
 app.use('/api/select', selectablesRouter);
+app.use('/api/recommend', recRouter)
 
 // Listen Server & Port
 app.listen(PORT, () => {

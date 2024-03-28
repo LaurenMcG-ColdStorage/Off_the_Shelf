@@ -15,4 +15,6 @@ function* getRecommendations(action){
 
 function* recSaga(){
     yield takeEvery('FIND_RECS', getRecommendations)
-}
+};
+
+export default recSaga;
