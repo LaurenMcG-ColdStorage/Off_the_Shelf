@@ -1,4 +1,6 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { Slider, Box, Button } from "@mui/material";
 
 import './RecTime.css';
@@ -6,9 +8,12 @@ import './RecTime.css';
 function RecTime(){
 
     const history = useHistory();
+    const dispatch = useDispatch();
+    const [sliderValue, setSliderValue] = useState({time: ''});
     
     const handleNext =(event) => {
         event.preventDefault();
+        dispatch({type: 'SET_TIME', payload: sliderValue})
         history.push('/recmechanics')
     };
 
@@ -39,7 +44,8 @@ function RecTime(){
                 step={30}
                 defaultValue={120}
                 getAriaValueText={valueText}
-                valueLabelDisplay="auto"></Slider>
+                valueLabelDisplay="auto"
+                onChange={(event) => setSliderValue(event.target.value)}></Slider>
             </Box>
             <Button variant='contained' sx={{
                     backgroundColor: '#464366',

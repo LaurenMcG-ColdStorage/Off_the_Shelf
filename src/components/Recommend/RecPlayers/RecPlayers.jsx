@@ -1,14 +1,19 @@
-import {Box, Button, Slider} from '@mui/material';
+import { Box, Button, Slider } from '@mui/material';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 import './RecPlayers.css';
 
 function RecPlayers(){
     
     const history = useHistory();
+    const dispatch = useDispatch();
+    const [sliderValue, setSliderValue] = useState({players:''});
     
     const handleNext = (event) => {
-        event.preventDefault()
+        event.preventDefault();
+        dispatch({type: 'SET_PLAYERS', payload: sliderValue});
         history.push('/reclength');
     }
 
@@ -36,6 +41,7 @@ function RecPlayers(){
                 defaultValue={3}
                 getAriaValueText={valueText}
                 valueLabelDisplay="auto"
+                onChange={(event) => setSliderValue(event.target.value)}
                 ></Slider>
             </Box>
             <Button variant='contained' sx={{

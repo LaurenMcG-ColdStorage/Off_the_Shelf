@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from "@mui/material";
 
 import './RecMech.css';
@@ -10,12 +10,15 @@ function RecMech(){
     const history = useHistory();
     const dispatch = useDispatch();
     const mechanics = useSelector((store) => store.selectables.mechanicReducer);
-    const [mechBoxOne, setMechBoxOne] = useState('');
-    const [mechBoxTwo, setMechBoxTwo] = useState('');
-    const [mechBoxThree, setMechBoxThree] = useState('');
+    const [mechBoxOne, setMechBoxOne] = useState({mech1: ''});
+    const [mechBoxTwo, setMechBoxTwo] = useState({mech2: ''});
+    const [mechBoxThree, setMechBoxThree] = useState({mech3: ''});
 
     const handleNext =(event) => {
         event.preventDefault();
+        dispatch({type: 'SET_MECH1', payload: mechBoxOne});
+        dispatch({type: 'SET_MECH2', payload: mechBoxTwo});
+        dispatch({type: 'SET_MECH3', payload: mechBoxThree});
         history.push('/rectheme')
     };
 
@@ -23,6 +26,7 @@ function RecMech(){
         <div className='recmech-container'>
             <h2>Now, on to gameplay. Are you looking for Dice Rolling? Card Play? Diplomacy?</h2>
             <select value={mechBoxOne} onChange={(event) => setMechBoxOne(event.target.value)} required>
+                <option>--Select Mechanic: Required--</option>
                 {mechanics.map((mech) => {
                     return(
                         <option key={mech.id} value={mech.id} >{mech.name}</option>
@@ -30,6 +34,7 @@ function RecMech(){
                 })}
             </select>
             <select value={mechBoxTwo} onChange={(event) => setMechBoxTwo(event.target.value)}>
+            <option>--Select Mechanic: Optional--</option>
                 {mechanics.map((mech) => {
                         return(
                             <option key={mech.id} value={mech.id} >{mech.name}</option>
@@ -37,6 +42,7 @@ function RecMech(){
                     })}
             </select>
             <select value={mechBoxThree} onChange={(event) => setMechBoxThree(event.target.value)}>
+            <option>--Select Mechanic: Optional--</option>
                 {mechanics.map((mech) => {
                         return(
                             <option key={mech.id} value={mech.id} >{mech.name}</option>

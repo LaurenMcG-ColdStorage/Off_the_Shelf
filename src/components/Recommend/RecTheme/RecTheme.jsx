@@ -8,11 +8,13 @@ import './RecTheme.css';
 function RecTheme(){
 
     const history = useHistory();
+    const dispatch = useDispatch();
     const themes = useSelector((store) => store.selectables.themeReducer)
-    const [pickTheme, setPickTheme] = useState('')
+    const [pickTheme, setPickTheme] = useState({theme:''})
 
     const handleComplete = (event) => {
         event.preventDefault();
+        dispatch({type: 'SET_THEME', payload: pickTheme})
         history.push('/recresult');
     };
 

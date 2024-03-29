@@ -1,20 +1,30 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { Button } from "@mui/material";
+
+import './RecResult.css';
 
 function RecResult(){
 
     const history = useHistory();
-
+    const dispatch = useDispatch();
+    const recReturn = useSelector((store) => store.recReturn);
+    
     const handleRestart = (event) => {
         event.preventDefault();
         history.push('/recommend');
     }
 
+    useEffect(() => {
+        dispatch({type: 'UNSET_ALL_RECS'})
+    })
     return(
         <div>
             <h2>Here are some great picks for you</h2>
             <p>Three games will be rendered here as cards.</p>
-            {collection.map((game, gameIndex) => {
+            {recReturn.map((game, gameIndex) => {
                     return(
                         <Card key={gameIndex}
                             sx={{width: 200,
@@ -40,7 +50,9 @@ function RecResult(){
                                         {game.title}
                                     </Typography>
                                     <Typography variant='subtitle2'>
-                                        There will be player count and one mechanic here in the details
+                                        Players: Up to {game.player_count}
+                                        Mechanic: {game.mech1}
+                                        Theme: {game.theme}
                                     </Typography>
                                     <Button sx={{
                                         color:'#f2f2f2',
