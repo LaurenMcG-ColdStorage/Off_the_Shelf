@@ -9,7 +9,7 @@ function RecTime(){
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const [sliderValue, setSliderValue] = useState({time: ''});
+    const [sliderValue, setSliderValue] = useState({time: 120});
     
     const handleNext =(event) => {
         event.preventDefault();
@@ -42,7 +42,6 @@ function RecTime(){
                 min={30}
                 max={390}
                 step={30}
-                defaultValue={120}
                 getAriaValueText={valueText}
                 valueLabelDisplay="auto"
                 onChange={(event) => setSliderValue(event.target.value)}></Slider>

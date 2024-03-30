@@ -22,6 +22,14 @@ const recRequest = (state = {players: '',
             return {...state, theme: action.payload};
         case 'SET_USER_COLLECT' :
             return {...state, collection_id: action.payload};
+        case 'UNSET_ALL_RECS' :
+            return {players: '', 
+            time: '', 
+            mech1: '', 
+            mech2: '', 
+            mech3: '', 
+            theme: '', 
+            collection_id: ''}
         default:
             return state;
     };

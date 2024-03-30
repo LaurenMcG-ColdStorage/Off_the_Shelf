@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@mui/material";
 
 import './Recommend.css';
@@ -6,9 +7,13 @@ import './Recommend.css';
 function Recommend(){
 
     const history = useHistory();
+    const dispatch = useDispatch();
+    const recRequest = useSelector((store) => store.recs.recRequest);
+    const user = useSelector((store) => store.user);
 
     const handleNext = (event) => {
         event.preventDefault()
+        dispatch({type: 'SET_USER_COLLECT', payload: user.collection_id})
         history.push('/recplayers');
     }
 

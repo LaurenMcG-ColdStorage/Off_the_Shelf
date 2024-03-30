@@ -9,7 +9,7 @@ function RecPlayers(){
     
     const history = useHistory();
     const dispatch = useDispatch();
-    const [sliderValue, setSliderValue] = useState({players:''});
+    const [sliderValue, setSliderValue] = useState({players:1});
     
     const handleNext = (event) => {
         event.preventDefault();
@@ -38,7 +38,6 @@ function RecPlayers(){
                 min={1}
                 max={8}
                 step={1}
-                defaultValue={3}
                 getAriaValueText={valueText}
                 valueLabelDisplay="auto"
                 onChange={(event) => setSliderValue(event.target.value)}

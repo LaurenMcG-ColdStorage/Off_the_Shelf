@@ -2,8 +2,10 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-router.get('/', (req,res) => {
+router.post('/', (req,res) => { 
     const recData = req.body;
+    console.log('RECDATA: ', recData);
+
     const reqQueryOne = `SELECT * FROM "games"
     JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
     WHERE "collection_game"."collection_id" = $1 AND
@@ -113,25 +115,25 @@ router.get('/', (req,res) => {
     ("games"."mech1_id" = $3 OR "games"."mech2_id" = $3 OR "games"."mech3_id" = $3) AND
     ("games"."mech1_id" = $4 OR "games"."mech2_id" = $4 OR "games"."mech3_id" = $4) LIMIT 3;`;
 
-    switch (recData) {
         //If the user entered all preferences
-        case (recData.time != '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme != ''):
-            return pool //Query One
+        if (recData.time != '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme != '') {
+            pool //Query One
             .query(reqQueryOne, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.mech3, recData.theme])
             .then((result) => {
-                if (result.rows.length < 3) {
+                console.log('Inside Case 1: ', result.rows)
+                if ((result.rows).length < 3) {
                     pool //Query Two, if query one doesn't yield enough results
                     .query(recQueryTwo, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.theme])
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool //Query Three, if two doesn't yield enough results
                             .query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
                             .then((result) => {
-                                if (result.rows.length < 3) {
+                                if ((result.rows).length < 3) {
                                     pool //Query Four, if three doesn't yield enough results
                                     .query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
                                     .then((result) => {
-                                        if (result.rows.length < 3) {
+                                        if ((result.rows).length < 3) {
                                             pool //Query Five, minimum criteria. Will almost definitely yield enough results
                                             .query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                             .then((result) => {
@@ -157,21 +159,22 @@ router.get('/', (req,res) => {
                     res.send(result.rows);
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered everything except mech3
-        case (recData.time != '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme != ''):
-            return pool
+        else if (recData.time != '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme != ''){
+            pool
             .query(recQueryTwo, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.theme])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool //Query Three, if two doesn't yield enough results
                     .query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool //Query Four, if three doesn't yield enough results
                             .query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
                             .then((result) => {
-                                if (result.rows.length < 3) {
+                                if ((result.rows).length < 3) {
                                     pool //Query Five, minimum criteria. Will almost definitely yield enough results
                                     .query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {
@@ -195,21 +198,22 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered everything except mech2
-        case (recData.time != '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme != ''):
-            return pool
+        else if (recData.time != '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme != ''){
+            pool
             .query(recQueryTwo, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech3, recData.theme])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool //Query Three, if two doesn't yield enough results
                     .query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool //Query Four, if three doesn't yield enough results
                             .query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
                             .then((result) => {
-                                if (result.rows.length < 3) {
+                                if ((result.rows).length < 3) {
                                     pool //Query Five, minimum criteria. Will almost definitely yield enough results
                                     .query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {
@@ -233,15 +237,16 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered all, but only one mech
-        case (recData.time != '' && recData.mech2 == '' && recData.mech3 == '' && recData.theme != ''):
-            return pool.query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
+        else if (recData.time != '' && recData.mech2 == '' && recData.mech3 == '' && recData.theme != ''){
+            pool.query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
                 .then((result) => {
-                    if (result.rows.length < 3) {
+                    if ((result.rows).length < 3) {
                         pool.query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
                         .then((result) => {
-                            if (result.rows.length < 3) {
+                            if ((result.rows).length < 3) {
                                 pool.query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                 .then((result) => {res.send(result.rows)})
                                 .catch((error) => {res.sendStatus(500)})
@@ -254,18 +259,19 @@ router.get('/', (req,res) => {
                         res.send(result.rows);
                     }
                 })
-                .catch((error) => {res.sendStatus(500)});
+                .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered all except theme
-        case (recData.time != '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme == ''):
-            return pool.query(recQuerySix, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.mech3])
+        else if (recData.time != '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme == ''){
+            pool.query(recQuerySix, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.mech3])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool.query(recQuerySeven, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2])
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool.query(recQueryEight, [recData.collection_id, recData.players, recData.time, recData.mech1])
                             .then((result) => {
-                                if (result.rows.length < 3) {
+                                if ((result.rows).length < 3) {
                                     pool.query(recQueryNine, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {res.send(result.rows)})
                                     .catch((error) => {res.sendStatus(500)})
@@ -283,18 +289,19 @@ router.get('/', (req,res) => {
                     res.send(result.rows);
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered two mechanics and no theme, mech2
-        case (recData.time != '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme == ''):
-            return pool.query(recQuerySeven, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2])
+        else if (recData.time != '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme == ''){
+            pool.query(recQuerySeven, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool.query()
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool.query(recQueryEight, [recData.collection_id, recData.players, recData.time, recData.mech1])
                             .then((result) => {
-                                if (result.rows.length < 3) {
+                                if ((result.rows).length < 3) {
                                     pool.query(recQueryNine, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {res.send(result.rows)})
                                     .catch((error) => {res.sendStatus(500)})
@@ -312,18 +319,19 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered two mechanics and no theme, mech3
-        case (recData.time != '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme == ''):
-            return pool.query(recQuerySeven, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech3])
+        else if (recData.time != '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme == ''){
+            pool.query(recQuerySeven, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech3])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool.query()
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool.query(recQueryEight, [recData.collection_id, recData.players, recData.time, recData.mech1])
                             .then((result) => {
-                                if (result.rows.length < 3) {
+                                if ((result.rows).length < 3) {
                                     pool.query(recQueryNine, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {res.send(result.rows)})
                                     .catch((error) => {res.sendStatus(500)})
@@ -341,18 +349,19 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered all but time
-        case (recData.time == '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme != ''):
-            return pool.query(recQueryTen, [recData.collection_id, recData.players, recData.mech1, recData.mech2, recData.mech3, recData.theme])
+        else if (recData.time == '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme != ''){
+            pool.query(recQueryTen, [recData.collection_id, recData.players, recData.mech1, recData.mech2, recData.mech3, recData.theme])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool.query(recQueryEleven, [recData.collection_id, recData.players, recData.mech1, recData.mech2, recData.theme])
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool.query(recQueryTwelve, [recData.collection_id, recData.players, recData.mech1, recData.theme])
                             .then((result) => {
-                                if (result.rows.length < 3) {
+                                if ((result.rows).length < 3) {
                                     pool.query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {res.send(result.rows)})
                                     .catch((error) => {res.sendStatus(500)})
@@ -369,15 +378,16 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered two mechanics and no time, mech2
-        case (recData.time == '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme != ''):
-            return pool.query(recQueryEleven, [recData.collection_id, recData.players, recData.mech1, recData.mech2, recData.theme])
+        else if (recData.time == '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme != ''){
+            pool.query(recQueryEleven, [recData.collection_id, recData.players, recData.mech1, recData.mech2, recData.theme])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool.query(recQueryTwelve, [recData.collection_id, recData.players, recData.mech1, recData.theme])
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool.query(recQueryNine, [recData.collection_id, recData.players, recData.mech1])
                             .then((result) => {res.send(result.rows)})
                             .catch((error) => {res.sendStatus(500)})
@@ -390,15 +400,16 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});  
+            .catch((error) => {res.sendStatus(500)})
+        }  
         //If the user entered two mechanics and no time, mech3
-        case (recData.time == '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme != ''):
-            return pool.query(recQueryEleven, [recData.collection_id, recData.players, recData.mech1, recData.mech3, recData.theme])
+        else if (recData.time == '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme != ''){
+            pool.query(recQueryEleven, [recData.collection_id, recData.players, recData.mech1, recData.mech3, recData.theme])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool.query(recQueryTwelve, [recData.collection_id, recData.players, recData.mech1, recData.theme])
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool.query(recQueryNine, [recData.collection_id, recData.players, recData.mech1])
                             .then((result) => {res.send(result.rows)})
                             .catch((error) => {res.sendStatus(500)})
@@ -411,18 +422,19 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered no theme and no time, all mechs
-        case (recData.time == '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme == ''):
-            return pool.query(recQueryThirteen, [recData.collection_id, recData.players, recData.mech1, recData.mech2, recData.mech3])
+        else if  (recData.time == '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme == ''){
+            pool.query(recQueryThirteen, [recData.collection_id, recData.players, recData.mech1, recData.mech2, recData.mech3])
             .then((result) => {
-                if (result.rows.length < 3) {
+                if ((result.rows).length < 3) {
                     pool.query(recQueryFourteen, [recData.collection_id, recData.players, recData.mech1, recData.mech2])
                     .then((result) => {
-                        if (result.rows.length < 3) {
+                        if ((result.rows).length < 3) {
                             pool.query()
                             .then((result) => {
-                                if (result.rows.length < 3) {
+                                if ((result.rows).length < 3) {
                                     pool.query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {res.send(result.rows)})
                                     .catch((error) => {res.sendStatus(500)}) 
@@ -440,10 +452,11 @@ router.get('/', (req,res) => {
                     res.send(result.rows);
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered no theme, no time, and two mechs. mech2
-        case (recData.time == '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme == ''):
-            return pool.query(recQueryFourteen, [recData.collection_id, recData.players, recData.mech1, recData.mech2])
+        else if (recData.time == '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme == ''){
+            pool.query(recQueryFourteen, [recData.collection_id, recData.players, recData.mech1, recData.mech2])
             .then((result) => {
                 if (result.rowslength < 3) {
                     pool.query(recQueryNine, [recData.collection_id, recData.players, recData.mech1])
@@ -453,10 +466,11 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered no theme, no time, and two mechs. mech3
-        case (recData.time == '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme == ''):
-            return pool.query(recQueryFourteen, [recData.collection_id, recData.players, recData.mech1, recData.mech3])
+        else if (recData.time == '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme == ''){
+            pool.query(recQueryFourteen, [recData.collection_id, recData.players, recData.mech1, recData.mech3])
             .then((result) => {
                 if (result.rowslength < 3) {
                     pool.query(recQueryNine, [recData.collection_id, recData.players, recData.mech1])
@@ -466,14 +480,15 @@ router.get('/', (req,res) => {
                     res.send(result.rows)
                 }
             })
-            .catch((error) => {res.sendStatus(500)});
+            .catch((error) => {res.sendStatus(500)})
+        }
         //If the user entered minimum info
-        default:
+        else {
             return pool
             .query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
             .then((result) => {res.send(result.rows)})
             .catch((error) => {res.sendStatus(500)});
-    }  
+        }  
 })
 
 module.exports = router;

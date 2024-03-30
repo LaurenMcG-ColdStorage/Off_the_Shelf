@@ -17,14 +17,15 @@ function RecResult(){
         history.push('/recommend');
     }
 
-    useEffect(() => {
-        dispatch({type: 'UNSET_ALL_RECS'})
-    })
+    // useEffect(() => {
+    //     dispatch({type: 'UNSET_ALL_RECS'})
+    // })
+    
     return(
         <div>
             <h2>Here are some great picks for you</h2>
             <p>Three games will be rendered here as cards.</p>
-            {recReturn.map((game, gameIndex) => {
+            {/* {recReturn.map((game, gameIndex) => {
                     return(
                         <Card key={gameIndex}
                             sx={{width: 200,
@@ -65,7 +66,7 @@ function RecResult(){
                             </CardActionArea>
                         </Card>
                     )
-                })}
+                })} */}
             <Button onClick={(event) => handleRestart(event)}>Back To Start</Button>
         </div>
     );

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useState} from 'react';
 
 import './ManageAddModal.css';
 
@@ -28,7 +28,7 @@ export const ManageAddModal = ({onClose}) => {
         dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}})
         onClose();
     }
-    
+
     return(
         <div className="modal-container">
             <div className='modal'>

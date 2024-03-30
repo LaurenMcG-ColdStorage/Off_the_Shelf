@@ -18,18 +18,23 @@ function Manage(){
     const dispatch = useDispatch();
     const [manageModal, setManageModal] = useState(false);
 
+    const handleRefresh = () => {
+        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}});
+    };
+    
     const handleClose = () => {
         setManageModal(false);
+        handleRefresh();
     };
 
     const handleRemoveFromCollection = (game) => {
         const removeData = {collection_id: user, game_id: game.game_id};
-        dispatch({type: 'REMOVE_TITLE', payload: removeData})
-        dispatch({type: 'GRAB_COLLECTION', payload: removeData})
+        dispatch({type: 'REMOVE_TITLE', payload: removeData});
+        handleRefresh();
     }
 
     useEffect(() => {
-        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}});
+        handleRefresh();
         dispatch({type: 'GET_MECHANICS'});
         dispatch({type: 'GET_GAME_THEMES'});
     }, [])
@@ -42,9 +47,9 @@ function Manage(){
             <h2>Collection: View</h2>
             <Button variant='contained' sx={{
                     backgroundColor: '#464366',
-                    '&:hover':{backgroundColor: '#e7822b'}
-            }}
-            onClick={(event) => setManageModal(true)}>Add New Game</Button>
+                    '&:hover':{backgroundColor: '#e7822b'}}}
+                    onClick={(event) => setManageModal(true)}>Add New Game
+            </Button>
             <div className='card-container'>
                 {collection.map((game, gameIndex) => {
                     return(
