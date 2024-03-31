@@ -22,15 +22,22 @@ router.post('/register', (req, res, next) => {
   const password = encryptLib.encryptPassword(req.body.password);
 
   //This query will add a new user
-  const queryText = `INSERT INTO "user" ("username", "password")
-  VALUES ($1, $2) RETURNING "id";`;
-  pool
-    .query(queryText, [username, password])
-    .then(() => res.sendStatus(201))
-    .catch((err) => {
-      console.log('User registration failed: ', err);
-      res.sendStatus(500);
-    });
+  const queryText = `INSERT INTO "user" ("username", "password", "collection_id", "role")
+  VALUES ($1, $2, $3, $4) RETURNING "id";`;
+  const collectionQuery = `INSERT INTO "collections" ("name")
+  VALUES ($1) RETURNING "id";`;
+  pool.query(collectionQuery, [req.body.collection])
+  .then((result) => { 
+    console.log('Collection Response: ', result.rows)
+    pool
+      .query(queryText, [username, password, result.rows[0].id, req.body.role])
+      .then(() => res.sendStatus(201))
+      .catch((err) => {
+        console.log('User registration failed: ', err);
+        res.sendStatus(500);
+      });
+
+  })
 });
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
@@ -48,16 +55,20 @@ router.post('/logout', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-  const userData = req.data;
+  const userData = req.body;
   console.log('User update Data: ', userData);
-  const updateQuery = `UPDATE "user" SET "collection_id" = $1 "role" = $2 WHERE "id" = $3;`;
-  pool
-  .query(updateQuery, [userData.collection_id, userData.role, userData.id])
+  const collectCheck = `SELECT * FROM "collections" WHERE "name" = $1;`;
+  const updateQuery = `UPDATE "user" SET "collection_id" = $1, "role" = $2 WHERE "id" = $3;`;
+  pool.query(collectCheck, [userData.collection])
   .then((result) => {
-    res.sendStatus(200);
-  })
-  .catch((error) => {
-    res.sendStatus(500);
+    console.log('USER UPDATE: ', result.rows[0])
+      pool.query(updateQuery, [result.rows[0].id, userData.role, userData.id])
+      .then((result) => {
+        res.sendStatus(200);
+      })
+      .catch((error) => {
+        res.sendStatus(500);
+      })
   })
 });
 

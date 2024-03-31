@@ -1,16 +1,23 @@
 .nav {
   /* flex box layout */
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  justify-content: center;
   align-items: center;
-  margin: 0 0 30px;
+  margin: auto;
   width: 100%;
   max-width: 1920px;
   height: 6em;
   background-image: url(/images/header.jpg);
   background-color: black, 0.6;
   background-size: auto;
-  overflow: hidden;
+  
+}
+
+.navBar {
+  margin: auto;
+  width: 100%;
+  max-width: 1920px;
+  text-align: center;
 }
 
 .nav a {
@@ -21,8 +28,7 @@
   font-size: 24px;
   font-weight: 700;
   color: #f2f2f2;
-  padding-left: 10px;
-  margin: 0;
+  margin: auto;
 }
 
 .navLink {

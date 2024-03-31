@@ -30,7 +30,7 @@ function* updateUserCollection(action) {
     //Grab the userdata sent by the dispatch
     const userData = action.payload;
           //Update the collections table with the new collection
-    const addCollection = yield axios.put(`/api/collection/${userData.collection}`);
+    //const addCollection = yield axios.post(`/api/collection/${userData.collection}`);
           //Package the data we're trying to update
     //console.log(addCollection.data)
     // const scrubbedData = {
@@ -39,7 +39,7 @@ function* updateUserCollection(action) {
     //   role: userData.role
     // };
     //console.log('Scrubbed data: ', scrubbedData);
-    yield axios.put('/api/user', {id: userData.id, collection_id: addCollection.id, role: userData.role});
+    yield axios.put('/api/user', {id: userData.id, collection: userData.collection, role: userData.role});
     yield put ({type: 'FETCH_USER'});
   } catch (error) {
     console.log('User update failed', error); 

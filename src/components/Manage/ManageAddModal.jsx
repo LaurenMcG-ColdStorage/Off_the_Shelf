@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState} from 'react';
+import { Button } from '@mui/material';
 
 import './ManageAddModal.css';
 
@@ -101,8 +102,24 @@ export const ManageAddModal = ({onClose}) => {
                     </tbody>
                 </table>
                 <div className='footer'>
-                    <button onClick={(event) => handleSubmit(event)}>Add To Collection</button>
-                    <button onClick={() => onClose()}>Cancel</button>
+                    <Button variant='contained' sx={{
+                        width: 160,
+                        mx: 1,
+                        my: 1,
+                        border: 1,
+                        borderColor: '#a34007',
+                        backgroundColor: '#c56009',
+                        '&:hover':{backgroundColor: '#e7822b'}}}
+                        onClick={(event) => handleSubmit(event)}>Add Game</Button>
+                    <Button variant='contained' sx={{
+                        width: 160,
+                        mx: 1,
+                        my: 1,
+                        border: 1,
+                        borderColor: '#a34007',
+                        backgroundColor: '#c56009',
+                        '&:hover':{backgroundColor: '#e7822b'}}}
+                        onClick={() => onClose()}>Cancel</Button>
                 </div>
             </div>
         </div>

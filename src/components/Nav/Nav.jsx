@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import './Nav.css';
 import { useSelector } from 'react-redux';
+
+import './Nav.css';
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -11,10 +12,12 @@ function Nav() {
   
   return (
     <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">Off The Shelf</h2>
-      </Link><br />
-      <div>
+      <div className="nav-title">
+        <Link to="/home">
+          <h2 className="nav-title">Off The Shelf</h2>
+        </Link>
+      </div>
+      <div className="navBar">
         {/* If no user is logged in, show these links */}
         {!user.id && (
           // If there's no user, show login/registration links
@@ -38,8 +41,13 @@ function Nav() {
             <Link className="navLink" to="/history">
               Play History
             </Link>
-            <Link className="navLink" to="/manage">
-              Manage
+            {user.role === 'Collector' &&
+              <Link className="navLink" to="/manage">
+                Manage
+              </Link>
+            }
+            <Link className="navLink" to='/user'>
+              Account
             </Link>
             <LogOutButton className="navLink" />
           </>

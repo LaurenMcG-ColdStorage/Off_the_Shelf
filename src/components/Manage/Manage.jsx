@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { ManageAddModal } from "./ManageAddModal";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector, useDispatch } from "react-redux";
 import { Card } from "@mui/material";
 import { CardActionArea } from "@mui/material";
@@ -46,6 +45,11 @@ function Manage(){
             }
             <h2>Collection: View</h2>
             <Button variant='contained' sx={{
+                    width: 150,
+                    mx: 'auto',
+                    my: 1,
+                    border: 1,
+                    borderColor: '#575477',
                     backgroundColor: '#464366',
                     '&:hover':{backgroundColor: '#e7822b'}}}
                     onClick={(event) => setManageModal(true)}>Add New Game

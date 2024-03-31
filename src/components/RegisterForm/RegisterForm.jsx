@@ -6,6 +6,8 @@ function RegisterForm() {
   //These state bits are for collecting a new user's inputs. 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [collection, setCollection] = useState('');
+  const [role, setRole] = useState('');
 
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
@@ -18,6 +20,8 @@ function RegisterForm() {
       payload: {
         username: username,
         password: password,
+        collection: collection,
+        role: role
       },
     });
   }; // end registerUser
@@ -51,6 +55,30 @@ function RegisterForm() {
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="collection">
+          Collection:
+          <input
+            type="collection"
+            name="collection"
+            value={collection}
+            required
+            onChange={(event) => setCollection(event.target.value)}
+          />
+        </label>
+      </div>
+      <div>
+        <label htmlFor="role">
+          Role:
+          <input
+            type="role"
+            name="role"
+            value={role}
+            required
+            onChange={(event) => setRole(event.target.value)}
           />
         </label>
       </div>

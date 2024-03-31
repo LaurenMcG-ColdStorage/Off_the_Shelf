@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Button } from '@mui/material';
 
 import './PlayHistoryModal.css';
 
@@ -31,16 +32,40 @@ export const PlayHistoryModal = ({onClose}) => {
                 </div>
                 <div className="content">
                     <h2> Log Your Session: </h2>
-                    <label>Game Title: </label>
-                    <input value={sessionUpdate.title} onChange={(event) => setSessionUpdate({...sessionUpdate, title: event.target.value})}></input><br />
-                    <label>How Many Players: </label>
-                    <input defaultValue={sessionUpdate.players} onChange={(event) => setSessionUpdate({...sessionUpdate, players: event.target.value})}></input><br />
-                    <label>Notes: </label>
-                    <input value={sessionUpdate.notes} onChange={(event) => setSessionUpdate({...sessionUpdate, notes: event.target.value})}></input>
+                    <table>
+                        <tr>
+                            <td><label>Game Title: </label></td>
+                            <td><input value={sessionUpdate.title} onChange={(event) => setSessionUpdate({...sessionUpdate, title: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>How Many Players: </label></td>
+                            <td><input defaultValue={sessionUpdate.players} onChange={(event) => setSessionUpdate({...sessionUpdate, players: event.target.value})}></input></td>
+                        </tr>
+                        <tr>
+                            <td><label>Notes: </label></td>
+                            <td><input value={sessionUpdate.notes} onChange={(event) => setSessionUpdate({...sessionUpdate, notes: event.target.value})}></input></td>
+                        </tr>    
+                    </table>
                 </div>
                 <div className="footer">
-                    <button className="btn-submit" onClick={(event) => sessionSubmit(event)}>Add Session</button>
-                    <button className="btn-cancel" onClick={() => onCancel()}>Cancel</button>
+                    <Button variant='contained' sx={{
+                        width: 160,
+                        mx: 1,
+                        my: 1,
+                        border: 1,
+                        borderColor: '#a34007',
+                        backgroundColor: '#c56009',
+                        '&:hover':{backgroundColor: '#e7822b'}}}
+                        className="btn-submit" onClick={(event) => sessionSubmit(event)}>Add Session</Button>
+                    <Button variant='contained' sx={{
+                        width: 160,
+                        mx: 1,
+                        my: 1,
+                        border: 1,
+                        borderColor: '#a34007',
+                        backgroundColor: '#c56009',
+                        '&:hover':{backgroundColor: '#e7822b'}}}
+                        className="btn-cancel" onClick={() => onCancel()}>Cancel</Button>
                 </div> 
             </div>
         </div>

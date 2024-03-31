@@ -1,14 +1,19 @@
 import React from 'react';
 import LogOutButton from '../LogOutButton/LogOutButton';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { UserModal } from './UserModal';
+import { Button } from '@mui/material';
+
+import './UserPage.css';
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
   //This local state tracks whether the UserModal element is requested to be open in our page, default closed.
   const [modal, setModal] = useState(false);
+
+  const dispatch = useDispatch();
 
   const handleButtonClick = () => {
     setModal(false);
@@ -20,9 +25,25 @@ function UserPage() {
         <UserModal onClose={handleButtonClick} onCancel={handleButtonClick} onSubmit={handleButtonClick}/>
       }
       <h2>Welcome, {user.username}!</h2>
-      <p>Your ID is: {user.id}</p>
-      <button onClick={(event) => setModal(true)}>Edit Profile: </button>
-      <LogOutButton className="btn" />
+      <p>Your Active Collection: {user.collection_id}</p>
+      <Button variant='contained' sx={{
+                    width: 150,
+                    mx: 'auto',
+                    my: 1,
+                    border: 1,
+                    borderColor: '#575477',
+                    backgroundColor: '#464366',
+                    '&:hover':{backgroundColor: '#e7822b'}}}
+                    onClick={(event) => setModal(true)}>Edit Profile</Button>
+      <Button variant='contained' sx={{
+                    width: 150,
+                    mx: 'auto',
+                    my: 1,
+                    border: 1,
+                    borderColor: '#575477',
+                    backgroundColor: '#464366',
+                    '&:hover':{backgroundColor: '#e7822b'}}}
+                    onClick={(event) =>dispatch({type: 'LOGOUT'})}>Log Out</Button>
     </div>
   );
 }

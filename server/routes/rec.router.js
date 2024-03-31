@@ -2,6 +2,18 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
+router.get('/:collection_id', (req, res) => {
+    const collection = req.params.id;
+    console.log('REC ROUTER, GET ROUTE: ', collection);
+    const recQuery = `SELECT * FROM "games"
+                      JOIN "collection_game" ON "game"."id" = "collection_game"."game_id"
+                      WHERE "collection_game"."game_id" = $1;`;
+
+    pool.query(recQuery, [collection])
+    .then((result) => {res.send(result.rows)})
+    .catch((error) => {res.sendStatus(500)});
+});
+
 router.post('/', (req,res) => { 
     const recData = req.body;
     console.log('RECDATA: ', recData);
