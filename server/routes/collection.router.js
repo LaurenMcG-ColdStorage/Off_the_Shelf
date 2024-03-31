@@ -9,9 +9,9 @@ router.get('/:id', (req, res) => {
   // GET route code here
   const collectionID = req.params.id;
   //console.log('Collection code: ', collectionID);
-  const collectionQuery = `SELECT 
-  "games"."title", "games"."image", "games"."id" AS "game_id", "collection_game"."played", "collection_game"."viewed",
-  "collections"."id" AS "collection_id" FROM "games"
+  const collectionQuery = `SELECT "games"."title", "games"."image", "games"."id" AS "game_id", "games"."player_count", 
+  "games"."play_time", "games"."mech1_id", "games"."mech2_id", "games"."mech3_id", "games"."theme_id",
+  "collection_game"."played", "collection_game"."viewed", "collections"."id" AS "collection_id" FROM "games"
   JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
   JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
   WHERE "collections"."id" = $1;`;

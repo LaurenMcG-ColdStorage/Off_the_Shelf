@@ -117,26 +117,31 @@ router.post('/', (req,res) => {
 
         //If the user entered all preferences
         if (recData.time != '' && recData.mech2 != '' && recData.mech3 != '' && recData.theme != '') {
+            console.log('Inside Case 1')
             pool //Query One
             .query(reqQueryOne, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.mech3, recData.theme])
             .then((result) => {
-                console.log('Inside Case 1: ', result.rows)
+                console.log('Case 1, result 1: ', result.rows)
                 if ((result.rows).length < 3) {
                     pool //Query Two, if query one doesn't yield enough results
                     .query(recQueryTwo, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.theme])
                     .then((result) => {
+                        console.log('Case 1, result 2: ', result.rows)
                         if ((result.rows).length < 3) {
                             pool //Query Three, if two doesn't yield enough results
                             .query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
                             .then((result) => {
+                                console.log('Case 1, result 3: ', result.rows)
                                 if ((result.rows).length < 3) {
                                     pool //Query Four, if three doesn't yield enough results
                                     .query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
                                     .then((result) => {
+                                        console.log('Case 1, result 4: ', result.rows)
                                         if ((result.rows).length < 3) {
                                             pool //Query Five, minimum criteria. Will almost definitely yield enough results
                                             .query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                             .then((result) => {
+                                                console.log('Case 1, result 5: ', result.rows)
                                                 res.send(result.rows);
                                             })
                                             .catch((error) => {res.sendStatus(500)})
@@ -163,21 +168,26 @@ router.post('/', (req,res) => {
         }
         //If the user entered everything except mech3
         else if (recData.time != '' && recData.mech2 != '' && recData.mech3 == '' && recData.theme != ''){
+            console.log('Case 2')
             pool
             .query(recQueryTwo, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech2, recData.theme])
             .then((result) => {
+                console.log('Case 2, result 1: ', result.rows)
                 if ((result.rows).length < 3) {
-                    pool //Query Three, if two doesn't yield enough results
+                    pool //Query Two, if two doesn't yield enough results
                     .query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
                     .then((result) => {
+                        console.log('Case 2, result 2: ', result.rows)
                         if ((result.rows).length < 3) {
-                            pool //Query Four, if three doesn't yield enough results
+                            pool //Query Three, if three doesn't yield enough results
                             .query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
                             .then((result) => {
+                                console.log('Case 2, result 3: ', result.rows)
                                 if ((result.rows).length < 3) {
-                                    pool //Query Five, minimum criteria. Will almost definitely yield enough results
+                                    pool //Query Four, minimum criteria. Will almost definitely yield enough results
                                     .query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {
+                                        console.log('Case 2, result 4: ', result.rows)
                                         res.send(result.rows);
                                     })
                                     .catch((error) => {res.sendStatus(500)})
@@ -202,37 +212,42 @@ router.post('/', (req,res) => {
         }
         //If the user entered everything except mech2
         else if (recData.time != '' && recData.mech2 == '' && recData.mech3 != '' && recData.theme != ''){
+            console.log('Case 3: ')
             pool
             .query(recQueryTwo, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.mech3, recData.theme])
             .then((result) => {
+                console.log('Case 3, result 1: ', result.rows)
                 if ((result.rows).length < 3) {
-                    pool //Query Three, if two doesn't yield enough results
+                    pool //Query Two, if two doesn't yield enough results
                     .query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
                     .then((result) => {
+                        console.log('Case 3, result 2: ', result.rows)
                         if ((result.rows).length < 3) {
-                            pool //Query Four, if three doesn't yield enough results
+                            pool //Query Three, if three doesn't yield enough results
                             .query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
                             .then((result) => {
+                                console.log('Case 3, result 3: ', result.rows)
                                 if ((result.rows).length < 3) {
-                                    pool //Query Five, minimum criteria. Will almost definitely yield enough results
+                                    pool //Query Four, minimum criteria. Will almost definitely yield enough results
                                     .query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
                                     .then((result) => {
+                                        console.log('Case 3, result 4: ', result.rows)
                                         res.send(result.rows);
                                     })
                                     .catch((error) => {res.sendStatus(500)})
-                                    //End Five
+                                    //End Four
                                 } else {
                                     res.send(result.rows);
                                 }
                             })
                             .catch((error) => {res.sendStatus(500)})
-                            //End Four
+                            //End Three
                         } else {
                             res.send(result.rows);
                         }
                     })
                     .catch((error) => {res.sendStatus(500)})
-                    //End Three
+                    //End Two
                 } else {
                     res.send(result.rows)
                 }
@@ -241,14 +256,19 @@ router.post('/', (req,res) => {
         }
         //If the user entered all, but only one mech
         else if (recData.time != '' && recData.mech2 == '' && recData.mech3 == '' && recData.theme != ''){
+            console.log('Case 4');
             pool.query(recQueryThree, [recData.collection_id, recData.players, recData.time, recData.mech1, recData.theme])
                 .then((result) => {
+                    console.log('Case 4, result 1: ', result.rows)
                     if ((result.rows).length < 3) {
                         pool.query(recQueryFour, [recData.collection_id, recData.players, recData.time, recData.mech1])
                         .then((result) => {
+                            console.log('Case 4, result 2: ', result.rows)
                             if ((result.rows).length < 3) {
                                 pool.query(recQueryFive, [recData.collection_id, recData.players, recData.mech1])
-                                .then((result) => {res.send(result.rows)})
+                                .then((result) => {
+                                    console.log('Case 4, result 3: ', result.rows)
+                                    res.send(result.rows)})
                                 .catch((error) => {res.sendStatus(500)})
                             } else {
                                 res.send(result.rows)
