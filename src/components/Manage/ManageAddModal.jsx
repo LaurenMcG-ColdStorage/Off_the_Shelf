@@ -5,7 +5,7 @@ import { Button } from '@mui/material';
 
 import './ManageAddModal.css';
 
-export const ManageAddModal = ({onClose}) => {
+export const ManageAddModal = ({onClose, onRefresh}) => {
     
     const user = useSelector((store) => store.user.collection_id);
     const mechanics = useSelector((store) => store.selectables.mechanicReducer);
@@ -25,9 +25,9 @@ export const ManageAddModal = ({onClose}) => {
     
     const handleSubmit = (event) => {
         event.preventDefault();
+        onRefresh();
         dispatch({type: 'ADD_GAME_COLLECTION', payload: game})
-        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}})
-        onClose();
+        onClose(event);
     }
 
     return(

@@ -42,18 +42,18 @@ router.post('/', (req, res) => {
           //Update logic variable
           newGameId = result.rows[0];
           //Update our collection
+          pool.query(collectQuery, [newGame.collection_id, newGameId.id, 0, 0])
+          .then((result) => {
+            res.sendStatus(201);
+          })
+          .catch((error) => {
+            res.sendStatus(500)
+          })
         })
         .catch((error) => {
           res.sendStatus(500)
         })
       }
-    pool.query(collectQuery, [newGame.collection_id, newGameId, 0, 0])
-        .then((result) => {
-          res.sendStatus(201);
-        })
-        .catch((error) => {
-          res.sendStatus(500)
-        })
     })
   } catch (error) {
     res.sendStatus(500)
