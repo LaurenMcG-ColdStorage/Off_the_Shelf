@@ -59,10 +59,12 @@ router.put('/', (req, res) => {
   console.log('User update Data: ', userData);
   const collectCheck = `SELECT * FROM "collections" WHERE "name" = $1;`;
   const updateQuery = `UPDATE "user" SET "collection_id" = $1, "role" = $2 WHERE "id" = $3;`;
+  
+  
   pool.query(collectCheck, [userData.collection])
   .then((result) => {
     console.log('USER UPDATE: ', result.rows[0])
-      pool.query(updateQuery, [result.rows[0].id, userData.role, userData.id])
+    pool.query(updateQuery, [result.rows[0].id, userData.role, userData.id])
       .then((result) => {
         res.sendStatus(200);
       })

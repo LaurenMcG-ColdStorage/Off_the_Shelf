@@ -25,13 +25,6 @@ router.get('/:id', (req, res) => {
   })
 });
 
-/**
- * POST route template
-*/
-router.post('/', (req, res) => {
-
-});
-
 router.get('/:collection', (req, res) => {
   //This route is checking to see if a collection is in the collections table already, and returning the ID if so
   const collection = req.params.collection;
@@ -61,7 +54,12 @@ router.post('/:collection', (req, res) => {
   })
   .catch((error) => {
     res.sendStatus(504)
-  })
-})
+  });
+});
+
+router.put('/', (req, res) => {
+  const convertQuery = `SELECT "id" FROM "games" WHERE "title" = $1;`;
+  const metricUpdate = `UPDATE "collection_game" SET "viewed" = "viewed" + 1 WHERE "game_id" = $1 AND "collection_id" = $2;`;
+});
 
 module.exports = router;

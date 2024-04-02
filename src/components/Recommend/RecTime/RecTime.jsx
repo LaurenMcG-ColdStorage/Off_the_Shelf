@@ -9,7 +9,7 @@ function RecTime(){
 
     const history = useHistory();
     const dispatch = useDispatch();
-    const [sliderValue, setSliderValue] = useState({time: 120});
+    const [sliderValue, setSliderValue] = useState();
     
     const handleNext =(event) => {
         event.preventDefault();

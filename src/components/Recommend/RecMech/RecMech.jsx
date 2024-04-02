@@ -10,16 +10,18 @@ function RecMech(){
     const history = useHistory();
     const dispatch = useDispatch();
     const mechanics = useSelector((store) => store.selectables.mechanicReducer);
-    const [mechBoxOne, setMechBoxOne] = useState({mech1: ''});
-    const [mechBoxTwo, setMechBoxTwo] = useState({mech2: ''});
-    const [mechBoxThree, setMechBoxThree] = useState({mech3: ''});
+    const [mechBoxOne, setMechBoxOne] = useState();
+    const [mechBoxTwo, setMechBoxTwo] = useState();
+    const [mechBoxThree, setMechBoxThree] = useState();
 
     const handleNext =(event) => {
         event.preventDefault();
-        dispatch({type: 'SET_MECH1', payload: mechBoxOne});
-        dispatch({type: 'SET_MECH2', payload: mechBoxTwo});
-        dispatch({type: 'SET_MECH3', payload: mechBoxThree});
-        history.push('/rectheme')
+        if (mechBoxOne != '') {
+            dispatch({type: 'SET_MECH1', payload: mechBoxOne});
+            dispatch({type: 'SET_MECH2', payload: mechBoxTwo});
+            dispatch({type: 'SET_MECH3', payload: mechBoxThree});
+            history.push('/rectheme')
+        }
     };
 
     return(

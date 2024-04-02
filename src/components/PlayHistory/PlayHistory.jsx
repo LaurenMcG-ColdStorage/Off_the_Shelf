@@ -41,7 +41,9 @@ function PlayHistory(){
                     my: 2}}
                     onClick={(event) => setModalActive(true)}>Add New Play Session</Button>
         <TableContainer component={Paper} 
-                        sx={{ width: '80%', 
+                        sx={{ 
+                        width: '80%',
+                        maxWidth: 900, 
                         mx: 'auto',
                         backgroundColor: '#686588',
                          }}>

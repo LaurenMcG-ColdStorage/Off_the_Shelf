@@ -3,11 +3,12 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/:collection_id', (req, res) => {
-    const collection = req.params.id;
+    const collection = req.params.collection_id;
     console.log('REC ROUTER, GET ROUTE: ', collection);
     const recQuery = `SELECT * FROM "games"
-                      JOIN "collection_game" ON "game"."id" = "collection_game"."game_id"
-                      WHERE "collection_game"."game_id" = $1;`;
+                      JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
+                      JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
+                      WHERE "collections"."id" = $1;`;
 
     pool.query(recQuery, [collection])
     .then((result) => {res.send(result.rows)})

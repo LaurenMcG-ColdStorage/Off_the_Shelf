@@ -12,15 +12,20 @@ function RecTheme(){
 
     const themes = useSelector((store) => store.selectables.themeReducer)
     const recRequest = useSelector((store) => store.recs.recRequest)
-    const [pickTheme, setPickTheme] = useState({theme: ''})
+    const [pickTheme, setPickTheme] = useState()
 
     const handleTheme = (event) => {
         dispatch({type: 'SET_THEME', payload: pickTheme});
     }
+    
+    const handleRec = (event) => {
+        dispatch({type: 'FIND_RECS', payload: recRequest});
+    }
+
     const handleComplete = (event) => {
         event.preventDefault();
         handleTheme();
-        dispatch({type: 'FIND_RECS', payload: recRequest});
+        handleRec();
         history.push('/recresult');
     };
 
