@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@mui/material';
+
+import './RegisterForm.css';
 
 function RegisterForm() {
 
@@ -83,7 +86,11 @@ function RegisterForm() {
         </label>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
+        <Button className="btn"  variant='contained' sx={{
+        backgroundColor:'#e7822b',
+        '&:hover': {backgroundColor:'#f9a44d'}
+        }}
+        type="submit" name="submit" value="Register">Register</Button>
       </div>
     </form>
   );

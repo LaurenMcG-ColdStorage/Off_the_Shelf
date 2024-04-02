@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Button } from '@mui/material';
+
 import './LandingPage.css';
 
 // CUSTOM COMPONENTS
@@ -54,9 +56,13 @@ function LandingPage() {
           <RegisterForm /> 
           <center>
             <h4>Already a Member?</h4>
-            <button className="btn btn_sizeSm" onClick={onLogin}>
+            <Button className="btn btn_sizeSm" variant='contained'
+              sx={{
+                backgroundColor:'#e7822b',
+                '&:hover': {backgroundColor:'#f9a44d'}
+              }} onClick={onLogin}>
               Login
-            </button>
+            </Button>
           </center>
         </div>
         }
