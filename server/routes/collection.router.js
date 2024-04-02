@@ -58,8 +58,10 @@ router.post('/:collection', (req, res) => {
 });
 
 router.put('/', (req, res) => {
-  const convertQuery = `SELECT "id" FROM "games" WHERE "title" = $1;`;
+  const updateArray = req.body;
   const metricUpdate = `UPDATE "collection_game" SET "viewed" = "viewed" + 1 WHERE "game_id" = $1 AND "collection_id" = $2;`;
+
+  console.log(updateArray);
 });
 
 module.exports = router;

@@ -23,7 +23,6 @@ function Manage(){
     
     const handleClose = () => {
         setManageModal(false);
-        handleRefresh();
     };
 
     const handleRemoveFromCollection = (game) => {

@@ -17,7 +17,7 @@ router.post('/', (req, res) => {
   VALUES ($1, $2, $3, $4);`;
 
   //This we'll be updating and using for logic pathways.
-  let newGameId = '';
+  let newGameId ;
 
   try {
     //First, check to see if a game is already in the DB
@@ -42,18 +42,18 @@ router.post('/', (req, res) => {
           //Update logic variable
           newGameId = result.rows[0];
           //Update our collection
-          pool.query(collectQuery, [newGame.collection_id, newGameId.id])
-          .then((result) => {
-            res.sendStatus(201);
-          })
-          .catch((error) => {
-            res.sendStatus(500)
-          })
         })
         .catch((error) => {
           res.sendStatus(500)
         })
       }
+    pool.query(collectQuery, [newGame.collection_id, newGameId, 0, 0])
+        .then((result) => {
+          res.sendStatus(201);
+        })
+        .catch((error) => {
+          res.sendStatus(500)
+        })
     })
   } catch (error) {
     res.sendStatus(500)
