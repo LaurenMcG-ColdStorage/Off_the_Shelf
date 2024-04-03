@@ -62,6 +62,11 @@ router.put('/', (req, res) => {
   const metricUpdate = `UPDATE "collection_game" SET "viewed" = "viewed" + 1 WHERE "game_id" = $1 AND "collection_id" = $2;`;
 
   console.log(updateArray);
+  updateArray.forEach(item => {
+    pool.query(metricUpdate, [item.game_id, item.collection_id])
+    .then((result) => {console.log('Completed updating: ', item.title)})
+    .catch((error) => {res.sendStatus(500)});
+  });
 });
 
 module.exports = router;

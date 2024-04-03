@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button } from '@mui/material';
+
+import './LoginForm.css';
 
 function LoginForm() {
   const [username, setUsername] = useState('');
@@ -58,7 +61,12 @@ function LoginForm() {
         </label>
       </div>
       <div>
-        <input className="btn" type="submit" name="submit" value="Log In" />
+        <Button className="btn" variant='contained' 
+          sx={{
+          backgroundColor:'#e7822b',
+          '&:hover': {backgroundColor:'#f9a44d'}
+          }}
+        type="submit" name="submit" value="Log In">Log In</Button>
       </div>
     </form>
   );

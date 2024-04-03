@@ -92,8 +92,12 @@ function* getRecommendations(action){
             };
         };
 
+        if (filteredRecs.length > 3) {
+            filteredRecs = filteredRecs.slice(0,2);
+        };
+
         yield put({ type: 'SET_RECOMMENDATION', payload: filteredRecs});
-        yield put({type: 'UPDATE_VIEWS', payload: filteredRecs, findRecs})
+        yield put({type: 'UPDATE_VIEWS', payload: filteredRecs})
     } catch (error) {
         console.log("Can't get recs")
     }
@@ -103,9 +107,7 @@ function* updateSaga(action){
     try{
     const updateViews = action.payload;
     console.log('UPDATE CANDIDATES: ', updateViews);
-    for (i=0; i< updateViews.length-1; i++){
-        axios.put('/api/collection', updateViews[i]);
-        }
+    yield axios.put('/api/collection', updateViews)
     } catch (error) {
         console.log('Error updating game views')
     }

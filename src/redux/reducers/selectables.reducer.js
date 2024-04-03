@@ -22,7 +22,17 @@ const themeReducer = (state = [], action) => {
     }
 };
 
+const collectReducer = (state = '', action) => {
+    switch (action.type) {
+        case 'SET_COLLECT_NAME':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     mechanicReducer,
     themeReducer,
+    collectReducer,
 })

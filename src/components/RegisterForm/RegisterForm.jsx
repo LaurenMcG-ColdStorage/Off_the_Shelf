@@ -86,10 +86,11 @@ function RegisterForm() {
         </label>
       </div>
       <div>
-        <Button className="btn"  variant='contained' sx={{
-        backgroundColor:'#e7822b',
-        '&:hover': {backgroundColor:'#f9a44d'}
-        }}
+        <Button className="btn"  variant='contained'
+          sx={{
+          backgroundColor:'#e7822b',
+          '&:hover': {backgroundColor:'#f9a44d'}
+          }}
         type="submit" name="submit" value="Register">Register</Button>
       </div>
     </form>

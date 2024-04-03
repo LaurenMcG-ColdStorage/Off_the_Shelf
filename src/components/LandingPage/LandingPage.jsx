@@ -24,7 +24,7 @@ function LandingPage() {
   return (
     <div className="container">
       <div className="grid">
-        <div className="grid-col grid-col_8">
+        <div className={user.id ? "grid-col grid-col_12" : "grid-col grid-col_8"}>
           <h2>{heading}</h2>
           <p>
             Is your group having trouble settling on a game to play? Do you spend

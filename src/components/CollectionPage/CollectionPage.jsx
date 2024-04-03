@@ -20,8 +20,8 @@ function CollectionPage(){
       },[])
 
     return (
-        <div className='collection-page'>
-            <h2>This is the Collection page</h2>
+        <div className='collection'>
+            <h2>Care To Scroll Through Your Collection?</h2>
             {collection.map((game, gameIndex) => {
                 return(
                     <Card key={gameIndex} className='cards'

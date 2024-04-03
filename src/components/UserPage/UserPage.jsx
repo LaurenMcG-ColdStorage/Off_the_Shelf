@@ -1,15 +1,16 @@
 import React from 'react';
-import LogOutButton from '../LogOutButton/LogOutButton';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { UserModal } from './UserModal';
 import { Button } from '@mui/material';
 
 import './UserPage.css';
 
 function UserPage() {
+
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
+  const collect = useSelector((store) => store.selectables.collectReducer);
   //This local state tracks whether the UserModal element is requested to be open in our page, default closed.
   const [modal, setModal] = useState(false);
 
@@ -19,13 +20,14 @@ function UserPage() {
     setModal(false);
   }
 
+
   return (
     <div className="container">
       {modal && 
         <UserModal onClose={handleButtonClick} onCancel={handleButtonClick} onSubmit={handleButtonClick}/>
       }
       <h2>Welcome, {user.username}!</h2>
-      <p>Your Active Collection: {user.collection_id}</p>
+      <p>Your Active Collection: {collect}</p>
       <Button variant='contained' sx={{
                     width: 150,
                     mx: 'auto',

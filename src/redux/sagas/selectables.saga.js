@@ -21,9 +21,20 @@ function* getGameThemes(){
     }
 };
 
+function* whatsMyCollectionName(action){
+    try {
+        const collection = action.payload;
+        const collectResponse = yield axios.get(`/api/select/${collection}`)
+        yield put ({type: 'SET_COLLECT_NAME', payload: collectResponse.data[0].name})
+    } catch (error) {
+        console.log('Error updating collection name')
+    }
+}
+
 function* selectablesSaga(){
     yield takeEvery('GET_MECHANICS', getGameMechanics);
     yield takeEvery('GET_GAME_THEMES', getGameThemes);
+    yield takeEvery('CALL_COLLECT', whatsMyCollectionName);
 };
 
 export default selectablesSaga;

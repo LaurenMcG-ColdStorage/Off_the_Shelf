@@ -30,7 +30,7 @@ function* removeGameFromCollection(action){
     }
 }
 
-function* setCollection(action){
+function* grabCollection(action){
     try {
         const collection = action.payload;
         console.log('set collection id : ', collection.collection_id);
@@ -48,7 +48,7 @@ function* setCollection(action){
 function* collectionSaga(){
     yield takeEvery('ADD_GAME_COLLECTION', addGameToCollection);
     yield takeEvery('NEW_COLLECTION', addNewCollection);
-    yield takeEvery('GRAB_COLLECTION', setCollection);
+    yield takeEvery('GRAB_COLLECTION', grabCollection);
     yield takeEvery('REMOVE_TITLE', removeGameFromCollection);
 }
 

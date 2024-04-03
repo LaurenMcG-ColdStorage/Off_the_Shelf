@@ -16,7 +16,7 @@ function RecResult(){
     const history = useHistory();
     const dispatch = useDispatch();
     const recReturn = useSelector((store) => store.recs.recReturn);
-    console.log(recReturn);
+    //console.log(recReturn);
 
     const handleRestart = (event) => {
         event.preventDefault();
@@ -31,7 +31,7 @@ function RecResult(){
         <div className='page-container'>
             <h1>Here Are Some Great Picks For You!</h1>
             <div className='result-container'>
-                {recReturn.map((game, gameIndex) => {
+                {recReturn.map((game, gameIndex) => { 
                         return(
                             <Card key={gameIndex}
                                 sx={{width: 300,
@@ -76,8 +76,7 @@ function RecResult(){
                     border: 1,
                     borderColor: '#575477',
                     backgroundColor: '#464366',
-                    '&:hover':{backgroundColor: '#e7822b'},
-                    my: 2}}
+                    '&:hover':{backgroundColor: '#e7822b'}}}
                     onClick={(event) => handleRestart(event)}>Back To Start</Button>
             </div>
 
