@@ -57,6 +57,7 @@ Grid
 .grid-col_8 {
   flex-basis: 66.66666667%;
   max-width: 66.66666667%;
+  margin-top: 8rem;
 }
 
 .grid-col_9 {
@@ -77,4 +78,5 @@ Grid
 .grid-col_12 {
   flex-basis: 100%;
   max-width: 100%;
+  margin-top: 8rem;
 }

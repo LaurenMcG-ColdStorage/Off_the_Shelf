@@ -93,7 +93,7 @@ function* getRecommendations(action){
         };
 
         if (filteredRecs.length > 3) {
-            filteredRecs = filteredRecs.slice(0,2);
+            filteredRecs = filteredRecs.slice(0,3);
         };
 
         yield put({ type: 'SET_RECOMMENDATION', payload: filteredRecs});

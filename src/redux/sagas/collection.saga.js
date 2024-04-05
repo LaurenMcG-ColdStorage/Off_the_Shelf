@@ -14,8 +14,10 @@ function* addNewCollection(action){
 //This adds a game to a specified collection.
 function* addGameToCollection(action){
     try{
-        console.log('Add game saga: ', action.payload);
-        const gamesResponse = yield axios.post('/api/games', action.payload)
+        const newGame = action.payload
+        //console.log('Add game saga: ', action.payload);
+        const gamesResponse = yield axios.post('/api/games', newGame);
+        yield put({type: 'GRAB_COLLECTION', payload: newGame});
     } catch (error) {
         console.log('Error adding to collection');
     };
@@ -33,10 +35,10 @@ function* removeGameFromCollection(action){
 function* grabCollection(action){
     try {
         const collection = action.payload;
-        console.log('set collection id : ', collection.collection_id);
+        //console.log('set collection id : ', collection.collection_id);
 
         const collectionResponse = yield axios.get(`/api/collection/${collection.collection_id}`);
-        console.log('Collectionresponse data: ', collectionResponse.data);
+        //console.log('Collectionresponse data: ', collectionResponse.data);
 
         yield put({type: 'SET_COLLECTION', payload: collectionResponse.data});
     

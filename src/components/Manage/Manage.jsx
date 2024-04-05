@@ -23,7 +23,6 @@ function Manage(){
     
     const handleClose = () => {
         setManageModal(false);
-        handleRefresh();
     };
 
     const handleRemoveFromCollection = (game) => {
@@ -36,12 +35,13 @@ function Manage(){
         handleRefresh();
         dispatch({type: 'GET_MECHANICS'});
         dispatch({type: 'GET_GAME_THEMES'});
+        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}});
     }, [])
 
     return(
         <div className='page-container'>
             {manageModal && 
-                <ManageAddModal onClose={handleClose} onRefresh={handleRefresh}/>
+                <ManageAddModal onClose={handleClose}/>
             }
             <h2>Collection: View</h2>
             <Button variant='contained' sx={{

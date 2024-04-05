@@ -44,7 +44,7 @@ function CollectionPage(){
                                 image={game.image}
                                 alt={game.title}/>
                             <CardContent>
-                                <Typography>
+                                <Typography sx={{fontSize: '2rem'}}>
                                     {game.title}
                                 </Typography>
                             </CardContent>
