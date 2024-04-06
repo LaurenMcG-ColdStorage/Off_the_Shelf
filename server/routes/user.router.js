@@ -26,17 +26,32 @@ router.post('/register', (req, res, next) => {
   VALUES ($1, $2, $3, $4) RETURNING "id";`;
   const collectionQuery = `INSERT INTO "collections" ("name")
   VALUES ($1) RETURNING "id";`;
-  pool.query(collectionQuery, [req.body.collection])
-  .then((result) => { 
-    console.log('Collection Response: ', result.rows)
-    pool
-      .query(queryText, [username, password, result.rows[0].id, req.body.role])
-      .then(() => res.sendStatus(201))
-      .catch((err) => {
-        console.log('User registration failed: ', err);
-        res.sendStatus(500);
-      });
+  const checkQuery = `SELECT "id" FROM "collections" WHERE "name" = $1;`;
 
+  pool.query(checkQuery, [req.body.collection])
+  .then((result) => {
+    if (result.rows[0] === undefined) {
+      pool.query(collectionQuery, [req.body.collection])
+      .then((result) => { 
+        console.log('Collection Response: ', result.rows)
+        pool.query(queryText, [username, password, result.rows[0].id, req.body.role])
+          .then(() => res.sendStatus(201))
+          .catch((err) => {
+            console.log('User registration failed: ', err);
+            res.sendStatus(500);
+          });
+      })
+      .catch((error) => {
+        res.sendStatus(500);
+      })
+    } else {
+      pool.query(queryText, [username, password, result.rows[0].id, req.body.role])
+          .then(() => res.sendStatus(201))
+          .catch((err) => {
+            console.log('User registration failed: ', err);
+            res.sendStatus(500);
+          });
+    }
   })
 });
 // Handles login form authenticate/login POST
