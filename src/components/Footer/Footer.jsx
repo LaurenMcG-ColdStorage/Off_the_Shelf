@@ -9,13 +9,13 @@ import './Footer.css';
 
 function Footer() {
   return (
-    <div className='navFoot'>
+    <footer className='navFoot'>
       <div className='navBarFoot'>
         <Link to='/data' className='navLinkFoot' sx={{color: '#f2f2f2', textDecoration: 'none'}}>Data Policy</Link>
         <div>&copy; Rust Monster</div>
       </div>
 
-    </div>
+    </footer>
   );
 }
 

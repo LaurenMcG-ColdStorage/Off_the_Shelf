@@ -1,8 +1,4 @@
-footer {
-  margin-top: 80px;
-  padding: 20px;
-  text-align: center;
-}
+
 
 .navFoot {
   /* flex box layout */
@@ -21,10 +17,6 @@ footer {
   width: 100%;
   max-width: 1920px;
   text-align: center;
-}
-
-.nav a {
-  text-decoration: none;
 }
 
 .navLinkFoot {
