@@ -7,7 +7,7 @@ router.get('/:collection_id', (req, res) => {
     console.log('REC ROUTER, GET ROUTE: ', collection);
     const recQuery = `SELECT "games"."id", "games"."title", "games"."player_count", "games"."play_time",
                       "games"."mech1_id", "games"."mech2_id", "games"."mech3_id", "games"."theme_id", "games"."image",
-                      "mechanics"."name" AS "mechanic_name", "themes"."name" AS "theme_name" FROM "games"
+                      "mechanics"."name" AS "mechanic_name", "themes"."name" AS "theme_name", "collection_game"."collection_id" FROM "games"
                       JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
                       JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
                       JOIN "mechanics" ON "games"."mech1_id" = "mechanics"."id"

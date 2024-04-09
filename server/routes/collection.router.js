@@ -9,15 +9,18 @@ router.get('/:id', (req, res) => {
   // GET route code here
   const collectionID = req.params.id;
   //console.log('Collection code: ', collectionID);
+  //The query to gather up all of the data we're going to need on the games within the selected collection
   const collectionQuery = `SELECT "games"."title", "games"."image", "games"."id" AS "game_id", "games"."player_count", 
   "games"."play_time", "games"."mech1_id", "games"."mech2_id", "games"."mech3_id", "games"."theme_id",
   "collection_game"."played", "collection_game"."viewed", "collections"."id" AS "collection_id" FROM "games"
   JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
   JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
   WHERE "collections"."id" = $1;`;
+  //Calling up the database, and sending query/collection info
   pool
   .query(collectionQuery, [collectionID])
   .then((result) => {
+    //Shipping back the results
     res.send(result.rows);
   })
   .catch((error) => {
@@ -42,6 +45,7 @@ router.get('/:collection', (req, res) => {
 })
 
 router.post('/:collection', (req, res) => {
+  //This adds a new collection to the database
   const newCollection = req.params.collection;
   //console.log('add collection data: ', newCollection);
   const addQuery = `INSERT INTO "collections" ("name")
@@ -49,6 +53,7 @@ router.post('/:collection', (req, res) => {
   pool
   .query(addQuery, [newCollection])
   .then((result) => {
+    //Send back the ID of the new collection
     //console.log('Returning: ', result.rows[0])
     res.send(result.rows[0]);
   })
@@ -58,12 +63,14 @@ router.post('/:collection', (req, res) => {
 });
 
 router.put('/', (req, res) => {
+  //Update a game's views within a collection
   const updateArray = req.body;
   const metricUpdate = `UPDATE "collection_game" SET "viewed" = "viewed" + 1 WHERE "game_id" = $1 AND "collection_id" = $2;`;
 
-  console.log(updateArray);
+  console.log('VIEW UPDATE: ', updateArray);
+  //This is supposed to loop through the viewed games, and update the views on all of them.
   updateArray.forEach(item => {
-    pool.query(metricUpdate, [item.game_id, item.collection_id])
+    pool.query(metricUpdate, [item.id, item.collection_id])
     .then((result) => {console.log('Completed updating: ', item.title)})
     .catch((error) => {res.sendStatus(500)});
   });
