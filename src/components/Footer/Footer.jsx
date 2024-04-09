@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from '@mui/material';
 import './Footer.css';
 
 // This is one of our simplest components
@@ -7,7 +8,15 @@ import './Footer.css';
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 function Footer() {
-  return <footer>&copy; Rust Monster</footer>;
+  return (
+    <div className='navFoot'>
+      <div className='navBarFoot'>
+        <Link to='/data' className='navLinkFoot' sx={{color: '#f2f2f2', textDecoration: 'none'}}>Data Policy</Link>
+        <div>&copy; Rust Monster</div>
+      </div>
+
+    </div>
+  );
 }
 
 export default Footer;

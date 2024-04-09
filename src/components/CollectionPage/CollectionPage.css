@@ -1,5 +1,6 @@
 .collection {
     text-align: center;
     text-justify: center;
-    margin: auto
+    margin: auto;
+    text-shadow: -2px, 2px, 2px black;
 }

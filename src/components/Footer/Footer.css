@@ -3,3 +3,47 @@ footer {
   padding: 20px;
   text-align: center;
 }
+
+.navFoot {
+  /* flex box layout */
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  margin-top: 80px;
+  padding: 20px;
+  max-width: 1920px;
+}
+
+.navBarFoot {
+  margin: auto;
+  width: 100%;
+  max-width: 1920px;
+  text-align: center;
+}
+
+.nav a {
+  text-decoration: none;
+}
+
+.navLinkFoot {
+  display: inline-block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+  font-size: 15px;
+  
+
+  /* these last two make the logout button in
+  the nav bar look like another link */
+  border: none;
+  cursor: pointer;
+  outline: 0;
+}
+
+.navLinkFoot:hover {
+  background-color: #e7822b;
+  border-radius: 10px;
+}

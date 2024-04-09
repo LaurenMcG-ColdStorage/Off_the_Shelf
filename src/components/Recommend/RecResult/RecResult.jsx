@@ -57,10 +57,10 @@ function RecResult(){
                                         <Typography variant="h4">
                                             <b>{game.title}</b>
                                         </Typography>
-                                        <Typography variant='subtitle2'>
+                                        <Typography variant='body1'>
                                             Players: Up to {game.player_count}<br />
-                                            Mechanic: {game.mech1_id}<br />
-                                            Theme: {game.theme_id}
+                                            Mechanic: {game.mechanic_name}<br />
+                                            Theme: {game.theme_name}
                                         </Typography>
                                     </CardContent>
                                 </CardActionArea>

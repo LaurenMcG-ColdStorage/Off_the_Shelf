@@ -30,6 +30,8 @@ import RecMech from "../Recommend/RecMech/RecMech";
 import RecTheme from "../Recommend/RecTheme/RecTheme";
 import RecResult from '../Recommend/RecResult/RecResult';
 
+import DataPolicy from '../DataPolicy/DataPolicy';
+
 import './App.css';
 
 function App() {
@@ -103,6 +105,10 @@ function App() {
             <RecResult />
           </ProtectedRoute>
 
+          <Route path="/data">
+            <DataPolicy />
+          </Route>
+
           <ProtectedRoute
             // logged in shows UserPage else shows LoginPage
             exact
@@ -126,7 +132,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/home" />
               :
               // Otherwise, show the login page
               <LoginPage />
@@ -140,7 +146,7 @@ function App() {
             {user.id ?
               // If the user is already logged in, 
               // redirect them to the /user page
-              <Redirect to="/user" />
+              <Redirect to="/home" />
               :
               // Otherwise, show the registration page
               <RegisterPage />

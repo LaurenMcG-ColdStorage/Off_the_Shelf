@@ -35,7 +35,7 @@ function CollectionPage(){
                             backgroundColor: '#464366',
                             borderColor: '#575477',
                             color: '#f2f2f2',
-
+                            textShadow: 'inherit'
                             }}>
                         <CardActionArea>
                             <CardMedia 

@@ -5,9 +5,13 @@ const router = express.Router();
 router.get('/:collection_id', (req, res) => {
     const collection = req.params.collection_id;
     console.log('REC ROUTER, GET ROUTE: ', collection);
-    const recQuery = `SELECT * FROM "games"
+    const recQuery = `SELECT "games"."id", "games"."title", "games"."player_count", "games"."play_time",
+                      "games"."mech1_id", "games"."mech2_id", "games"."mech3_id", "games"."theme_id", "games"."image",
+                      "mechanics"."name" AS "mechanic_name", "themes"."name" AS "theme_name" FROM "games"
                       JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
                       JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
+                      JOIN "mechanics" ON "games"."mech1_id" = "mechanics"."id"
+                      JOIN "themes" ON "games"."theme_id" = "themes"."id"
                       WHERE "collections"."id" = $1;`;
 
     pool.query(recQuery, [collection])

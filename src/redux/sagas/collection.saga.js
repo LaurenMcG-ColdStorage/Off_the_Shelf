@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import { takeEvery, put } from 'redux-saga/effects';
 
 //This adds a new collection to the database
