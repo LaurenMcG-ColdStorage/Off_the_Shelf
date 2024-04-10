@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import './LogOutButton.css'
 
+//This button will likely be deprecated in the future
+
 function LogOutButton(props) {
   const dispatch = useDispatch();
   return (
