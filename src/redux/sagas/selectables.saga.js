@@ -4,8 +4,8 @@ import { takeEvery, put } from 'redux-saga/effects';
 function* getGameMechanics(){
     try {
         //console.log('MECHANICS SAGA RUNNING')
-        const mechResponse = yield axios.get(`/api/select`);
-        yield put({type: 'SET_MECHANICS', payload: mechResponse.data});
+        const mechResponse = yield axios.get(`/api/select`);             //Call for mechanics gathering
+        yield put({type: 'SET_MECHANICS', payload: mechResponse.data});  //Store the results for handling
     } catch (error) {
         console.log('Error getting game mechanics');
     }
@@ -14,8 +14,8 @@ function* getGameMechanics(){
 function* getGameThemes(){
     try {
         //console.log('THEME SAGA RUNNING')
-        const themeResponse = yield axios.get(`/api/select/theme`);
-        yield put ({type: 'SET_GAME_THEMES', payload: themeResponse.data});
+        const themeResponse = yield axios.get(`/api/select/theme`);        //Call for theme gathering
+        yield put ({type: 'SET_GAME_THEMES', payload: themeResponse.data});//Store for handling
     } catch (error) {
         console.log('Error getting game themes');
     }
@@ -24,8 +24,8 @@ function* getGameThemes(){
 function* whatsMyCollectionName(action){
     try {
         const collection = action.payload;
-        const collectResponse = yield axios.get(`/api/select/${collection}`)
-        yield put ({type: 'SET_COLLECT_NAME', payload: collectResponse.data[0].name})
+        const collectResponse = yield axios.get(`/api/select/${collection}`);         //Get the name of the collection
+        yield put ({type: 'SET_COLLECT_NAME', payload: collectResponse.data[0].name});//store the result for handling
     } catch (error) {
         console.log('Error updating collection name')
     }
