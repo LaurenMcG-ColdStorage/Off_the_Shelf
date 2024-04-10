@@ -19,6 +19,7 @@ router.get('/:collection_id', (req, res) => {
     .catch((error) => {res.sendStatus(500)});
 });
 
+//Deprecated - Ignore.
 router.post('/', (req,res) => { 
     const recData = req.body;
     console.log('RECDATA: ', recData);

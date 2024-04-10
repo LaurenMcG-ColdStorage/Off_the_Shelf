@@ -3,6 +3,7 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.get('/', (req,res) => {
+    //Gather all mechanics data
     const mechQuery = `SELECT * FROM "mechanics";`;
     //console.log('Mechanics Query Running')
     pool
@@ -16,6 +17,7 @@ router.get('/', (req,res) => {
 });
 
 router.get('/theme', (req, res) => {
+    //Gather all themes data
     const themeQuery = `SELECT * FROM "themes";`;
     //console.log('Themes Query Running')
     pool
@@ -29,7 +31,7 @@ router.get('/theme', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    //Gets the collection name based on the ID. THIS IS TO BE REFACTORED IN THE FUTURE, THIS SHOULD NOT BE NECESSARY!
+    //Gets the collection name based on the ID. THIS IS TO BE REFACTORED IN THE FUTURE, SHOULD NOT BE NECESSARY!
     const id = req.params.id;
     const callCollect = `SELECT "name" FROM "collections" WHERE "id" = $1;`;
 
