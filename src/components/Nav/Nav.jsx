@@ -46,9 +46,9 @@ function Nav() {
                 Manage
               </Link>
             }
-            <Link className="navLink" to='/user'>
+            {/* <Link className="navLink" to='/user'>
               Account
-            </Link>
+            </Link> */}
             <LogOutButton className="navLink" />
           </>
         )}
