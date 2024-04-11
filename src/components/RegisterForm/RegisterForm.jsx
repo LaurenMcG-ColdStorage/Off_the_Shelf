@@ -76,13 +76,15 @@ function RegisterForm() {
       <div>
         <label htmlFor="role">
           Role:
-          <input
+          <select 
             type="role"
             name="role"
             value={role}
             required
-            onChange={(event) => setRole(event.target.value)}
-          />
+            onChange={(event) => setRole(event.target.value)}>
+              <option value='Player'>Player</option>
+              <option value='Collector'>Collector</option>
+            </select>
         </label>
       </div>
       <div>

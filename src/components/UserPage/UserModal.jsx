@@ -9,7 +9,7 @@ export const UserModal = ({onSubmit, onCancel, onClose}) => {
 
     const user = useSelector((state) => state.user);
     //console.log(user);
-    const [userUpdate, setUserUpdate] = useState({id: user.id, collection: '', role: 'Player'});
+    const [userUpdate, setUserUpdate] = useState({id: user.id, collection: '', role: ''});
     const dispatch = useDispatch();
 
     const userSubmit = () => {
@@ -28,7 +28,7 @@ export const UserModal = ({onSubmit, onCancel, onClose}) => {
                     <h2> Update Profile: </h2>
                     <table>
                         <tr>
-                            <td><label>Collection: </label></td>
+                            <td><label>Set Active Collection: </label></td>
                             <td><input value={userUpdate.collection} onChange={(event) => setUserUpdate({...userUpdate, collection: event.target.value})}></input></td>
                         </tr>
                         <tr>

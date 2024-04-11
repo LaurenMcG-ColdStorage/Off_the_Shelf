@@ -80,23 +80,34 @@ router.put('/', (req, res) => {
   const userData = req.body;
   console.log('User update Data: ', userData);
   const collectCheck = `SELECT * FROM "collections" WHERE "name" = $1;`;
-  const updateQuery = `UPDATE "user" SET "collection_id" = $1, "role" = $2 WHERE "id" = $3;`;
+  const updateCollectionQuery = `UPDATE "user" SET "collection_id" = $1 WHERE "id" = $2;`;
+  const updateRoleQuery = `UPDATE "user" SET "role" = $1 WHERE "id" = $2;`;
   
-  
-  pool.query(collectCheck, [userData.collection])
-  .then((result) => {
-    //console.log('USER UPDATE: ', result.rows[0])
-    pool.query(updateQuery, [result.rows[0].id, userData.role, userData.id])
-      .then((result) => {
-        res.sendStatus(200);
-      })
-      .catch((error) => {
-        res.sendStatus(500);
-      })
-  })
-  .catch((error) => {
-    res.sendStatus(500);
-  })
+  if ( userData.collection != '') {
+    pool.query(collectCheck, [userData.collection])
+    .then((result) => {
+      //console.log('USER UPDATE: ', result.rows[0])
+      pool.query(updateCollectionQuery, [result.rows[0].id, userData.id])
+        .then((result) => {
+          res.sendStatus(200);
+        })
+        .catch((error) => {
+          res.sendStatus(500);
+        })
+    })
+    .catch((error) => {
+      res.sendStatus(500);
+    })
+  }
+  if ( userData.role != '') {
+      pool.query(updateRoleQuery, [userData.role, userData.id])
+        .then((result) => {
+          res.sendStatus(200);
+        })
+        .catch((error) => {
+          res.sendStatus(500);
+        })
+  }
 });
 
 module.exports = router;
