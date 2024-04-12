@@ -10,7 +10,7 @@ function RegisterForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [collection, setCollection] = useState('');
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('Player');
 
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
@@ -85,7 +85,7 @@ function RegisterForm() {
               <option value='Player'>Player</option>
               <option value='Collector'>Collector</option>
             </select>
-        </label>
+        </label><br />
       </div>
       <div>
         <Button className="btn"  variant='contained'
