@@ -37,54 +37,60 @@ function RegisterForm() {
           {errors.registrationMessage}
         </h3>
       )}
-      <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="collection">
-          Collection:
-          <input
-            type="collection"
-            name="collection"
-            value={collection}
-            required
-            onChange={(event) => setCollection(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="role">
-          Role:
-          <input
-            type="role"
-            name="role"
-            value={role}
-            required
-            onChange={(event) => setRole(event.target.value)}
-          />
-        </label>
-      </div>
+      <table className='registerTable'>
+        <tbody>
+          <tr>
+            <td><label htmlFor="username">Username:</label></td>
+            <td>
+              <input
+                type="text"
+                name="username"
+                value={username}
+                required
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label htmlFor="password">Password:</label></td>
+            <td>
+              <input
+                type="password"
+                name="password"
+                value={password}
+                required
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label htmlFor="collection">Collection:</label></td>
+            <td>
+              <input
+                type="collection"
+                name="collection"
+                value={collection}
+                required
+                onChange={(event) => setCollection(event.target.value)}
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label htmlFor="role">Role:</label></td>
+            <td>
+              <select
+                type="role"
+                name="role"
+                value={role}
+                required
+                onChange={(event) => setRole(event.target.value)}>
+                  <option default value='Player'>Player</option>
+                  <option value='Collector'>Collector</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
       <div>
         <Button className="btn"  variant='contained'
           sx={{
