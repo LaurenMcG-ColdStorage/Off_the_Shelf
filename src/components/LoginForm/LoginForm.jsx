@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@mui/material';
+import { Input } from '@mui/material';
 
 import './LoginForm.css';
 
@@ -41,7 +42,10 @@ function LoginForm() {
           <tr>
             <td><label htmlFor="username">Username:</label></td>
             <td>
-              <input
+              <Input sx={{
+                color: '#f2f2f2',
+                textShadow: 2,
+              }}
                 type="text"
                 name="username"
                 required
@@ -53,7 +57,10 @@ function LoginForm() {
           <tr>
             <td><label htmlFor="password">Password:</label></td>
             <td>
-              <input
+              <Input sx={{
+                color: '#f2f2f2',
+                textShadow: 2,
+              }}
                 type="password"
                 name="password"
                 required
