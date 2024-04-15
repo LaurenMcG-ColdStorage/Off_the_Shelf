@@ -28,12 +28,16 @@ router.post('/register', (req, res, next) => {
   VALUES ($1) RETURNING "id";`;
   const checkQuery = `SELECT "id" FROM "collections" WHERE "name" = $1;`;
 
+  //Query One: Check for a collection's existence in the collections table
   pool.query(checkQuery, [req.body.collection])
   .then((result) => {
+    //If the result is undefined
     if (result.rows[0] === undefined) {
+      //Then add the new collection to collections table
       pool.query(collectionQuery, [req.body.collection])
       .then((result) => { 
-        console.log('Collection Response: ', result.rows)
+        //Finally, add user to database
+        //console.log('Collection Response: ', result.rows)
         pool.query(queryText, [username, password, result.rows[0].id, req.body.role])
           .then(() => res.sendStatus(201))
           .catch((err) => {
@@ -44,7 +48,9 @@ router.post('/register', (req, res, next) => {
       .catch((error) => {
         res.sendStatus(500);
       })
+    //If the result isn't undefined
     } else {
+      //Skip adding collection, and just add new user
       pool.query(queryText, [username, password, result.rows[0].id, req.body.role])
           .then(() => res.sendStatus(201))
           .catch((err) => {
@@ -70,6 +76,7 @@ router.post('/logout', (req, res) => {
 });
 
 router.put('/', (req, res) => {
+  //Updates active user's information
   const userData = req.body;
   console.log('User update Data: ', userData);
   const collectCheck = `SELECT * FROM "collections" WHERE "name" = $1;`;
@@ -78,7 +85,7 @@ router.put('/', (req, res) => {
   
   pool.query(collectCheck, [userData.collection])
   .then((result) => {
-    console.log('USER UPDATE: ', result.rows[0])
+    //console.log('USER UPDATE: ', result.rows[0])
     pool.query(updateQuery, [result.rows[0].id, userData.role, userData.id])
       .then((result) => {
         res.sendStatus(200);

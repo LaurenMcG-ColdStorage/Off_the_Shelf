@@ -17,8 +17,8 @@ function* addGameToCollection(action){
     try{
         const newGame = action.payload
         //console.log('Add game saga: ', action.payload);
-        const gamesResponse = yield axios.post('/api/games', newGame);
-        yield put({type: 'GRAB_COLLECTION', payload: newGame});
+        const gamesResponse = yield axios.post('/api/games', newGame); //Send data to router for handling
+        yield put({type: 'GRAB_COLLECTION', payload: newGame});        //Store returned data for use
     } catch (error) {
         console.log('Error adding to collection');
     };
@@ -27,7 +27,7 @@ function* addGameToCollection(action){
 function* removeGameFromCollection(action){
     try{
         const queryData = action.payload;
-        const removeResponse = yield axios.delete(`/api/games/${queryData.collection_id}/${queryData.game_id}`);
+        const removeResponse = yield axios.delete(`/api/games/${queryData.collection_id}/${queryData.game_id}`); //Sends data for specific game removal from collection
     } catch (error) {
         console.log('Error removing game from collection');
     }
@@ -38,7 +38,7 @@ function* grabCollection(action){
         const collection = action.payload;
         //console.log('set collection id : ', collection.collection_id);
 
-        const collectionResponse = yield axios.get(`/api/collection/${collection.collection_id}`);
+        const collectionResponse = yield axios.get(`/api/collection/${collection.collection_id}`); //Send collection id, get collection.
         //console.log('Collectionresponse data: ', collectionResponse.data);
 
         yield put({type: 'SET_COLLECTION', payload: collectionResponse.data});

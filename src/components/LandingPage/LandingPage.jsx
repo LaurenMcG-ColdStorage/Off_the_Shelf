@@ -18,9 +18,10 @@ function LandingPage() {
   };
 
   useEffect(() => {
-    {user.id && setHeading(`Welcome Back ${user.username}!`) }
+    {user.id && setHeading(`Welcome Back ${user.username}!`)}
   },[])
 
+  //Rendering is conditional, based on whether you're logged in
   return (
     <div className="container">
       <div className="grid">

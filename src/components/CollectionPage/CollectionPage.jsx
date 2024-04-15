@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { Card } from "@mui/material";
-import {CardContent} from "@mui/material";
-import {CardMedia} from "@mui/material";
-import {CardActionArea} from "@mui/material";
-import {Typography} from "@mui/material";
+import { CardContent } from "@mui/material";
+import { CardMedia } from "@mui/material";
+import { CardActionArea } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import './CollectionPage.css';
 
