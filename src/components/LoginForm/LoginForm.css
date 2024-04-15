@@ -5,3 +5,10 @@
     border-color: #575477;
     box-shadow: -2px, 2px, 2px, black;
 }
+
+.loginTable{
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
