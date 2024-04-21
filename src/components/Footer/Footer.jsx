@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from '@mui/material';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import './Footer.css';
 
 function Footer() {

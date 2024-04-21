@@ -3,8 +3,6 @@ import LoginForm from '../LoginForm/LoginForm';
 import { useHistory } from 'react-router-dom';
 import { Button } from '@mui/material';
 
-import './LoginPage.css';
-
 function LoginPage() {
   const history = useHistory();
 
