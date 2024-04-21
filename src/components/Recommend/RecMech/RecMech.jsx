@@ -43,7 +43,7 @@ function RecMech(){
                         sx={{color: '#f2f2f2',
                             borderColor: '#464366',
                             backgroundColor: '#464366',
-                            '&:selected': {backgroundColor: '#464366'} }}
+                            '& .MuiSelect-root': {color: '#e78922b'}}}
                         value={mechBoxOne}
                         onChange={(event) => setMechBoxOne(event.target.value)}>
                             {mechanics.map((mech, mechIndex) => {

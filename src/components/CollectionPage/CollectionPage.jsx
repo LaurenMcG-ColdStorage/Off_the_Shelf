@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@mui/material";
 import {CardContent} from "@mui/material";
 import {CardMedia} from "@mui/material";
@@ -12,6 +12,7 @@ function CollectionPage(){
 
     const user = useSelector((store) => store.user);
     const collection = useSelector((store) => store.collection);
+    const [details, setDetails] = useState(false);
     //console.log('Collection is: ', collection);
     const dispatch = useDispatch();
     
@@ -37,17 +38,18 @@ function CollectionPage(){
                             color: '#f2f2f2',
                             textShadow: 'inherit'
                             }}>
-                        <CardActionArea>
-                            <CardMedia 
+                        <CardActionArea onClick={(event) => setDetails(!details)}>
+                                <CardMedia 
                                 component='img'
                                 height='145'
                                 image={game.image}
                                 alt={game.title}/>
-                            <CardContent>
-                                <Typography sx={{fontSize: '2rem'}}>
-                                    {game.title}
-                                </Typography>
-                            </CardContent>
+                                <CardContent>
+                                    <Typography sx={{fontSize: '2rem'}}>
+                                    {/* {details === true ? 
+                                        // {game.title} : }  This is where I'm trying to work on rendering a games details when it's clicked on. */}
+                                    </Typography>
+                                </CardContent>
                         </CardActionArea>
                     </Card>
 
