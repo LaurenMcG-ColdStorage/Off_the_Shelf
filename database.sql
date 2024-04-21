@@ -1,8 +1,4 @@
--- USER is a reserved keyword with Postgres
--- You must use double quotes in every query that user is in:
--- ex. SELECT * FROM "user";
--- Otherwise you will have errors!
-
+-- PLEASE READ FIRST --
 -- The database name is: off_the_shelf
 
 -- These queries are arranged so that you can copy/paste them directly into your database interface 
@@ -14,7 +10,7 @@ CREATE TABLE "mechanics" (
 	"name" VARCHAR(20)
 	);
 
--- This stores themes	
+-- This stores the themes
 CREATE TABLE "themes" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(20)
@@ -75,7 +71,7 @@ CREATE TABLE "user_collection" (
 	"collection_id" INT REFERENCES "collections"
 	);
 
--- This will hold user game history logs
+-- This holds the data that a user wants to store about games they've played.
 CREATE TABLE "history" (
 	"user_id" BIGINT REFERENCES "user",
 	"game_id" INT NOT NULL REFERENCES "games",
