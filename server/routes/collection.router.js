@@ -44,25 +44,23 @@ router.get('/:collection', (req, res) => {
   })
 })
 
-router.post('/:collection', (req, res) => {
+router.post('/:collection/:id', (req, res) => {
   //This adds a new collection to the database
   const newCollection = req.params.collection;
+  const userId = req.params.id;
   //console.log('add collection data: ', newCollection);
-  const addQuery = `INSERT INTO "collections" ("name")
-                    VALUES ($1) RETURNING "id";`;
+  const addQuery = `WITH "ins1" AS (
+                      INSERT INTO "collections" ("name")
+                      VALUES ($1) 
+                      RETURNING "id"),
+                    UPDATE "user" SET "active_collection" = (SELECT "id" FROM "ins1") WHERE "user_id" = $2`;
   pool
-  .query(addQuery, [newCollection])
-  .then((result) => {
-    //Send back the ID of the new collection
-    //console.log('Returning: ', result.rows[0])
-    res.send(result.rows[0]);
-  })
-  .catch((error) => {
-    res.sendStatus(504)
-  });
+  .query(addQuery, [newCollection, userId])
+  .then((result) => {res.send(result.rows[0])})  //Send back the ID of the new collection for state update.
+  .catch((error) => {res.sendStatus(500)});      //Send an error on failure.
 });
 
-router.put('/', (req, res) => {
+router.put('/view', (req, res) => {
   //Update a game's views within a collection
   const updateArray = req.body;
   const metricUpdate = `UPDATE "collection_game" SET "viewed" = "viewed" + 1 WHERE "game_id" = $1 AND "collection_id" = $2;`;

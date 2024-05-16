@@ -37,58 +37,6 @@ function RegisterForm() {
           {errors.registrationMessage}
         </h3>
       )}
-<<<<<<< HEAD
-      <div>
-        <label htmlFor="username">
-          Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            required
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            required
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="collection">
-          Collection:
-          <input
-            type="collection"
-            name="collection"
-            value={collection}
-            required
-            onChange={(event) => setCollection(event.target.value)}
-          />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="role">
-          Role:
-          <select 
-            type="role"
-            name="role"
-            value={role}
-            required
-            onChange={(event) => setRole(event.target.value)}>
-              <option value='Player'>Player</option>
-              <option value='Collector'>Collector</option>
-            </select>
-        </label><br />
-      </div>
-=======
       <table className='registerTable'>
         <tbody>
           <tr>
@@ -143,7 +91,6 @@ function RegisterForm() {
           </tr>
         </tbody>
       </table>
->>>>>>> 5e628c17398404916b52be8062296a7abd7d9cbd
       <div>
         <Button className="btn"  variant='contained'
           sx={{

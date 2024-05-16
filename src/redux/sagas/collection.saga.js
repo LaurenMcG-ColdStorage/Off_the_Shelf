@@ -1,12 +1,13 @@
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import { takeEvery, put } from 'redux-saga/effects';
 
 //This adds a new collection to the database
 function* addNewCollection(action){
-    const collection = action.payload
+    const collection = action.payload.collection;
+    const userId = action.pyaload.user_id;
     try {
-        const collectionResponse = yield axios.post(`/api/collection/${collection}`)
+        const collectionResponse = yield axios.post(`/api/collection/${collection}/${userId}`);
+        yield put ({type: 'GRAB_COLLECTION', payload: collectionResponse.data})
     } catch (error) {
         console.log('Unable to add collection')
     };
@@ -31,7 +32,7 @@ function* removeGameFromCollection(action){
     } catch (error) {
         console.log('Error removing game from collection');
     }
-}
+};
 
 function* grabCollection(action){
     try {
@@ -53,6 +54,6 @@ function* collectionSaga(){
     yield takeEvery('NEW_COLLECTION', addNewCollection);
     yield takeEvery('GRAB_COLLECTION', grabCollection);
     yield takeEvery('REMOVE_TITLE', removeGameFromCollection);
-}
+};
 
 export default collectionSaga;

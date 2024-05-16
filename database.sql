@@ -20,12 +20,11 @@ CREATE TABLE "themes" (
 CREATE TABLE "games" (
 	"id" SERIAL PRIMARY KEY,
 	"title" VARCHAR(50) NOT NULL,
-	"player_count" INT NOT NULL,
-	"play_time" INT NOT NULL,
-	"mech1_id" INT NOT NULL REFERENCES "mechanics",
-	"mech2_id" INT NOT NULL REFERENCES "mechanics",
-	"mech3_id" INT NOT NULL REFERENCES "mechanics",
-	"theme_id" INT NOT NULL REFERENCES "themes",
+	"min_players" INT NOT NULL
+	"max_players" INT NOT NULL,
+	"min_play_time" INT NOT NULL,
+	"max_play_time" INT NOT NULL,
+	"description" VARCHAR(1000),
 	"image" VARCHAR(100) NOT NULL
 	);
 
@@ -60,7 +59,7 @@ CREATE TABLE "user" (
 	"id" SERIAL PRIMARY KEY,
 	"username" VARCHAR(30) UNIQUE NOT NULL,
 	"password" VARCHAR(255) NOT NULL,
-	"collection_id" INT REFERENCES "collections",
+	"active_collection" INT REFERENCES "collections",
 	"role" VARCHAR(10)
 	);
 	
@@ -80,3 +79,49 @@ CREATE TABLE "history" (
 	"notes" VARCHAR(1000)
 	);
 	
+	INSERT INTO "mechanics" ("name")
+VALUES ('Area Control'), 
+('Contracts'), 
+('Engine Building'), 
+('Deck Building'),
+('Cooperative'),
+('Strategy'),
+('Hidden Roles'),
+('Worker Placement'),
+('Dice Rolling'),
+('Set Collection'),
+('Trick Taking'),
+('Drafting'),
+('Tile Placement'),
+('Bag Building'),
+('Pool Building'),
+('Time Travel'),
+('Card Play'),
+('Push Your Luck'),
+('Puzzle'),
+('Pattern Building'),
+('Economy Manipulation'),
+('Variable Set Up'),
+('Hand Management'),
+('Legacy'),
+('Trading');
+
+INSERT INTO "themes" ("name")
+VALUES ('Steampunk'),
+('Fantasy'),
+('Mythology'),
+('Animals'),
+('Nature'),
+('Horror'),
+('Travel'),
+('History'),
+('Science Fiction'),
+('Zombies'),
+('Movie'),
+('Post Apocalyptic'),
+('Nautical'),
+('Town Building'),
+('Civilization'),
+('Art'),
+('Abstract')
+;
