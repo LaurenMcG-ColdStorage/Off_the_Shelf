@@ -60,7 +60,7 @@ CREATE TABLE "user" (
 	"username" VARCHAR(30) UNIQUE NOT NULL,
 	"password" VARCHAR(255) NOT NULL,
 	"active_collection" INT REFERENCES "collections",
-	"role" VARCHAR(10)
+	"email" VARCHAR(100)
 	);
 	
  -- This will tie users to collections

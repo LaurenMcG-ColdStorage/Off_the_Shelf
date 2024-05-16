@@ -2,20 +2,23 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 
-/**
- * GET route template
- */
+
 router.get('/:id', (req, res) => {
   // GET route code here
   const collectionID = req.params.id;
   //console.log('Collection code: ', collectionID);
   //The query to gather up all of the data we're going to need on the games within the selected collection
-  const collectionQuery = `SELECT "games"."title", "games"."image", "games"."id" AS "game_id", "games"."player_count", 
-  "games"."play_time", "games"."mech1_id", "games"."mech2_id", "games"."mech3_id", "games"."theme_id",
-  "collection_game"."played", "collection_game"."viewed", "collections"."id" AS "collection_id" FROM "games"
-  JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
-  JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
-  WHERE "collections"."id" = $1;`;
+  const collectionQuery = `SELECT "games"."title", "games"."image", "games"."id" AS "game_id", "games"."min_players", 
+  "games"."max_players", "games"."min_play_time", "games"."max_play_time", "games"."description", STRING_AGG("mechanics"."name", ' ,') AS "mechanic", "themes"."name" AS "theme", "collection_game"."played", "collection_game"."viewed" FROM "games"
+  INNER JOIN "game_mechanic" ON "games"."id" = "game_mechanic"."game_id"
+  INNER JOIN "mechanics" ON "mechanics"."id" = "game_mechanic"."mechanic_id"
+  INNER JOIN "game_theme" ON "games"."id" = "game_theme"."theme_id"
+  INNER JOIN "themes" ON "themes"."id" = "game_theme"."theme_id"
+  INNER JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
+  INNER JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
+  WHERE "collections"."id" = $1
+  GROUP BY "games"."id", "themes"."name", "collection_game"."played", "collection_game"."viewed";`;
+  const mechanicQuery = 
   //Calling up the database, and sending query/collection info
   pool
   .query(collectionQuery, [collectionID])
