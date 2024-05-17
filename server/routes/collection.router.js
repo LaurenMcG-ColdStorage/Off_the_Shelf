@@ -8,8 +8,11 @@ router.get('/:id', (req, res) => {
   const collectionID = req.params.id;
   //console.log('Collection code: ', collectionID);
   //The query to gather up all of the data we're going to need on the games within the selected collection
-  const collectionQuery = `SELECT "games"."title", "games"."image", "games"."id" AS "game_id", "games"."min_players", 
-  "games"."max_players", "games"."min_play_time", "games"."max_play_time", "games"."description", STRING_AGG("mechanics"."name", ' ,') AS "mechanic", "themes"."name" AS "theme", "collection_game"."played", "collection_game"."viewed" FROM "games"
+  const collectionQuery =  //This looks huge and intimidating, but really all it's doing is getting game information and organizing it all before sending it back to the client
+  `SELECT "games"."title", "games"."image", "games"."id" AS "game_id", "games"."min_players", 
+  "games"."max_players", "games"."min_play_time", "games"."max_play_time", "games"."description",
+  STRING_AGG("mechanics"."name", ' ,') AS "mechanic", "themes"."name" AS "theme", "collection_game"."played",
+  "collection_game"."viewed" FROM "games"
   INNER JOIN "game_mechanic" ON "games"."id" = "game_mechanic"."game_id"
   INNER JOIN "mechanics" ON "mechanics"."id" = "game_mechanic"."mechanic_id"
   INNER JOIN "game_theme" ON "games"."id" = "game_theme"."theme_id"
@@ -18,17 +21,11 @@ router.get('/:id', (req, res) => {
   INNER JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
   WHERE "collections"."id" = $1
   GROUP BY "games"."id", "themes"."name", "collection_game"."played", "collection_game"."viewed";`;
-  const mechanicQuery = 
   //Calling up the database, and sending query/collection info
   pool
   .query(collectionQuery, [collectionID])
-  .then((result) => {
-    //Shipping back the results
-    res.send(result.rows);
-  })
-  .catch((error) => {
-    res.sendStatus(500);
-  })
+  .then((result) => {res.send(result.rows)})   //Shipping back the results
+  .catch((error) => {res.sendStatus(500)});    //Sending an error if things went wrong
 });
 
 router.get('/:collection', (req, res) => {
@@ -76,5 +73,7 @@ router.put('/view', (req, res) => {
     .catch((error) => {res.sendStatus(500)});
   });
 });
+
+router.delete
 
 module.exports = router;
