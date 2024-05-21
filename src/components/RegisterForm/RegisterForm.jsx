@@ -7,26 +7,18 @@ import './RegisterForm.css';
 function RegisterForm() {
 
   //These state bits are for collecting a new user's inputs. 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [collection, setCollection] = useState('');
-  const [role, setRole] = useState('Player');
+  const [newUser, setNewUser] = useState({
+                                username: '',
+                                password: '',
+                                email: '',
+                                collection: ''})
 
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
   const registerUser = (event) => {
     event.preventDefault();
-
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        username: username,
-        password: password,
-        collection: collection,
-        role: role
-      },
-    });
+    dispatch({type: 'REGISTER', payload: newUser});
   }; // end registerUser
 
   return (
@@ -45,9 +37,9 @@ function RegisterForm() {
               <input
                 type="text"
                 name="username"
-                value={username}
+                value={newUser.username}
                 required
-                onChange={(event) => setUsername(event.target.value)}
+                onChange={(event) => setNewUser({...newUser, username: event.target.value})}
               />
             </td>
           </tr>
@@ -57,9 +49,9 @@ function RegisterForm() {
               <input
                 type="password"
                 name="password"
-                value={password}
+                value={newUser.password}
                 required
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={(event) => setNewUser({...newUser, password: event.target.value})}
               />
             </td>
           </tr>
@@ -69,24 +61,22 @@ function RegisterForm() {
               <input
                 type="collection"
                 name="collection"
-                value={collection}
+                value={newUser.collection}
                 required
-                onChange={(event) => setCollection(event.target.value)}
+                onChange={(event) => setNewUser({...newUser, collection: event.target.value})}
               />
             </td>
           </tr>
           <tr>
-            <td><label htmlFor="role">Role:</label></td>
+            <td><label htmlFor="role">Email Address:</label></td>
             <td>
-              <select
-                type="role"
-                name="role"
-                value={role}
+              <input
+                type="email"
+                name="email"
+                value={newUser.email}
                 required
-                onChange={(event) => setRole(event.target.value)}>
-                  <option default value='Player'>Player</option>
-                  <option value='Collector'>Collector</option>
-              </select>
+                onChange={(event) => setNewUser({...newUser, email: event.target.value})}
+              />
             </td>
           </tr>
         </tbody>

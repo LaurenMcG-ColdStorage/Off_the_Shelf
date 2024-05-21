@@ -1,10 +1,9 @@
 .formPanel {
     background-color: #464366;
     border: 2px;
-    border-radius: 5px;
     border-color: #575477;
     box-shadow: -2px, 2px, 2px, black;
-    margin-top: 10rem;
+    min-width: 350px;
 }
 
 .registerTable{

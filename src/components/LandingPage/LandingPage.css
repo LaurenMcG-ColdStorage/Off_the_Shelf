@@ -86,3 +86,9 @@ Grid
   margin: auto;
   max-width: 50%;
 }
+
+/* --------------  MISC----------------- */
+.grid_align{
+  width: 350px;
+  text-align: center;
+}

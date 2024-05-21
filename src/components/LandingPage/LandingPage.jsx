@@ -25,7 +25,7 @@ function LandingPage() {
   return (
     <div className="container">
       <div className="grid">
-        <div className={user.id ? "grid-col grid-col_12" : "grid-col grid-col_8"}>
+        <div className={user.id ? "grid-col gpromorid-col_11" : "grid-col grid-col_7"}>
           <div className='promo'>
             <h2>{heading}</h2>
             <p>
@@ -55,9 +55,9 @@ function LandingPage() {
 
         :
 
-        <div className="grid-col grid-col_4">
+        <div className="grid-col grid-col_3">
           <RegisterForm /> 
-          <center>
+          <center className='grid_align'>
             <h4>Already a Member?</h4>
             <Button className="btn btn_sizeSm" variant='contained'
               sx={{
