@@ -25,18 +25,20 @@ router.post('/register', (req, res, next) => {
   //This query will add a new user
   const checkQuery = `SELECT "id" FROM "collections" WHERE "name" = $1;`;
 
-  const registerTransactionOne = `WITH "ins1" AS (
-                                    INSERT INTO "collections" ("name")
-                                    VALUES ($1)
-                                    RETURNING "id")
-                                  "ins2" AS (
-                                    INSERT INTO "user" ("username", "password", "active_collection", "email")
-                                    SELECT $2, $3, ("id" FROM "ins1"), $4
-                                    RETURNING "id"),
-                                  INSERT INTO "user_collection" ("user_id", "role", "collection_id")
-                                  SELECT ("id" FROM "ins2"), $5, ("id" FROM "ins1");`;
+  const registerTransactionOne = 
+  `WITH "ins1" AS (
+    INSERT INTO "collections" ("name")
+    VALUES ($1)
+    RETURNING "id"),
+  "ins2" AS (
+    INSERT INTO "user" ("username", "password", "active_collection", "email")
+    SELECT $2, $3, "id", $4 FROM "ins1"
+    RETURNING "id")
+  INSERT INTO "user_collection" ("user_id", "role", "collection_id")
+  VALUES((SELECT "id" FROM "ins2"), $5, (SELECT "id" FROM "ins1"));`;
   
-  const registerTransactionTwo = `WITH "ins1" AS (
+  const registerTransactionTwo = `
+  WITH "ins1" AS (
     INSERT INTO "user" ("username", "password", "active_collection", "email")
     VALUES ($1, $2, $3, $4)
     RETURNING "id")
@@ -46,11 +48,11 @@ router.post('/register', (req, res, next) => {
   //Query One: Check for a collection's existence in the collections table
   pool.query(checkQuery, [collection])
   .then((result) => {
-    const collectId = result.rows[0].id;
     //If the result is undefined
-    console.log(collectId);
-    if (collectId === undefined) {
-      console.log('Inside Register If Statement')
+    //console.log(result.rows[0].id);
+    if (result.rows[0] === undefined) {
+      //console.log('Inside Register If Statement')
+      //console.log('Collection: ', collection, 'Username: ', username, 'Password: ', password, 'Email: ', email);
       //Run the transaction to fill in the relevant tables: user, collections, user_collection
       pool.query(registerTransactionOne, [collection, username, password, email, 'Collector'])
       .then((result) => {res.sendStatus(200)})  //Send OK signal on completion
@@ -58,12 +60,12 @@ router.post('/register', (req, res, next) => {
     //If the result isn't undefined
     } else {
       //Skip adding collection, and just add new user
-      console.log('Inside Register Else Statement')
-      console.log('Username: ', username, 'Password: ', password, 'Collection ID: ', collectId, 'Email: ', email)
-      pool.query(registerTransactionTwo, [username, password, collectId, email, 'Player'])
+      //console.log('Inside Register Else Statement')
+      //console.log('Username: ', username, 'Password: ', password, 'Collection ID: ', result.rows[0].id, 'Email: ', email)
+      pool.query(registerTransactionTwo, [username, password, result.rows[0].id, email, 'Player'])
           .then((result) => {res.sendStatus(201)})  //Send OK on completion
           .catch((error) => {
-            console.log('Registration failed: ', error)
+            //console.log('Registration failed: ', error)
             res.sendStatus(500)
           }); //Send Error on failure
     };
