@@ -25,7 +25,7 @@ function LandingPage() {
   return (
     <div className="container">
       <div className="grid">
-        <div className={user.id ? "grid-col gpromorid-col_11" : "grid-col grid-col_7"}>
+        <div className={user.id ? "grid-col grid-col_12" : "grid-col grid-col_7"}>
           <div className='promo'>
             <h2>{heading}</h2>
             <p>

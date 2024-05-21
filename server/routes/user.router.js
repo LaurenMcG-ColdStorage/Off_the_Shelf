@@ -21,7 +21,6 @@ router.post('/register', (req, res, next) => {
   const password = encryptLib.encryptPassword(req.body.password);
   const collection = req.body.collection;
   const email = req.body.email;
-  const role = req.body.role;
 
   //This query will add a new user
   const checkQuery = `SELECT "id" FROM "collections" WHERE "name" = $1;`;
@@ -38,27 +37,35 @@ router.post('/register', (req, res, next) => {
                                   SELECT ("id" FROM "ins2"), $5, ("id" FROM "ins1");`;
   
   const registerTransactionTwo = `WITH "ins1" AS (
-                                    INSERT INTO "user" ("username", "password", "active_collection", "email")
-                                    SELECT $1, $2, $3, $4
-                                    RETURNING "id"),
-                                  INSERT INTO "user_collection" ("user_id", "role", "collection_id")
-                                  SELECT ("id" FROM "ins1"), $5, $3;`
+    INSERT INTO "user" ("username", "password", "active_collection", "email")
+    VALUES ($1, $2, $3, $4)
+    RETURNING "id")
+  INSERT INTO "user_collection" ("user_id", "role", "collection_id")
+  SELECT "id", $5, $3 FROM "ins1";`
 
   //Query One: Check for a collection's existence in the collections table
   pool.query(checkQuery, [collection])
   .then((result) => {
+    const collectId = result.rows[0].id;
     //If the result is undefined
-    if (result.rows[0] === undefined) {
+    console.log(collectId);
+    if (collectId === undefined) {
+      console.log('Inside Register If Statement')
       //Run the transaction to fill in the relevant tables: user, collections, user_collection
-      pool.query(registerTransactionOne, [collection, username, password, email, role])
+      pool.query(registerTransactionOne, [collection, username, password, email, 'Collector'])
       .then((result) => {res.sendStatus(200)})  //Send OK signal on completion
       .catch((error) => {res.sendStatus(500)}); //Send an error if transaction fails
     //If the result isn't undefined
     } else {
       //Skip adding collection, and just add new user
-      pool.query(registerTransactionTwo, [username, password, result.rows[0].id, email, role])
+      console.log('Inside Register Else Statement')
+      console.log('Username: ', username, 'Password: ', password, 'Collection ID: ', collectId, 'Email: ', email)
+      pool.query(registerTransactionTwo, [username, password, collectId, email, 'Player'])
           .then((result) => {res.sendStatus(201)})  //Send OK on completion
-          .catch((error) => {res.sendStatus(500)}); //Send Error on failure
+          .catch((error) => {
+            console.log('Registration failed: ', error)
+            res.sendStatus(500)
+          }); //Send Error on failure
     };
   })
 });

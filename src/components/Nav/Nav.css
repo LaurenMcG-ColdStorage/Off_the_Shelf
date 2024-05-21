@@ -8,7 +8,7 @@
   height: 6em;
   background-image: url(/images/header.jpg);
   background-color: black, 0.6;
-  background-size: 1920px;
+  background-size: cover;
 }
 
 .navBar {
