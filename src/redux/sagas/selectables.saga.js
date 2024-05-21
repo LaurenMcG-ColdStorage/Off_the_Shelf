@@ -23,9 +23,10 @@ function* getGameThemes(){
 
 function* whatsMyCollectionName(action){
     try {
-        const collection = action.payload;
-        const collectResponse = yield axios.get(`/api/select/${collection}`);         //Get the name of the collection
-        yield put ({type: 'SET_COLLECT_NAME', payload: collectResponse.data[0].name});//store the result for handling
+        const collection = action.payload.active_collection;
+        const user = action.payload.id;
+        const collectResponse = yield axios.get(`/api/select/${collection}/${user}`); //Get the name of the collection, and the user's role
+        yield put ({type: 'SET_COLLECT_NAME', payload: collectResponse.data});        //store the result for handling
     } catch (error) {
         console.log('Error updating collection name')
     }

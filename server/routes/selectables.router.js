@@ -30,10 +30,13 @@ router.get('/theme', (req, res) => {
     })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id/:user', (req, res) => {
     //Gets the collection name based on the ID. THIS IS TO BE REFACTORED IN THE FUTURE, SHOULD NOT BE NECESSARY!
     const id = req.params.id;
-    const callCollect = `SELECT "name" FROM "collections" WHERE "id" = $1;`;
+    const callCollect = `
+    SELECT "collections"."name" FROM "collections" 
+    JOIN "user_collection" ON
+    WHERE "id" = $1;`;
 
     pool
     .query(callCollect, [id])
