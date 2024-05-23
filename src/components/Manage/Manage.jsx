@@ -12,13 +12,13 @@ import './Manage.css';
 
 function Manage(){
 
-    const user = useSelector((store) => store.user.collection_id);
+    const user = useSelector((store) => store.user);
     const collection = useSelector((store) => store.collection);
     const dispatch = useDispatch();
     const [manageModal, setManageModal] = useState(false);
 
     const handleRefresh = () => {
-        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}});
+        dispatch({type: 'GRAB_COLLECTION', payload: user});
     };
     
     const handleClose = () => {
@@ -26,7 +26,7 @@ function Manage(){
     };
 
     const handleRemoveFromCollection = (game) => {
-        const removeData = {collection_id: user, game_id: game.game_id};
+        const removeData = {collection_id: user.active_collection, game_id: game.game_id};
         dispatch({type: 'REMOVE_TITLE', payload: removeData});
         handleRefresh();
     }
@@ -35,7 +35,7 @@ function Manage(){
         handleRefresh();
         dispatch({type: 'GET_MECHANICS'});
         dispatch({type: 'GET_GAME_THEMES'});
-        dispatch({type: 'GRAB_COLLECTION', payload: {collection_id: user}});
+        dispatch({type: 'GRAB_COLLECTION', payload: user});
     }, [])
 
     return(

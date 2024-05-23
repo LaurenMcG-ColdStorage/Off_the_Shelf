@@ -9,8 +9,10 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser((id, done) => {
   pool
-    .query(`SELECT "user"."id", "user"."username", "user"."active_collection", "user"."password", "user"."email", "user_collection"."role" FROM "user" 
+    .query(`SELECT "user"."id", "user"."username", "user"."active_collection", "user"."password", "user"."email", "user_collection"."role", "collections"."name"
+            FROM "user" 
             JOIN "user_collection" ON "user"."active_collection" = "user_collection"."collection_id"
+            JOIN "collections" ON "collections"."id" = "user_collection"."collection_id"
             WHERE "user"."id" = $1`, [id])
     .then((result) => {
       // Handle Errors

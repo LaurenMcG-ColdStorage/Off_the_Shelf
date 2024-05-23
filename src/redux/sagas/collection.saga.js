@@ -37,9 +37,9 @@ function* removeGameFromCollection(action){
 function* grabCollection(action){
     try {
         const collection = action.payload;
-        //console.log('set collection id : ', collection.collection_id);
+        console.log('set collection id : ', collection.active_collection);
 
-        const collectionResponse = yield axios.get(`/api/collection/${collection.collection_id}`); //Send collection id, get collection.
+        const collectionResponse = yield axios.get(`/api/collection/${collection.active_collection}`); //Send collection id, get collection.
         //console.log('Collectionresponse data: ', collectionResponse.data);
 
         yield put({type: 'SET_COLLECTION', payload: collectionResponse.data});

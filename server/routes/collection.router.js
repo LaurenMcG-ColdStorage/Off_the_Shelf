@@ -13,12 +13,12 @@ router.get('/:id', (req, res) => {
   "games"."max_players", "games"."min_play_time", "games"."max_play_time", "games"."description",
   STRING_AGG("mechanics"."name", ' ,') AS "mechanic", "themes"."name" AS "theme", "collection_game"."played",
   "collection_game"."viewed" FROM "games"
-  INNER JOIN "game_mechanic" ON "games"."id" = "game_mechanic"."game_id"
-  INNER JOIN "mechanics" ON "mechanics"."id" = "game_mechanic"."mechanic_id"
-  INNER JOIN "game_theme" ON "games"."id" = "game_theme"."theme_id"
-  INNER JOIN "themes" ON "themes"."id" = "game_theme"."theme_id"
-  INNER JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
-  INNER JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
+  FULL JOIN "game_mechanic" ON "games"."id" = "game_mechanic"."game_id"
+  FULL JOIN "mechanics" ON "mechanics"."id" = "game_mechanic"."mechanic_id"
+  FULL JOIN "game_theme" ON "games"."id" = "game_theme"."theme_id"
+  FULL JOIN "themes" ON "themes"."id" = "game_theme"."theme_id"
+  FULL JOIN "collection_game" ON "games"."id" = "collection_game"."game_id"
+  FULL JOIN "collections" ON "collection_game"."collection_id" = "collections"."id"
   WHERE "collections"."id" = $1
   GROUP BY "games"."id", "themes"."name", "collection_game"."played", "collection_game"."viewed";`;
   //Calling up the database, and sending query/collection info

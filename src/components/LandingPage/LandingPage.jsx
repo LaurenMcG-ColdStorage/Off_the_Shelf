@@ -18,8 +18,9 @@ function LandingPage() {
   };
 
   useEffect(() => {
-    {user.id && setHeading(`Welcome Back ${user.username}!`)}
+    setHeading(`Welcome Back ${user.username}!`)
   },[])
+
 
   //Rendering is conditional, based on whether you're logged in
   return (

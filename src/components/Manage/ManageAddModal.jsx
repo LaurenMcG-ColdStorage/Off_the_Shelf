@@ -7,24 +7,27 @@ import './ManageAddModal.css';
 
 export const ManageAddModal = ({onClose}) => {
     
-    const user = useSelector((store) => store.user.collection_id);
+    const user = useSelector((store) => store.user);
     const mechanics = useSelector((store) => store.selectables.mechanicReducer);
     const themes = useSelector((store) => store.selectables.themeReducer);
     const dispatch = useDispatch();
     //This local state will store all of the data for a new game
     const [game, setGame] = useState({
         title: '', 
-        player_count: 0, 
-        play_time: 0,
-        mech1_id: 0,
-        mech2_id: 0,
-        mech3_id: 0,
+        min_players: 0, 
+        max_players: 0,
+        min_play_time: 0,
+        max_play_time: 0,
+        description: 0,
         theme_id: 0,
         image: '',
-        collection_id: user})
+        active_collection: user.active_collection
+    });
+    const[mechanic, setMechanic] = useState([])
     
     const handleSubmit = (event) => {
         event.preventDefault();
+        setGame({...game, mechs: mechanic})
         dispatch({type: 'ADD_GAME_COLLECTION', payload: game})
         onClose(event);
     }
@@ -43,16 +46,16 @@ export const ManageAddModal = ({onClose}) => {
                             <td><input value={game.title} onChange={(event) => setGame({...game, title: event.target.value})}></input></td>
                         </tr>
                         <tr>
-                            <td><label>Player Count</label></td>
-                            <td><input value={game.player_count} onChange={(event) => setGame({...game, player_count: event.target.value})}></input></td>
+                            <td><label>Min Players</label></td>
+                            <td><input value={game.min_players} onChange={(event) => setGame({...game, min_players: event.target.value})}></input></td>
                         </tr>
                         <tr>
-                            <td><label>Play Time</label></td>
-                            <td><input value={game.play_time} onChange={(event) => setGame({...game, play_time: event.target.value})}></input></td>
+                            <td><label>Max Players</label></td>
+                            <td><input value={game.max_players} onChange={(event) => setGame({...game, max_players: event.target.value})}></input></td>
                         </tr>
                         <tr>
                             <td><label>First Mechanic</label></td>
-                            <td><select value={game.mech1_id} onChange={(event) => setGame({...game, mech1_id: event.target.value})}>
+                            <td><select value={mechanic[0]} onChange={(event) => setMechanic(...mechanic, event.target.value)}>
                                 {mechanics.map((mech1) => {
                                     return (
                                         <option key={mech1.id} value={mech1.id}>{mech1.name}</option>
@@ -63,7 +66,7 @@ export const ManageAddModal = ({onClose}) => {
                         </tr>
                         <tr>
                             <td><label>Second Mechanic</label></td>
-                            <td><select value={game.mech2_id} onChange={(event) => setGame({...game, mech2_id: event.target.value})}>
+                            <td><select value={mechanic[1]} onChange={(event) => setMechanic(...mechanic, event.target.value)}>
                                 {mechanics.map((mech2) => {
                                     return (
                                         <option key={mech2.id} value={mech2.id}>{mech2.name}</option>
@@ -74,7 +77,7 @@ export const ManageAddModal = ({onClose}) => {
                         </tr>
                         <tr>
                             <td><label>Third Mechanic</label></td>
-                            <td><select value={game.mech3_id} onChange={(event) => setGame({...game, mech3_id: event.target.value})}>
+                            <td><select value={mechanic[2]} onChange={(event) => setMechanic(...mechanic, event.target.value)}>
                                 {mechanics.map((mech3) => {
                                     return (
                                         <option key={mech3.id} value={mech3.id}>{mech3.name}</option>

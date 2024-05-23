@@ -35,7 +35,7 @@ function* whatsMyCollectionName(action){
 function* selectablesSaga(){
     yield takeEvery('GET_MECHANICS', getGameMechanics);
     yield takeEvery('GET_GAME_THEMES', getGameThemes);
-    yield takeEvery('CALL_COLLECT', whatsMyCollectionName);
+    //yield takeEvery('CALL_COLLECT', whatsMyCollectionName);
 };
 
 export default selectablesSaga;

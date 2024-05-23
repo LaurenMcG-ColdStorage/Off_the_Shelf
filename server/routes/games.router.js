@@ -8,16 +8,17 @@ router.post('/', async (req, res) => {
     // We start our route by defining everything we'll need.
     //This is our data packaged from the client.
     const newGame = req.body;
+    console.log('Data To add: ', newGame)
     //This query is to check for a game already in the games table.
     const gameQuery = `SELECT "id" FROM "games" WHERE "title" = $1;`;
     //This adds a game to the games table and grabs the new game's ID for use.
     const addQuery = `
     WITH "ins1" AS (
-      INSERT INTO "games" ("title", "min_players", "max_players", "min_play_time", "max_play_time", "description")
-      VALUES ($1, $2, $3, $4, $5, $6)
+      INSERT INTO "games" ("title", "min_players", "max_players", "min_play_time", "max_play_time", "description", "image")
+      VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING "id")
     INSERT INTO "game_theme" ("game_id", "theme_id")
-    SELECT ("id" FROM "ins1"), $7
+    SELECT ("id" FROM "ins1"), $8
     RETURNING "game_id";`;
     //This adds the game to our user's collection.
     const collectQuery = `INSERT INTO "collection_game" ("collection_id", "game_id", "viewed", "played") 
@@ -35,9 +36,10 @@ router.post('/', async (req, res) => {
       newGameId = result.rows[0];
       //If the logic variable isn't undefined (which means we have the game already)
       if (newGameId != undefined) {
+        console.log('Game Add: Existing Game')
         db.query('BEGIN'); //This starts our transaction
         //Add game to collection
-        db.query(collectQuery, [newGame.collection_id, newGameId.id, 0, 0])
+        db.query(collectQuery, [newGame.active_collection, newGameId.id, 0, 0])
         .then((result) => {
           res.sendStatus(201)
           db.query('COMMIT')
@@ -58,7 +60,7 @@ router.post('/', async (req, res) => {
           };
           db.query('COMMIT');
           //Update our collection
-          pool.query(collectQuery, [newGame.collection_id, newGameId.id, 0, 0])
+          pool.query(collectQuery, [newGame.active_collection, newGameId.id, 0, 0])
           .then((result) => {
             res.sendStatus(201);
           })

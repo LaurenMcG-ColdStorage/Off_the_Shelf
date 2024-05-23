@@ -19,11 +19,11 @@ function* fetchUser() {
     // with an id and username set the client-side user object to let
     // the client-side code know the user is logged in
     yield put({ type: 'SET_USER', payload: response.data });
-    yield put({ type: 'CALL_COLLECT', payload: response.data})
+    //yield put({ type: 'CALL_COLLECT', payload: response.data})
   } catch (error) {
     console.log('User get request failed', error);
   }
-}
+};
 
 // This is where we will update user collections and roles.
 function* updateUserCollection(action) {
@@ -45,11 +45,11 @@ function* updateUserCollection(action) {
   } catch (error) {
     console.log('User update failed', error); 
   }
-} 
+} ;
 
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeEvery('UPDATE_USER', updateUserCollection);
-}
+};
 
 export default userSaga;
