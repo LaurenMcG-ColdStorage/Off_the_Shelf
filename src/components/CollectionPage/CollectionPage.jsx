@@ -5,6 +5,7 @@ import { CardContent } from "@mui/material";
 import { CardMedia } from "@mui/material";
 import { CardActionArea } from "@mui/material";
 import { Typography } from "@mui/material";
+import { Collapse } from "@mui/material";
 
 import './CollectionPage.css';
 
@@ -44,12 +45,35 @@ function CollectionPage(){
                                 height='145'
                                 image={game.image}
                                 alt={game.title}/>
-                                <CardContent>
-                                    <Typography sx={{fontSize: '2rem'}}>
-                                    {/* {details === true ? 
-                                        // {game.title} : }  This is where I'm trying to work on rendering a games details when it's clicked on. */}
-                                    </Typography>
+                                {details === true ? 
+                                    <CardContent>
+                                        <Typography sx={{fontSize: '2rem'}}>
+                                            {game.title}
+                                        </Typography>
+                                        <Typography sx={{fontSize: '1rem'}}>
+                                            Theme: {game.theme}
+                                        </Typography>
+                                        <Typography sx={{fontSize: '1rem'}}>
+                                            Mechanics: {game.mechanic} 
+                                        </Typography>
+                                        <Typography sx={{fontSize: '1rem'}}>
+                                            Players: {game.min_players} - {game.max_players}<br/>
+                                        </Typography>
+                                        <Typography sx={{fontSize: '1rem'}}>
+                                            Play Time: {game.min_play_time} - {game.max_play_time}<br/>
+                                        </Typography>
+                                        <Typography sx={{fontSize: '1rem'}}>
+                                            {game.description}
+                                        </Typography>
+                                    </CardContent>
+                                            : 
+                                    <CardContent>
+                                        <Typography sx={{fontSize: '2rem'}}>
+                                            {game.title} 
+                                        </Typography>
+                                         {/* This is where I'm trying to work on rendering a games details when it's clicked on. */}
                                 </CardContent>
+                                }  
                         </CardActionArea>
                     </Card>
 

@@ -11,7 +11,7 @@ router.get('/:id', (req, res) => {
   const collectionQuery =  //This looks huge and intimidating, but really all it's doing is getting game information and organizing it all before sending it back to the client
   `SELECT "games"."title", "games"."image", "games"."id" AS "game_id", "games"."min_players", 
   "games"."max_players", "games"."min_play_time", "games"."max_play_time", "games"."description",
-  STRING_AGG("mechanics"."name", ' ,') AS "mechanic", "themes"."name" AS "theme", "collection_game"."played",
+  STRING_AGG("mechanics"."name", ', ') AS "mechanic", "themes"."name" AS "theme", "collection_game"."played",
   "collection_game"."viewed" FROM "games"
   FULL JOIN "game_mechanic" ON "games"."id" = "game_mechanic"."game_id"
   FULL JOIN "mechanics" ON "mechanics"."id" = "game_mechanic"."mechanic_id"
