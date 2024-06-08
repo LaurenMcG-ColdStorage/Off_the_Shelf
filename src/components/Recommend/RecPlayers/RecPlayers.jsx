@@ -36,8 +36,9 @@ function RecPlayers(){
                 '& .MuiSlider-valueLabel': {backgroundColor: '#e7822b'}}}
                 marks
                 min={1}
-                max={8}
+                max={10}
                 step={1}
+                defaultValue={[1, 5]}
                 getAriaValueText={valueText}
                 valueLabelDisplay="auto"
                 onChange={(event) => setSliderValue(event.target.value)}

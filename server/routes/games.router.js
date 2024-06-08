@@ -17,8 +17,8 @@ router.post('/', async (req, res) => {
       INSERT INTO "games" ("title", "min_players", "max_players", "min_play_time", "max_play_time", "description", "image")
       VALUES ($1, $2, $3, $4, $5, $6, $7)
       RETURNING "id")
-    INSERT INTO "game_theme" ("game_id", "theme_id")
-    SELECT ("id" FROM "ins1"), $8
+    INSERT INTO "game_theme" ("theme_id", "game_id")
+    SELECT $8 "id" FROM "ins1"
     RETURNING "game_id";`;
     //This adds the game to our user's collection.
     const collectQuery = `INSERT INTO "collection_game" ("collection_id", "game_id", "viewed", "played") 
@@ -30,14 +30,14 @@ router.post('/', async (req, res) => {
     let newGameId ;
 
     //First, check to see if a game is already in the DB
-    let result = await db.query(gameQuery, [newGame.title])
+    await db.query(gameQuery, [newGame.title])
     .then((result) => {
       //Update our logic variable
       newGameId = result.rows[0];
+      db.query('BEGIN'); //This starts our transaction
       //If the logic variable isn't undefined (which means we have the game already)
       if (newGameId != undefined) {
         console.log('Game Add: Existing Game')
-        db.query('BEGIN'); //This starts our transaction
         //Add game to collection
         db.query(collectQuery, [newGame.active_collection, newGameId.id, 0, 0])
         .then((result) => {
@@ -50,8 +50,8 @@ router.post('/', async (req, res) => {
         }) //Return error on failure, rolls back inserts
         //If the logic variable is empty (The game is totally new)
       } else {
-        db.query('BEGIN'); //This starts our transaction
-         db.query(addQuery, [newGame.title, parseInt(newGame.min_players), parseInt(newGame.max_players), parseInt(newGame.min_play_time), parseInt(newGame.max_play_time), parseInt(newGame.description), parseInt(newGame.image)])
+        console.log('Game Add: New Game');
+        db.query(addQuery, [newGame.title, newGame.players[0], newGame.players[1], newGame.play_time[0], newGame.play_time[1], newGame.description, newGame.image, newGame.theme_id])
         .then((result) => {
           //Update logic variable
           newGameId = result.rows[0];
@@ -69,6 +69,7 @@ router.post('/', async (req, res) => {
           })
         })
         .catch((error) => {
+          db.query('ROLLBACK')
           res.sendStatus(500)
         })
       }
